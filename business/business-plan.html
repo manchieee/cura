@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cura 事業計画書</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Noto+Serif+JP:wght@200;300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fdf6f3;
+      --navy: #2a1f1a;
+      --rose: #b5647a;
+      --rose-deep: #9e4e68;
+      --rose-grad-start: #8a3a55;
+      --rose-grad-end: #b87888;
+      --gold: #c9a882;
+      --text: #2c2220;
+      --text-muted: #7a6560;
+      --white: #ffffff;
+      --border: #e8d0c8;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Serif JP', "Yu Mincho", serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 2.0;
+      font-size: 10pt;
+    }
+
+    /* ── ページ共通 ── */
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto 16px;
+      background: var(--white);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.10);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* ── 表紙 ── */
+    .cover {
+      background: linear-gradient(160deg, var(--rose-grad-start) 0%, #a85f78 55%, var(--rose-grad-end) 100%);
+      min-height: 297mm;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 60px 40px;
+      position: relative;
+    }
+    .cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 30%, rgba(255,220,210,0.25) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 40% at 80% 80%, rgba(220,180,190,0.15) 0%, transparent 60%);
+    }
+    .cover-inner { position: relative; z-index: 1; }
+    .cover-logo {
+      font-family: 'Abril Fatface', serif;
+      font-size: 72pt;
+      color: var(--white);
+      letter-spacing: 0.15em;
+      margin-bottom: 4px;
+    }
+    .cover-tagline {
+      font-size: 9pt;
+      letter-spacing: 0.35em;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 48px;
+      font-weight: 300;
+    }
+    .cover-divider {
+      width: 48px;
+      height: 1px;
+      background: rgba(255,255,255,0.5);
+      margin: 0 auto 48px;
+    }
+    .cover-title {
+      font-size: 18pt;
+      font-weight: 500;
+      color: var(--white);
+      letter-spacing: 0.25em;
+      margin-bottom: 16px;
+    }
+    .cover-subtitle {
+      font-size: 9pt;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.2em;
+      font-weight: 300;
+      margin-bottom: 64px;
+    }
+    .cover-meta {
+      font-size: 8pt;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.15em;
+      line-height: 2.0;
+    }
+    .cover-copy {
+      position: absolute;
+      bottom: 40px;
+      left: 0; right: 0;
+      text-align: center;
+      font-size: 11pt;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.3em;
+      font-style: italic;
+    }
+
+    /* ── 内容ページ共通 ── */
+    .page-inner {
+      padding: 20mm 18mm;
+    }
+
+    /* ── ヘッダー（内容ページ） ── */
+    .page-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 24px;
+    }
+    .page-header-logo {
+      font-family: 'Abril Fatface', serif;
+      font-size: 14pt;
+      color: var(--rose-deep);
+      letter-spacing: 0.12em;
+    }
+    .page-header-title {
+      font-size: 7.5pt;
+      color: var(--text-muted);
+      letter-spacing: 0.2em;
+    }
+
+    /* ── セクション見出し ── */
+    .section {
+      margin-bottom: 28px;
+    }
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .section-num {
+      font-family: 'Abril Fatface', serif;
+      font-size: 18pt;
+      color: var(--rose);
+      line-height: 1;
+    }
+    .section-label {
+      font-size: 11pt;
+      font-weight: 500;
+      color: var(--navy);
+      letter-spacing: 0.15em;
+      border-bottom: 2px solid var(--rose);
+      padding-bottom: 2px;
+    }
+
+    /* ── テキスト ── */
+    p { font-size: 9.5pt; line-height: 2.0; margin-bottom: 8px; }
+    .lead { font-size: 10.5pt; font-weight: 300; color: var(--navy); line-height: 2.2; margin-bottom: 16px; }
+    .em { color: var(--rose-deep); font-weight: 500; }
+
+    /* ── テーブル ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 9pt;
+      margin-bottom: 12px;
+    }
+    th {
+      background: var(--navy);
+      color: var(--white);
+      padding: 7px 10px;
+      text-align: left;
+      font-weight: 400;
+      letter-spacing: 0.1em;
+      font-size: 8.5pt;
+    }
+    td {
+      padding: 7px 10px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.8;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:nth-child(even) td { background: #faf4f2; }
+    .td-label { color: var(--text-muted); font-size: 8.5pt; width: 38%; }
+    .td-val { font-weight: 400; }
+    .price { color: var(--rose-deep); font-weight: 500; }
+
+    /* ── ハイライトボックス ── */
+    .highlight-box {
+      background: linear-gradient(135deg, rgba(158,78,104,0.06) 0%, rgba(201,168,130,0.08) 100%);
+      border-left: 3px solid var(--rose);
+      padding: 14px 18px;
+      margin-bottom: 14px;
+      border-radius: 0 6px 6px 0;
+    }
+    .highlight-box p { margin: 0; font-size: 9.5pt; }
+
+    /* ── フェーズ ── */
+    .phase-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .phase-card {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      position: relative;
+    }
+    .phase-card.active {
+      border-color: var(--rose);
+      background: rgba(181,100,122,0.04);
+    }
+    .phase-badge {
+      font-size: 7pt;
+      letter-spacing: 0.15em;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .phase-card.active .phase-badge { color: var(--rose); }
+    .phase-title { font-size: 9pt; font-weight: 500; color: var(--navy); margin-bottom: 6px; }
+    .phase-items { font-size: 8pt; color: var(--text-muted); line-height: 1.9; }
+    .phase-label {
+      position: absolute;
+      top: -8px;
+      left: 12px;
+      background: var(--rose);
+      color: white;
+      font-size: 6.5pt;
+      padding: 1px 8px;
+      border-radius: 10px;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── 収支テーブル ── */
+    .finance-table th { background: var(--navy); }
+    .finance-table .sub-header td {
+      background: rgba(42,31,26,0.06);
+      font-weight: 500;
+      font-size: 8.5pt;
+      color: var(--navy);
+    }
+    .finance-table .total-row td {
+      background: var(--navy);
+      color: var(--white);
+      font-weight: 500;
+    }
+    .num { text-align: right; }
+
+    /* ── 差別化グリッド ── */
+    .diff-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .diff-card {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 12px 14px;
+    }
+    .diff-icon { font-size: 16pt; margin-bottom: 4px; }
+    .diff-title { font-size: 9pt; font-weight: 500; color: var(--navy); margin-bottom: 4px; }
+    .diff-desc { font-size: 8pt; color: var(--text-muted); line-height: 1.8; }
+
+    /* ── フッター ── */
+    .page-footer {
+      position: absolute;
+      bottom: 12mm;
+      left: 18mm; right: 18mm;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+      padding-top: 6px;
+    }
+    .footer-brand {
+      font-family: 'Abril Fatface', serif;
+      font-size: 8pt;
+      color: var(--rose);
+      letter-spacing: 0.12em;
+    }
+    .footer-note { font-size: 7pt; color: var(--text-muted); letter-spacing: 0.1em; }
+
+    /* ── 印刷設定 ── */
+    @media print {
+      body { background: white; }
+      .page {
+        width: 100%;
+        margin: 0;
+        box-shadow: none;
+        page-break-after: always;
+      }
+      .page:last-child { page-break-after: auto; }
+      @page {
+        size: A4;
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════
+     表紙
+════════════════════════════ -->
+<div class="page">
+  <div class="cover">
+    <div class="cover-inner">
+      <div class="cover-logo">cura</div>
+      <div class="cover-tagline">care with intention — 心を込めたケア</div>
+      <div class="cover-divider"></div>
+      <div class="cover-title">事　業　計　画　書</div>
+      <div class="cover-subtitle">プライベートケアサービス</div>
+      <div class="cover-meta">
+        代表　高野まさみ<br>
+        文京区千石 4-43-<br>
+        TEL 070-5450-8818<br>
+        2026年　開業予定
+      </div>
+    </div>
+    <div class="cover-copy">「最期まで、自宅で。」</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     P2：事業概要
+════════════════════════════ -->
+<div class="page">
+  <div class="page-inner">
+    <div class="page-header">
+      <div class="page-header-logo">cura</div>
+      <div class="page-header-title">事業計画書</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <span class="section-num">01</span>
+        <span class="section-label">事業概要</span>
+      </div>
+      <p class="lead">
+        curaは、文京区を拠点とする<span class="em">自費プライベートケアサービス</span>です。介護保険の制度に縛られず、介護福祉士と看護師が一体となって「その人だけのケア」を提供します。
+      </p>
+      <table>
+        <tr><td class="td-label">事業名</td><td class="td-val">cura（クーラ）</td></tr>
+        <tr><td class="td-label">事業形態</td><td class="td-val">個人事業主スタート・第2種社会福祉事業として届出予定</td></tr>
+        <tr><td class="td-label">開業予定</td><td class="td-val">2026年9月</td></tr>
+        <tr><td class="td-label">拠点</td><td class="td-val">〒113-0021　東京都文京区千石4-43-</td></tr>
+        <tr><td class="td-label">連絡先</td><td class="td-val">070-5450-8818</td></tr>
+        <tr><td class="td-label">サービスエリア</td><td class="td-val">文京区全域・千代田区・新宿区・豊島区の一部（番町・神楽坂・目白含む）</td></tr>
+        <tr><td class="td-label">理念</td><td class="td-val">スタッフの幸福最優先＝「圧倒的な安心と信頼」</td></tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <span class="section-num">02</span>
+        <span class="section-label">事業の背景と理念</span>
+      </div>
+      <div class="highlight-box">
+        <p>父は脊髄損傷で25年間、自宅で生き続けた。母は2016年のクリスマスイブ、事故で背骨16本を骨折した。家族の介護を通じて痛感したのは、「必要なケアは制度の外にある」という現実だった。</p>
+      </div>
+      <p>日本の介護保険制度は、標準化されたサービスを効率的に届けることに特化している。しかし、その人らしい生活を支えるには制度の枠を超えた対応が不可欠だ。富裕層の高齢者やその家族は、品質・柔軟性・緊急対応のすべてを求めているにもかかわらず、そのニーズに応えるサービスはほとんど存在しない。curaはその空白に応える。</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-brand">cura</div>
+    <div class="footer-note">社外秘 — 無断転載禁止</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     P3：サービス・料金
+════════════════════════════ -->
+<div class="page">
+  <div class="page-inner">
+    <div class="page-header">
+      <div class="page-header-logo">cura</div>
+      <div class="page-header-title">事業計画書</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <span class="section-num">03</span>
+        <span class="section-label">サービス内容</span>
+      </div>
+      <table>
+        <tr><th>サービス</th><th>内容</th></tr>
+        <tr>
+          <td>オーダーメイド・ケア</td>
+          <td>自宅生活支援・外出同行・旅行同行・ペットのお世話まで、利用者の「したいこと」を軸に設計</td>
+        </tr>
+        <tr>
+          <td>看護師バックアップ</td>
+          <td>健康管理・服薬確認・医療的アドバイス。介護福祉士と看護師がチームで対応</td>
+        </tr>
+        <tr>
+          <td>24時間オンコール</td>
+          <td>夜間・休日の緊急相談に対応。一次対応は介護福祉士、医療判断は看護師へエスカレーション</td>
+        </tr>
+        <tr>
+          <td>病院・外出同行</td>
+          <td>診察室への同席・入退院対応・専門医受診の調整サポート</td>
+        </tr>
+        <tr>
+          <td>レスパイトケア</td>
+          <td>遠方在住の家族に代わって日常的なケアを担う。家族の「休息」と「安心」を支える</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <span class="section-num">04</span>
+        <span class="section-label">料金体系</span>
+      </div>
+      <table>
+        <tr><th>項目</th><th class="num">料金（税込）</th><th>備考</th></tr>
+        <tr>
+          <td>入会金</td>
+          <td class="num price">¥36,300</td>
+          <td>アセスメント・ケアプラン作成含む</td>
+        </tr>
+        <tr>
+          <td>プライベートケア / 1時間</td>
+          <td class="num price">¥8,800〜</td>
+          <td>介護福祉士対応・最低3時間〜</td>
+        </tr>
+        <tr>
+          <td>看護師同行プラン / 1時間</td>
+          <td class="num price">¥16,500〜</td>
+          <td>医療的ケア・健康管理が必要な場合</td>
+        </tr>
+        <tr>
+          <td>夜間オンコール / 月額</td>
+          <td class="num price">¥16,500</td>
+          <td>月3回まで・オンコールのみの登録も可</td>
+        </tr>
+        <tr>
+          <td>移動費</td>
+          <td class="num">別途実費</td>
+          <td>交通費・駐車場代等</td>
+        </tr>
+      </table>
+      <div class="highlight-box">
+        <p>月会費なし・1回から利用可。将来的にはフルサポートプラン（月額）を追加予定。有料老人ホームとの比較で圧倒的な価値を提案する。</p>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-brand">cura</div>
+    <div class="footer-note">社外秘 — 無断転載禁止</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     P4：市場・差別化
+════════════════════════════ -->
+<div class="page">
+  <div class="page-inner">
+    <div class="page-header">
+      <div class="page-header-logo">cura</div>
+      <div class="page-header-title">事業計画書</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <span class="section-num">05</span>
+        <span class="section-label">ターゲット市場</span>
+      </div>
+      <table>
+        <tr><th>ターゲット</th><th>特徴・ニーズ</th></tr>
+        <tr>
+          <td>文京区付近在住の富裕層高齢者</td>
+          <td>独居・身寄りなし含む。制度介護では対応できない高水準のケアを求める。品質・柔軟性・緊急対応がすべて必要。</td>
+        </tr>
+        <tr>
+          <td>全国にいる家族</td>
+          <td>遠方から親の介護を心配している。「信頼できる人に任せたい」「何かあった時にすぐ動ける人が欲しい」という強いニーズ。</td>
+        </tr>
+      </table>
+      <p style="font-size:8.5pt; color:var(--text-muted);">
+        文京区は世帯年収・教育水準・医療へのアクセス意識が都内でもトップクラス。高齢化と核家族化の進行により、自費介護市場は今後急速に拡大すると予測される。
+      </p>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <span class="section-num">06</span>
+        <span class="section-label">競合との差別化</span>
+      </div>
+      <div class="diff-grid">
+        <div class="diff-card">
+          <div class="diff-title">介護福祉士 × 看護師 W体制</div>
+          <div class="diff-desc">文京区エリアでW資格体制で自費ケアを提供するサービスはほぼ存在しない。生活支援から医療的判断まで一気通貫で対応できる。</div>
+        </div>
+        <div class="diff-card">
+          <div class="diff-title">24時間緊急対応</div>
+          <div class="diff-desc">大手訪問介護の「24時間」は本部への電話。curaは夜中でも担当者に繋がり、必要であれば看護師が医療判断を行う。</div>
+        </div>
+        <div class="diff-card">
+          <div class="diff-title">「資格より、気づける人を選ぶ」</div>
+          <div class="diff-desc">人手不足で選べない業界で、少人数だから選べる。「いつもと違う」に気づいて即動ける人柄を最重視した採用をしている。</div>
+        </div>
+        <div class="diff-card">
+          <div class="diff-title">実話に基づくブランド</div>
+          <div class="diff-desc">代表自身の家族介護体験が事業の核。マッチングアプリや大手には作れない、感情と信頼の根拠がある。</div>
+        </div>
+      </div>
+      <table>
+        <tr><th>比較項目</th><th>大手訪問介護</th><th>マッチングアプリ</th><th style="background:var(--rose-deep);">cura</th></tr>
+        <tr>
+          <td>スタッフ資格</td><td>介護職員</td><td>未経験可</td><td style="color:var(--rose-deep);font-weight:500;">介護福祉士＋看護師</td>
+        </tr>
+        <tr>
+          <td>夜間緊急対応</td><td>本部電話</td><td>なし</td><td style="color:var(--rose-deep);font-weight:500;">担当者直通</td>
+        </tr>
+        <tr>
+          <td>富裕層対応</td><td>△</td><td>×</td><td style="color:var(--rose-deep);font-weight:500;">◎ 専門特化</td>
+        </tr>
+        <tr>
+          <td>料金</td><td>保険給付範囲</td><td>¥2,000〜</td><td style="color:var(--rose-deep);font-weight:500;">¥8,800〜（品質保証）</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-brand">cura</div>
+    <div class="footer-note">社外秘 — 無断転載禁止</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     P5：体制・代表
+════════════════════════════ -->
+<div class="page">
+  <div class="page-inner">
+    <div class="page-header">
+      <div class="page-header-logo">cura</div>
+      <div class="page-header-title">事業計画書</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <span class="section-num">07</span>
+        <span class="section-label">代表プロフィール</span>
+      </div>
+      <table>
+        <tr><td class="td-label">氏名</td><td class="td-val">高野まさみ</td></tr>
+        <tr><td class="td-label">資格</td><td class="td-val">介護福祉士</td></tr>
+        <tr><td class="td-label">経験</td><td class="td-val">介護経験25年・介護福祉士資格取得後6年（グループホーム4年・小規模多機能2年）</td></tr>
+        <tr><td class="td-label">現職</td><td class="td-val">社会福祉法人泉湧く家・小規模多機能こまごめ（豊島区）</td></tr>
+        <tr><td class="td-label">学習目標</td><td class="td-val">簿記（経営数値把握のため取得目標）</td></tr>
+        <tr><td class="td-label">個人的背景</td><td class="td-val">父（脊髄損傷25年・2025年他界）、母（2016年転落事故・現在自宅生活）、長男（2024年PMBCL発症・現在寛解）。家族の介護・闘病を通じた実体験が事業の根幹</td></tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <span class="section-num">08</span>
+        <span class="section-label">体制・拡大フェーズ</span>
+      </div>
+      <div class="phase-grid">
+        <div class="phase-card active">
+          <div class="phase-label">開業時</div>
+          <div class="phase-badge">PHASE 1</div>
+          <div class="phase-title">2名体制</div>
+          <div class="phase-items">
+            ・代表（介護福祉士）<br>
+            ・看護師（64歳・救急外科経験）<br>
+            ・月固定5万円＋時間単価
+          </div>
+        </div>
+        <div class="phase-card">
+          <div class="phase-badge">PHASE 2</div>
+          <div class="phase-title">介護士追加</div>
+          <div class="phase-items">
+            ・介護士2名追加<br>
+            ・手取り30万円以上<br>
+            ・7月頃正式オファー予定
+          </div>
+        </div>
+        <div class="phase-card">
+          <div class="phase-badge">PHASE 3</div>
+          <div class="phase-title">渉外・組織化</div>
+          <div class="phase-items">
+            ・渉外・広報担当合流<br>
+            ・JVパートナー拡大<br>
+            ・法人化検討
+          </div>
+        </div>
+      </div>
+      <div class="highlight-box">
+        <p><strong>マネジメント方針：</strong>組織は「三角形」。代表のルールがスタッフに一直線に伝わる構造。評価権は代表が持ち、「気づき・優しさ・丁寧」を動作・数値でマニュアル化する。</p>
+      </div>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-brand">cura</div>
+    <div class="footer-note">社外秘 — 無断転載禁止</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     P6：収支計画
+════════════════════════════ -->
+<div class="page">
+  <div class="page-inner">
+    <div class="page-header">
+      <div class="page-header-logo">cura</div>
+      <div class="page-header-title">事業計画書</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <span class="section-num">09</span>
+        <span class="section-label">収支計画（概算）</span>
+      </div>
+      <p style="font-size:8.5pt; color:var(--text-muted); margin-bottom:12px;">※開業初年度（フェーズ1：まさみ＋看護師の2名体制）の月次概算</p>
+
+      <table class="finance-table">
+        <tr><th>項目</th><th class="num">月額（概算）</th><th>前提条件</th></tr>
+        <tr class="sub-header"><td colspan="3">【収入】</td></tr>
+        <tr>
+          <td>入会金収入</td>
+          <td class="num">¥108,900</td>
+          <td>月3件 × ¥36,300</td>
+        </tr>
+        <tr>
+          <td>プライベートケア</td>
+          <td class="num">¥475,200</td>
+          <td>月18件 × 3時間 × ¥8,800</td>
+        </tr>
+        <tr>
+          <td>看護師同行プラン</td>
+          <td class="num">¥198,000</td>
+          <td>月4件 × 3時間 × ¥16,500</td>
+        </tr>
+        <tr>
+          <td>夜間オンコール</td>
+          <td class="num">¥132,000</td>
+          <td>月8件 × ¥16,500</td>
+        </tr>
+        <tr class="sub-header"><td>売上合計</td><td class="num">¥914,100</td><td></td></tr>
+
+        <tr class="sub-header"><td colspan="3">【支出】</td></tr>
+        <tr>
+          <td>看護師報酬</td>
+          <td class="num">¥110,000</td>
+          <td>固定5万円＋稼働分</td>
+        </tr>
+        <tr>
+          <td>移動交通費</td>
+          <td class="num">¥30,000</td>
+          <td>概算</td>
+        </tr>
+        <tr>
+          <td>通信・システム費</td>
+          <td class="num">¥15,000</td>
+          <td>携帯・クラウド・予約システム等</td>
+        </tr>
+        <tr>
+          <td>保険料</td>
+          <td class="num">¥10,000</td>
+          <td>賠償責任保険等</td>
+        </tr>
+        <tr>
+          <td>その他経費</td>
+          <td class="num">¥20,000</td>
+          <td>消耗品・印刷等</td>
+        </tr>
+        <tr class="sub-header"><td>支出合計</td><td class="num">¥185,000</td><td></td></tr>
+
+        <tr class="total-row">
+          <td>営業利益（概算）</td>
+          <td class="num">¥729,100</td>
+          <td>代表報酬含む</td>
+        </tr>
+      </table>
+
+      <div class="highlight-box">
+        <p>上記は初年度の月次目標値。入会金は開業初期に集中することが多いため、安定収益の柱はケア稼働時間の積み上げ。月20〜25件のケア対応が安定軌道に乗るラインと想定。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <span class="section-num">10</span>
+        <span class="section-label">開業スケジュール</span>
+      </div>
+      <table>
+        <tr><th>時期</th><th>内容</th></tr>
+        <tr><td>2026年6月</td><td>特定創業支援等事業セミナー（文京区）受講</td></tr>
+        <tr><td>2026年夏</td><td>現職退職（夏ボーナス後）・有給34日消化</td></tr>
+        <tr><td>2026年8〜9月</td><td>開業届提出・第2種社会福祉事業届出・日本政策金融公庫融資実行</td></tr>
+        <tr><td>2026年9月</td><td>cura 開業</td></tr>
+        <tr><td>2026年末〜</td><td>介護士採用・フェーズ2移行</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-brand">cura</div>
+    <div class="footer-note">社外秘 — 無断転載禁止</div>
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     P7：集客・今後
+════════════════════════════ -->
+<div class="page">
+  <div class="page-inner">
+    <div class="page-header">
+      <div class="page-header-logo">cura</div>
+      <div class="page-header-title">事業計画書</div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <span class="section-num">11</span>
+        <span class="section-label">集客・マーケティング戦略</span>
+      </div>
+      <table>
+        <tr><th>チャネル</th><th>内容</th><th>優先度</th></tr>
+        <tr>
+          <td>JVパートナー連携</td>
+          <td>クリニック・医療ソーシャルワーカー・相続弁護士・高級不動産・ケアマネジャーとの紹介ネットワーク構築</td>
+          <td style="color:var(--rose-deep);font-weight:500;">最優先</td>
+        </tr>
+        <tr>
+          <td>ウェブサイト</td>
+          <td>curaブランドHP（実話ストーリー・代表の想い）。検索流入＋紹介先への信頼担保</td>
+          <td>高</td>
+        </tr>
+        <tr>
+          <td>LINE公式アカウント</td>
+          <td>顧客・家族との継続コミュニケーション・オンコール一次窓口</td>
+          <td>高</td>
+        </tr>
+        <tr>
+          <td>SNS（Instagram）</td>
+          <td>curaの日常・ストーリーを発信。ブランド認知の積み上げ</td>
+          <td>中</td>
+        </tr>
+      </table>
+      <div class="highlight-box">
+        <p>競合優位性は単一要素ではなく「個人ストーリー × 固定看護チーム × 紹介ネットワーク × 顧客関係」の組み合わせで構成される。個別要素は模倣できても、全体は模倣困難。</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <span class="section-num">12</span>
+        <span class="section-label">資金調達計画</span>
+      </div>
+      <table>
+        <tr><th>調達先</th><th>内容</th><th>時期</th></tr>
+        <tr>
+          <td>日本政策金融公庫</td>
+          <td>創業融資（在職中に申請予定）</td>
+          <td>2026年夏〜秋</td>
+        </tr>
+        <tr>
+          <td>東京都スタートアップ補助金</td>
+          <td>上限400万円</td>
+          <td>申請検討中</td>
+        </tr>
+        <tr>
+          <td>小規模持続化補助金</td>
+          <td>販路開拓・広告費等</td>
+          <td>申請検討中</td>
+        </tr>
+        <tr>
+          <td>文京区創業支援</td>
+          <td>区内起業家向け支援制度</td>
+          <td>6月セミナー受講後</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <span class="section-num">13</span>
+        <span class="section-label">中長期ビジョン</span>
+      </div>
+      <p>文京区エリアで「プライベートケアといえばcura」という圧倒的な認知を確立し、紹介ネットワークによる顧客獲得を安定させる。収益が安定した段階で法人化し、フェーズ2・3の体制拡充へ移行する。</p>
+      <p>将来的には、月額フルサポートプラン（在宅フルサポート・月120万円規模）を導入し、有料老人ホームの代替として富裕層市場における自費在宅ケアの新しい基準を作る。</p>
+    </div>
+  </div>
+  <div class="page-footer">
+    <div class="footer-brand">cura</div>
+    <div class="footer-note">社外秘 — 無断転載禁止</div>
+  </div>
+</div>
+
+</body>
+</html>

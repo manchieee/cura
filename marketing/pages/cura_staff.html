@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スタッフ・役職・報酬 — cura 内部資料</title>
+  <link rel="stylesheet" href="internal.css">
+  <style>
+    .role-card {
+      border: 1px solid var(--cream-dark);
+      background: #fff;
+      margin-bottom: 1.2rem;
+    }
+    .role-header {
+      background: var(--dark);
+      padding: 1rem 1.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .role-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--cream);
+      letter-spacing: 0.04em;
+      font-weight: 400;
+    }
+    .role-badge {
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      padding: 0.2rem 0.65rem;
+      border: 1px solid rgba(201,168,130,0.4);
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      white-space: nowrap;
+    }
+    .role-body {
+      padding: 1.3rem 1.4rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.2rem;
+    }
+    @media (max-width: 700px) { .role-body { grid-template-columns: 1fr; } }
+    .role-section-label {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      text-transform: uppercase;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+    .role-list {
+      list-style: none;
+      font-size: 0.82rem;
+      color: var(--text-mid);
+    }
+    .role-list li {
+      padding: 0.2rem 0;
+      display: flex;
+      gap: 0.5rem;
+      align-items: baseline;
+      line-height: 1.7;
+    }
+    .role-list li::before {
+      content: '';
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+      margin-top: 0.42rem;
+    }
+    .pay-highlight {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      color: var(--rose);
+      margin-bottom: 0.3rem;
+    }
+    .complexity-level {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 0 1.2rem;
+      align-items: center;
+      padding: 0.9rem 1.2rem;
+      border-bottom: 1px solid var(--cream-dark);
+    }
+    .complexity-level:last-child { border-bottom: none; }
+    .cl-badge {
+      width: 2.4rem;
+      height: 2.4rem;
+      background: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.75rem;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      flex-shrink: 0;
+    }
+    .cl-name { font-weight: 400; font-size: 0.88rem; margin-bottom: 0.2rem; }
+    .cl-desc { font-size: 0.78rem; color: var(--text-mid); line-height: 1.6; }
+    .cl-rate {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: var(--rose);
+      white-space: nowrap;
+      text-align: right;
+    }
+    .promotion-step {
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      margin-top: 1rem;
+    }
+    .p-step {
+      flex: 1;
+      min-width: 160px;
+      border: 1px solid var(--cream-dark);
+      border-right: none;
+      background: #fff;
+    }
+    .p-step:last-child { border-right: 1px solid var(--cream-dark); }
+    .p-step-head {
+      background: var(--dark);
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid rgba(201,168,130,0.15);
+    }
+    .p-step-head .step-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.65rem;
+      color: rgba(201,168,130,0.5);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.2rem;
+    }
+    .p-step-head .step-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      color: var(--cream);
+      font-weight: 400;
+    }
+    .p-step-body {
+      padding: 0.9rem 1rem;
+    }
+    .p-step-body ul {
+      list-style: none;
+      font-size: 0.77rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+    }
+    .p-step-body ul li {
+      padding: 0.15rem 0;
+      display: flex;
+      gap: 0.4rem;
+      align-items: baseline;
+    }
+    .p-step-body ul li::before {
+      content: '—';
+      color: var(--gold);
+      font-size: 0.6rem;
+      flex-shrink: 0;
+    }
+    .p-step-body .pay {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.88rem;
+      color: var(--rose);
+      margin-top: 0.6rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid var(--cream-dark);
+    }
+  </style>
+</head>
+<body>
+
+<div class="internal-banner">社内共有資料 — Internal Use Only</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="cura_overview.html" class="nav-logo">cura <span>Internal</span></a>
+    <ul class="nav-links">
+      <li><a href="cura_overview.html">概要</a></li>
+      <li><a href="cura_staff.html" class="active">スタッフ</a></li>
+      <li><a href="cura_jv.html">JV</a></li>
+      <li><a href="cura_price.html">料金</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="page-tag">Doc 02 — Staff</p>
+    <h1>役職・担当業務・昇格基準・複雑度手当</h1>
+    <p>スタッフ構成・役割分担・報酬モデル・昇格ルールの内部定義資料。採用・説明・評価に使用。</p>
+    <div class="page-header-meta">
+      <span class="meta-chip">更新：2026-03</span>
+      <span class="meta-chip">作成：まさみ</span>
+      <span class="meta-chip">社内限定</span>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+
+  <!-- ── 1. 役職一覧 ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2>役職・担当業務</h2>
+    </div>
+
+    <!-- 代表 -->
+    <div class="role-card">
+      <div class="role-header">
+        <span class="role-title">まさみ — 代表・管理者・現場介護福祉士</span>
+        <span class="role-badge">Founder</span>
+      </div>
+      <div class="role-body">
+        <div>
+          <span class="role-section-label">担当業務</span>
+          <ul class="role-list">
+            <li>事業全体の経営判断・管理</li>
+            <li>利用者アセスメント・ケアプラン作成</li>
+            <li>現場介護（直接ケア）</li>
+            <li>スタッフ採用・教育・評価</li>
+            <li>JVパートナー対応・営業</li>
+            <li>緊急時の最終判断・対応</li>
+          </ul>
+        </div>
+        <div>
+          <span class="role-section-label">資格・経験</span>
+          <ul class="role-list">
+            <li>介護福祉士（資格保有）</li>
+            <li>グループホーム 4年</li>
+            <li>小規模多機能型居宅介護 2年</li>
+            <li>介護支援専門員（取得予定）</li>
+          </ul>
+        </div>
+        <div>
+          <span class="role-section-label">報酬モデル</span>
+          <div class="pay-highlight">代表報酬</div>
+          <p style="font-size:0.8rem;color:var(--text-mid);line-height:1.8;">
+            売上から経費・スタッフ人件費を差し引いた利益から代表報酬を設定。
+            フェーズ1では最低生活費を確保しつつ再投資優先。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 看護師 -->
+    <div class="role-card">
+      <div class="role-header">
+        <span class="role-title">連携看護師（1名）</span>
+        <span class="role-badge">RN Partner</span>
+      </div>
+      <div class="role-body">
+        <div>
+          <span class="role-section-label">担当業務</span>
+          <ul class="role-list">
+            <li>看護師同行訪問（医療的ケア）</li>
+            <li>バイタルチェック・健康管理</li>
+            <li>家族・医療機関への報告</li>
+            <li>緊急時の医療判断サポート</li>
+            <li>オンコール時の電話相談対応</li>
+          </ul>
+        </div>
+        <div>
+          <span class="role-section-label">資格・要件</span>
+          <ul class="role-list">
+            <li>看護師免許（必須）</li>
+            <li>在宅・訪問看護経験（歓迎）</li>
+            <li>プライバシーへの高い意識</li>
+            <li>富裕層対応に対する適性</li>
+          </ul>
+        </div>
+        <div>
+          <span class="role-section-label">報酬モデル</span>
+          <div class="pay-highlight">固定給 ＋ 歩合</div>
+          <p style="font-size:0.8rem;color:var(--text-mid);line-height:1.8;">
+            基本固定給（ブランド・宣伝価値への対価）＋ 訪問件数連動の歩合。
+            看護師同行訪問料金（¥12,000〜/h）の一定割合を歩合として配分。
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 介護福祉士 -->
+    <div class="role-card">
+      <div class="role-header">
+        <span class="role-title">介護福祉士スタッフ（採用予定：2名）</span>
+        <span class="role-badge">CW Staff</span>
+      </div>
+      <div class="role-body">
+        <div>
+          <span class="role-section-label">担当業務</span>
+          <ul class="role-list">
+            <li>担当利用者への定期訪問介護</li>
+            <li>身体介護・生活援助</li>
+            <li>外出同行・通院付き添い</li>
+            <li>利用者状態の観察・記録・報告</li>
+            <li>担当利用者家族との連絡</li>
+          </ul>
+        </div>
+        <div>
+          <span class="role-section-label">資格・要件</span>
+          <ul class="role-list">
+            <li>介護福祉士資格（必須）</li>
+            <li>在宅・訪問介護経験（歓迎）</li>
+            <li>運転免許（望ましい）</li>
+            <li>cura の理念への共感</li>
+          </ul>
+        </div>
+        <div>
+          <span class="role-section-label">報酬モデル</span>
+          <div class="pay-highlight">手取り 30万円以上</div>
+          <p style="font-size:0.8rem;color:var(--text-mid);line-height:1.8;">
+            基本時給制 ＋ 複雑度手当 ＋ 定着ボーナス。
+            手取り30万円以上を目標に設定。
+            フルタイム換算での試算を下記参照。
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 2. 報酬試算 ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2>介護福祉士スタッフ 報酬試算</h2>
+    </div>
+
+    <div class="doc-table-wrap">
+      <table class="doc-table">
+        <tr>
+          <th>項目</th>
+          <th>計算式</th>
+          <th>金額（目安）</th>
+        </tr>
+        <tr>
+          <td class="em">基本時給</td>
+          <td>月160h × 時給2,200円</td>
+          <td class="gold">¥352,000</td>
+        </tr>
+        <tr>
+          <td class="em">複雑度手当</td>
+          <td>Level2〜4ケース 月10h分 × 手当350円</td>
+          <td class="gold">¥3,500〜</td>
+        </tr>
+        <tr>
+          <td class="em">交通費</td>
+          <td>実費支給（上限あり）</td>
+          <td>別途支給</td>
+        </tr>
+        <tr>
+          <td class="em">社会保険控除後（概算）</td>
+          <td>額面 ÷ 約1.17</td>
+          <td class="gold">手取り約 ¥300,000〜</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="highlight-box mt">
+      <p><strong>目標：</strong>介護福祉士スタッフの手取り30万円以上を達成するため、cura は受注単価を下げない。
+      安売りは利用者・スタッフ双方への不誠実。</p>
+    </div>
+  </div>
+
+  <!-- ── 3. 複雑度手当 ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2>複雑度手当（ケア難易度加算）</h2>
+    </div>
+
+    <p class="sub" style="margin-bottom:1rem;">
+      ケースの難易度・リスクに応じてスタッフへ手当を追加支給する制度。
+      難しいケースを担当するスタッフが正当に評価される仕組み。
+      利用者側の料金にも同様に複雑度加算を反映する。
+    </p>
+
+    <div class="doc-table-wrap">
+      <table class="doc-table">
+        <thead>
+          <tr>
+            <th style="width:80px;">レベル</th>
+            <th>ケース定義</th>
+            <th>具体例</th>
+            <th style="width:130px;">利用者料金加算</th>
+            <th style="width:120px;">スタッフ手当</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="pill pill-dark">L1 標準</span></td>
+            <td>ADL支援、認知症なし〜軽度、医療的ケアなし</td>
+            <td>食事・入浴・外出同行</td>
+            <td class="gold">基本料金</td>
+            <td>なし</td>
+          </tr>
+          <tr>
+            <td><span class="pill pill-gold">L2 中程度</span></td>
+            <td>軽〜中度認知症、褥瘡管理、服薬管理が必要</td>
+            <td>BPSD対応、デイ誘導困難</td>
+            <td class="gold">＋15%</td>
+            <td>＋¥200/h</td>
+          </tr>
+          <tr>
+            <td><span class="pill pill-rose">L3 高度</span></td>
+            <td>重度認知症・行動障害、医療的ケア多数、看取り期</td>
+            <td>経管栄養、尿道カテーテル、夜間興奮</td>
+            <td class="gold">＋25%</td>
+            <td>＋¥400/h</td>
+          </tr>
+          <tr>
+            <td><span class="pill pill-rose">L4 特別</span></td>
+            <td>在宅ターミナル、人工呼吸器、超高難易度ケース</td>
+            <td>ALS・重症心不全終末期など</td>
+            <td class="gold">要相談</td>
+            <td>要相談</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="note mt">※ 複雑度レベルは代表（まさみ）がアセスメント時に判定。変化時は随時見直し。</p>
+    <p class="note">※ L3・L4 は看護師同行プランとのセットを強く推奨。</p>
+  </div>
+
+  <!-- ── 4. 昇格基準 ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2>昇格基準（キャリアパス）</h2>
+    </div>
+
+    <p class="sub" style="margin-bottom:1rem;">
+      cura のスタッフは経験・スキル・信頼の積み重ねによって昇格し、報酬と担当範囲が広がる。
+    </p>
+
+    <div class="promotion-step">
+      <div class="p-step">
+        <div class="p-step-head">
+          <div class="step-num">STEP 01</div>
+          <div class="step-name">研修スタッフ</div>
+        </div>
+        <div class="p-step-body">
+          <ul>
+            <li>入職〜3ヶ月</li>
+            <li>まさみ同行での訪問研修</li>
+            <li>cura 理念・手順の習得</li>
+            <li>担当利用者なし（同行のみ）</li>
+          </ul>
+          <div class="pay">時給 2,000円</div>
+        </div>
+      </div>
+      <div class="p-step">
+        <div class="p-step-head">
+          <div class="step-num">STEP 02</div>
+          <div class="step-name">スタッフ</div>
+        </div>
+        <div class="p-step-body">
+          <ul>
+            <li>研修修了後</li>
+            <li>担当利用者 1〜3名</li>
+            <li>L1〜L2ケース対応</li>
+            <li>月次フィードバック面談</li>
+          </ul>
+          <div class="pay">時給 2,200円<br>＋ 複雑度手当</div>
+        </div>
+      </div>
+      <div class="p-step">
+        <div class="p-step-head">
+          <div class="step-num">STEP 03</div>
+          <div class="step-name">シニアスタッフ</div>
+        </div>
+        <div class="p-step-body">
+          <ul>
+            <li>在籍1年以上</li>
+            <li>利用者満足度：高評価継続</li>
+            <li>L3ケース独立対応可</li>
+            <li>担当利用者 4名以上</li>
+          </ul>
+          <div class="pay">時給 2,600円<br>＋ 複雑度手当</div>
+        </div>
+      </div>
+      <div class="p-step">
+        <div class="p-step-head">
+          <div class="step-num">STEP 04</div>
+          <div class="step-name">リードスタッフ</div>
+        </div>
+        <div class="p-step-body">
+          <ul>
+            <li>シニア 1年以上</li>
+            <li>新人同行指導担当</li>
+            <li>管理業務の一部補助</li>
+            <li>代表不在時の対応可</li>
+          </ul>
+          <div class="pay">時給 3,000円〜<br>＋ 管理手当</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight-box rose mt2">
+      <p><strong>昇格の原則：</strong>年次ではなく「実績・信頼・スキル」で評価。
+      早期昇格も可能。「続けることへのリスペクト」が cura の評価軸。</p>
+    </div>
+  </div>
+
+  <!-- ── 5. 勤務モデル ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <h2>勤務モデル・働き方</h2>
+    </div>
+
+    <div class="doc-table-wrap">
+      <table class="doc-table">
+        <tr><th style="width:180px;">項目</th><th>内容</th></tr>
+        <tr><td class="em">雇用形態</td><td>業務委託（フェーズ1）→ 正社員・パート（スタッフ増員時）</td></tr>
+        <tr><td class="em">勤務時間</td><td>フレキシブル。週20〜40h 応相談。シフト制ではなく「担当者制」で調整。</td></tr>
+        <tr><td class="em">移動手段</td><td>代表：自転車。看護師：電車。スタッフ：交通費実費支給。</td></tr>
+        <tr><td class="em">オンコール対応</td><td>夜間オンコール担当時は深夜加算あり。月10〜15件を上限に設定。</td></tr>
+        <tr><td class="em">記録・報告</td><td>訪問後にデジタル記録（ツール選定中）。家族報告は必要に応じてメール/電話。</td></tr>
+        <tr><td class="em">休暇</td><td>担当利用者との調整の上で柔軟に取得可。代替担当（代表・他スタッフ）を事前に設定。</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="logo">cura</div>
+  <p>社内共有資料 — 外部への配布・転送禁止 ／ © 2026 cura</p>
+</footer>
+
+</body>
+</html>

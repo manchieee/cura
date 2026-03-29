@@ -1,0 +1,10 @@
+.DS_Store
+.claude/settings.local.json
+*.pdf
+*.tar
+*.zip
+cura-company/
+cura-agents/
+cura-agents.zip
+cura-claude-config-v2.tar
+"# cura 税務・財務メモ/"

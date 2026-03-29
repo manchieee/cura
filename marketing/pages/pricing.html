@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>料金 — cura</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .pricing-hero-note {
+      font-size: 0.8rem;
+      color: rgba(250,247,242,0.45);
+      margin-top: 1.2rem;
+      letter-spacing: 0.05em;
+    }
+    .price-card {
+      background: #fff;
+      border: 1px solid var(--cream-dark);
+      padding: 2.4rem 2.2rem;
+      position: relative;
+    }
+    .price-card.featured {
+      border-color: var(--rose);
+      background: #fff;
+    }
+    .featured-badge {
+      position: absolute;
+      top: -1px;
+      right: 2rem;
+      background: var(--rose);
+      color: #fff;
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      padding: 0.3rem 0.9rem;
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .price-card .service-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 400;
+      margin-bottom: 0.4rem;
+    }
+    .price-card .service-desc {
+      font-size: 0.82rem;
+      color: var(--text-mid);
+      line-height: 1.85;
+      margin-bottom: 1.4rem;
+      min-height: 3.5rem;
+    }
+    .price-card .price-main {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      color: var(--dark);
+      line-height: 1;
+    }
+    .price-card .price-unit {
+      font-size: 0.78rem;
+      color: var(--text-light);
+      margin-top: 0.3rem;
+      letter-spacing: 0.05em;
+    }
+    .price-card .price-includes {
+      list-style: none;
+      margin-top: 1.4rem;
+      padding-top: 1.4rem;
+      border-top: 1px solid var(--cream-dark);
+    }
+    .price-card .price-includes li {
+      font-size: 0.82rem;
+      color: var(--text-mid);
+      padding: 0.2rem 0;
+      display: flex;
+      gap: 0.5rem;
+      align-items: baseline;
+    }
+    .price-card .price-includes li::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+      margin-top: 0.45rem;
+    }
+    .entry-fee-box {
+      background: var(--dark);
+      color: var(--cream);
+      padding: 2.8rem 2.4rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+    }
+    .entry-fee-box h3 {
+      color: var(--cream);
+      margin-bottom: 0.4rem;
+    }
+    .entry-fee-box p {
+      font-size: 0.84rem;
+      color: rgba(250,247,242,0.55);
+      line-height: 1.9;
+    }
+    .entry-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      color: var(--gold);
+      white-space: nowrap;
+      text-align: right;
+    }
+    .entry-price-note {
+      font-size: 0.75rem;
+      color: rgba(250,247,242,0.4);
+      text-align: right;
+      margin-top: 0.2rem;
+    }
+    .faq-item {
+      padding: 1.8rem 0;
+      border-bottom: 1px solid var(--cream-dark);
+    }
+    .faq-item:last-child { border-bottom: none; }
+    .faq-q {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--dark);
+      margin-bottom: 0.6rem;
+      display: flex;
+      gap: 0.8rem;
+      align-items: baseline;
+    }
+    .faq-q::before {
+      content: 'Q';
+      font-size: 0.8rem;
+      color: var(--rose);
+      letter-spacing: 0.1em;
+      flex-shrink: 0;
+    }
+    .faq-a {
+      font-size: 0.86rem;
+      color: var(--text-mid);
+      line-height: 2;
+      padding-left: 1.4rem;
+    }
+    .note-box {
+      background: var(--cream-mid);
+      border-left: 2px solid var(--gold);
+      padding: 1.4rem 1.8rem;
+      margin-top: 2rem;
+      font-size: 0.82rem;
+      color: var(--text-mid);
+      line-height: 1.9;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">cura</a>
+    <ul class="nav-links">
+      <li><a href="index.html">概要</a></li>
+      <li><a href="staff.html">スタッフ</a></li>
+      <li><a href="jv.html">JV</a></li>
+      <li><a href="pricing.html" class="active">料金</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <p class="hero-eyebrow">Pricing</p>
+  <h1>透明な料金で、<br>安心してお任せください。</h1>
+  <div class="hero-divider"></div>
+  <p>月額契約不要。必要なときに、必要なだけご利用いただけます。<br>
+  すべての料金は事前にご説明し、ご納得の上でサービスを開始します。</p>
+  <p class="pricing-hero-note">※ 表示価格はすべて税込・目安です。詳細はご相談ください。</p>
+</section>
+
+<!-- Price Cards -->
+<div class="section">
+  <p class="section-label">Services</p>
+  <h2>サービス料金</h2>
+  <div class="gold-rule"></div>
+
+  <div class="grid-3" style="margin-top:2.8rem;">
+    <div class="price-card">
+      <p class="service-name">介護士訪問</p>
+      <p class="service-desc">介護福祉士が単独でお伺いします。日常の生活支援・身体介護・外出同行など幅広く対応します。</p>
+      <p class="price-main">¥8,000<span style="font-size:1rem;">〜</span></p>
+      <p class="price-unit">/ 1時間あたり</p>
+      <ul class="price-includes">
+        <li>身体介護・生活援助</li>
+        <li>外出同行・通院付き添い</li>
+        <li>担当者固定制</li>
+        <li>事前アセスメント実施済み</li>
+      </ul>
+    </div>
+
+    <div class="price-card featured">
+      <span class="featured-badge">おすすめ</span>
+      <p class="service-name">看護師同行プラン</p>
+      <p class="service-desc">介護福祉士と看護師がペアでお伺いします。医療的ケアが必要な方・状態が不安定な方に適しています。</p>
+      <p class="price-main">¥12,000<span style="font-size:1rem;">〜</span></p>
+      <p class="price-unit">/ 1時間あたり</p>
+      <ul class="price-includes">
+        <li>身体介護 ＋ 医療的サポート</li>
+        <li>バイタルチェック・健康管理</li>
+        <li>看護師による状態アセスメント</li>
+        <li>ご家族へのフィードバック</li>
+      </ul>
+    </div>
+
+    <div class="price-card">
+      <p class="service-name">夜間オンコール</p>
+      <p class="service-desc">夜間の急変・不安に対応する月額プランです。電話相談から緊急訪問まで、安心の夜をお届けします。</p>
+      <p class="price-main">¥11,000</p>
+      <p class="price-unit">/ 月額（定額）</p>
+      <ul class="price-includes">
+        <li>夜間電話相談（無制限）</li>
+        <li>緊急訪問対応</li>
+        <li>翌朝の状態報告</li>
+        <li>他プランと併用可</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 入会金 -->
+  <div class="entry-fee-box">
+    <div>
+      <h3>入会金・アセスメント</h3>
+      <p>初回ご利用前に、担当スタッフがご自宅を訪問し、生活環境・健康状態・ご希望を丁寧に伺います。<br>
+      アセスメントの結果をもとに、最適なケアプランをご提案します。</p>
+    </div>
+    <div>
+      <p class="entry-price">¥33,000</p>
+      <p class="entry-price-note">初回のみ・アセスメント含む</p>
+    </div>
+  </div>
+
+  <div class="note-box">
+    <strong>料金についてのご注意</strong><br>
+    ・上記は目安料金です。訪問時間・内容・エリアによって異なる場合があります。<br>
+    ・交通費が別途かかる場合があります（エリアにより）。<br>
+    ・すべての料金は事前にご説明し、ご納得の上でサービスを開始します。
+  </div>
+</div>
+
+<!-- Flow -->
+<div class="section-mid">
+  <div class="section">
+    <p class="section-label">How to Start</p>
+    <h2>ご利用の流れ</h2>
+    <div class="gold-rule"></div>
+    <ol class="flow">
+      <li>
+        <span class="flow-num">1</span>
+        <div class="flow-text">
+          <h4>お問い合わせ</h4>
+          <p>メール・お電話にてご連絡ください。サービス内容・エリア・料金についてお気軽にご質問ください。</p>
+        </div>
+      </li>
+      <li>
+        <span class="flow-num">2</span>
+        <div class="flow-text">
+          <h4>初回ヒアリング（無料）</h4>
+          <p>電話またはオンラインで、ご状況・ご希望・ご不安な点を丁寧にお伺いします。費用は一切かかりません。</p>
+        </div>
+      </li>
+      <li>
+        <span class="flow-num">3</span>
+        <div class="flow-text">
+          <h4>アセスメント訪問（入会金 ¥33,000）</h4>
+          <p>担当スタッフがご自宅を訪問し、生活環境・健康状態・ご要望を確認します。ケアプランをご提案します。</p>
+        </div>
+      </li>
+      <li>
+        <span class="flow-num">4</span>
+        <div class="flow-text">
+          <h4>プラン確定・契約</h4>
+          <p>ご提案内容にご納得いただいた上で契約書を締結します。月額契約不要・1回から利用可能です。</p>
+        </div>
+      </li>
+      <li>
+        <span class="flow-num">5</span>
+        <div class="flow-text">
+          <h4>サービス開始</h4>
+          <p>担当スタッフが定期的にお伺いします。内容の変更・追加はいつでもご相談ください。</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="section">
+  <p class="section-label">FAQ</p>
+  <h2>よくあるご質問</h2>
+  <div class="gold-rule"></div>
+
+  <div class="faq-item">
+    <p class="faq-q">月額契約は必要ですか？</p>
+    <p class="faq-a">不要です。1回からご利用いただけます。定期利用・単発利用どちらも対応しています。</p>
+  </div>
+  <div class="faq-item">
+    <p class="faq-q">急な依頼にも対応できますか？</p>
+    <p class="faq-a">スケジュールに空きがある場合は対応可能です。まずはご連絡ください。なお、アセスメント（初回訪問）を済ませておくとスムーズにご依頼いただけます。</p>
+  </div>
+  <div class="faq-item">
+    <p class="faq-q">担当者は毎回同じ人が来ますか？</p>
+    <p class="faq-a">はい。cura では担当者固定制を採用しています。同じスタッフが継続してお伺いすることで、信頼関係を積み重ねます。</p>
+  </div>
+  <div class="faq-item">
+    <p class="faq-q">保険は使えますか？</p>
+    <p class="faq-a">cura は完全自費のサービスです。介護保険・医療保険の適用はありません。保険制度の枠にとらわれない、自由なケアをご提供するためのサービスです。</p>
+  </div>
+  <div class="faq-item">
+    <p class="faq-q">夜間オンコールとはどのようなサービスですか？</p>
+    <p class="faq-a">夜間に体調の変化や不安があった際に、電話で相談いただけます。状況によっては緊急訪問にも対応します。月額 ¥11,000 の定額プランで、ご家族の夜間の不安を軽減します。</p>
+  </div>
+  <div class="faq-item">
+    <p class="faq-q">サービスエリア外でも利用できますか？</p>
+    <p class="faq-a">基本エリアは文京区・番町・神楽坂・目白です。エリア外については交通費等も含めてご相談ください。</p>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <p class="section-label text-center">Contact</p>
+  <h2>まずは無料ヒアリングから</h2>
+  <p>ご不明な点・ご不安な点はどうぞお気軽に。費用は一切かかりません。</p>
+  <a href="staff.html" class="btn btn-outline">スタッフを見る</a>
+  &nbsp;&nbsp;
+  <a href="index.html" class="btn btn-outline-light">cura について</a>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">cura</div>
+  <p>文京区千石 ／ 完全自費プライベート介護サービス</p>
+  <p style="margin-top:0.4rem;">© 2026 cura. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

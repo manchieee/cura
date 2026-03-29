@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>概要・理念・USP — cura 内部資料</title>
+  <link rel="stylesheet" href="internal.css">
+  <style>
+    .usp-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 700px) { .usp-grid { grid-template-columns: 1fr; } }
+    .usp-item {
+      border: 1px solid var(--cream-dark);
+      background: #fff;
+      padding: 1.4rem 1.3rem;
+    }
+    .usp-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      color: var(--gold);
+      opacity: 0.35;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+    }
+    .usp-item h3 { margin-bottom: 0.4rem; }
+    .usp-item p { font-size: 0.82rem; color: var(--text-mid); line-height: 1.85; }
+    .target-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 700px) { .target-row { grid-template-columns: 1fr; } }
+    .target-cell {
+      border-top: 2px solid var(--gold);
+      padding: 1.2rem 0.2rem 0;
+    }
+    .target-cell .label { color: var(--text-light); }
+    .target-cell h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      margin-bottom: 0.4rem;
+    }
+    .target-cell p { font-size: 0.8rem; color: var(--text-mid); line-height: 1.8; }
+    .model-row {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--cream-dark);
+      margin-top: 1rem;
+      overflow: hidden;
+    }
+    .model-cell {
+      flex: 1;
+      padding: 1.3rem 1.2rem;
+      border-right: 1px solid var(--cream-dark);
+    }
+    .model-cell:last-child { border-right: none; }
+    .model-cell .label { margin-bottom: 0.6rem; }
+    .model-cell p { font-size: 0.81rem; color: var(--text-mid); line-height: 1.8; }
+    @media (max-width: 700px) {
+      .model-row { flex-direction: column; }
+      .model-cell { border-right: none; border-bottom: 1px solid var(--cream-dark); }
+      .model-cell:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="internal-banner">社内共有資料 — Internal Use Only</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="cura_overview.html" class="nav-logo">cura <span>Internal</span></a>
+    <ul class="nav-links">
+      <li><a href="cura_overview.html" class="active">概要</a></li>
+      <li><a href="cura_staff.html">スタッフ</a></li>
+      <li><a href="cura_jv.html">JV</a></li>
+      <li><a href="cura_price.html">料金</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="page-tag">Doc 01 — Overview</p>
+    <h1>事業概要・理念・USP</h1>
+    <p>cura の存在意義、目指す姿、競合との差別化ポイントを整理した内部資料です。</p>
+    <div class="page-header-meta">
+      <span class="meta-chip">更新：2026-03</span>
+      <span class="meta-chip">作成：まさみ</span>
+      <span class="meta-chip">社内限定</span>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+
+  <!-- ── 1. Mission & Vision ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2>ミッション・ビジョン</h2>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <span class="card-label">Mission</span>
+        <h3>制度の外に、本物のケアを届ける</h3>
+        <p>介護保険では届かない時間・内容・関係性を、完全自費という形で実現する。
+        利用者が「自分の生活の主役」でいられる時間を守ることが cura の使命。</p>
+      </div>
+      <div class="card">
+        <span class="card-label">Vision</span>
+        <h3>富裕層の在宅老後を、最上級の選択肢に</h3>
+        <p>「施設に入るしかない」という諦めではなく、「自宅で最高の暮らしができる」という確信を持てる社会へ。
+        cura はその選択肢の最上位に位置する存在を目指す。</p>
+      </div>
+    </div>
+
+    <div class="highlight-box mt">
+      <p><strong>一言で言うと：</strong>「保険介護の常識を問い直す、完全オーダーメイドのプライベートケア」</p>
+    </div>
+  </div>
+
+  <!-- ── 2. 事業概要 ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2>事業概要</h2>
+    </div>
+
+    <div class="doc-table-wrap">
+      <table class="doc-table">
+        <tr><th style="width:180px;">項目</th><th>内容</th></tr>
+        <tr><td class="em">事業名</td><td>cura（キュラ）— ラテン語で「心を込めたケア」</td></tr>
+        <tr><td class="em">事業種別</td><td>完全自費 プライベート訪問介護・生活支援サービス</td></tr>
+        <tr><td class="em">拠点</td><td>文京区千石（千石駅徒歩圏内）</td></tr>
+        <tr><td class="em">代表</td><td>まさみ（介護福祉士・管理者兼任）</td></tr>
+        <tr><td class="em">開業予定</td><td>2026年</td></tr>
+        <tr><td class="em">サービスエリア</td><td>文京区・番町・神楽坂・目白エリアを中心</td></tr>
+        <tr><td class="em">初期体制</td><td>代表1名でスタート → 看護師1名・介護福祉士2名体制へ段階的拡大</td></tr>
+        <tr><td class="em">根拠法令</td><td>第2種社会福祉事業（有料老人ホーム等除く）／届出制</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── 3. ターゲット顧客 ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2>ターゲット顧客像</h2>
+    </div>
+
+    <div class="target-row">
+      <div class="target-cell">
+        <span class="label">Primary</span>
+        <h4>在宅高齢者・本人</h4>
+        <p>文京区・番町・神楽坂・目白在住。70代以上。自宅での生活継続を望む。
+        保険サービスに不満を持つか、制度外のサービスを求めている。</p>
+      </div>
+      <div class="target-cell">
+        <span class="label">Secondary</span>
+        <h4>ご家族・子世代</h4>
+        <p>40〜60代。親の介護に関与する立場。
+        親の安全・QOLを最優先に考えており、費用よりも「信頼できる担当者」を重視。</p>
+      </div>
+      <div class="target-cell">
+        <span class="label">Tertiary</span>
+        <h4>紹介者・パートナー</h4>
+        <p>クリニック・不動産管理・FP・弁護士など。
+        富裕層顧客の生活設計に関与しており、cura を付加価値として紹介できる立場。</p>
+      </div>
+    </div>
+
+    <div class="highlight-box rose mt">
+      <p><strong>共通点：</strong>「費用より質」「関係性の継続」「プライバシー」を最優先にする価値観を持つ。
+      安さや制度活用よりも「信頼できる人が来る」ことに最大の価値を置く。</p>
+    </div>
+  </div>
+
+  <!-- ── 4. USP ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2>USP（競合優位性）</h2>
+    </div>
+    <p class="sub" style="margin-bottom:0.8rem;">公的訪問介護・民間介護会社・高齢者施設との比較での差別化ポイント。</p>
+
+    <div class="usp-grid">
+      <div class="usp-item">
+        <div class="usp-num">U1</div>
+        <h3>担当者完全固定制</h3>
+        <p>毎回同じスタッフが訪問。公的介護では当たり前の「誰が来るかわからない」を完全に排除。
+        担当者との信頼関係が cura の最大の商品。</p>
+      </div>
+      <div class="usp-item">
+        <div class="usp-num">U2</div>
+        <h3>介護 ＋ 看護のチーム制</h3>
+        <p>介護福祉士と看護師が連携してケア。医療・介護の境界を利用者視点でシームレスに埋める。
+        複数事業所をコーディネートする手間がない。</p>
+      </div>
+      <div class="usp-item">
+        <div class="usp-num">U3</div>
+        <h3>時間・内容の完全自由化</h3>
+        <p>保険介護の「30分・1時間」「できること・できないこと」制限なし。
+        食事・会話・外出・旅行同行まで、生活のすべてに対応。</p>
+      </div>
+      <div class="usp-item">
+        <div class="usp-num">U4</div>
+        <h3>月額契約不要・1回から</h3>
+        <p>定期契約の縛りなし。旅行中の一時的なケア、術後リハビリ期間のみ、
+        など柔軟な利用が可能。高齢者施設とも競合しない。</p>
+      </div>
+      <div class="usp-item">
+        <div class="usp-num">U5</div>
+        <h3>少数精鋭による守秘性</h3>
+        <p>大手介護事業所のように大勢の職員が関与しない。
+        家族構成・資産・健康状態など、富裕層が最も気にする「情報漏えい」リスクを最小化。</p>
+      </div>
+      <div class="usp-item">
+        <div class="usp-num">U6</div>
+        <h3>代表が現場に立つ</h3>
+        <p>まさみが管理者と現場スタッフを兼任。「担当者 ＝ 社長」という他にない品質保証。
+        何かあればすぐ本人と話せるという安心感。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 5. ビジネスモデル ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <h2>ビジネスモデル概要</h2>
+    </div>
+
+    <div class="model-row">
+      <div class="model-cell">
+        <span class="label">Revenue</span>
+        <p>訪問介護料金（時間単価）<br>
+        夜間オンコール月額料金<br>
+        入会金（アセスメント込み）</p>
+      </div>
+      <div class="model-cell">
+        <span class="label">Cost</span>
+        <p>スタッフ人件費（手取り30万円以上目標）<br>
+        交通費・消耗品<br>
+        保険・その他固定費</p>
+      </div>
+      <div class="model-cell">
+        <span class="label">Growth</span>
+        <p>既存顧客のリピート・紹介<br>
+        JVパートナーからの紹介<br>
+        段階的なエリア・スタッフ拡大</p>
+      </div>
+      <div class="model-cell">
+        <span class="label">Moat</span>
+        <p>担当者との長期的信頼関係<br>
+        利用者・家族ネットワーク<br>
+        富裕層向けブランド認知</p>
+      </div>
+    </div>
+
+    <div class="highlight-box mt">
+      <p><strong>フェーズ1（開業期）：</strong>まさみ1人で月20〜30件の訪問をこなしながら、信頼できる顧客ベースを構築。
+      利益よりも関係性の質を優先し、紹介が紹介を呼ぶ構造を作る。</p>
+    </div>
+  </div>
+
+  <!-- ── 6. ブランドガイドライン ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">06</span>
+      <h2>ブランドガイドライン（社内確認用）</h2>
+    </div>
+
+    <div class="doc-table-wrap">
+      <table class="doc-table">
+        <tr><th style="width:160px;">要素</th><th>ガイドライン</th></tr>
+        <tr><td class="em">トーン</td><td>上品・信頼・温かみ。押しつけがましくなく、静かな自信がある言葉遣い。</td></tr>
+        <tr><td class="em">絶対に言わない</td><td>「お安く」「割引」「キャンペーン」「格安」「コスパ」</td></tr>
+        <tr><td class="em">カラー</td><td>ネイビー #2a1f1a ／ ローズ #8a3a55 ／ ゴールド #c9a882</td></tr>
+        <tr><td class="em">フォント</td><td>Cormorant Garamond（見出し）／ Noto Serif JP（本文）</td></tr>
+        <tr><td class="em">NG表現</td><td>「スタッフを派遣」→「担当者がお伺い」／「ヘルパー」→「介護福祉士」</td></tr>
+        <tr><td class="em">数字の見せ方</td><td>価格は「¥8,000〜」と下限のみ。上限は示さない。値引き交渉は不可。</td></tr>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="logo">cura</div>
+  <p>社内共有資料 — 外部への配布・転送禁止 ／ © 2026 cura</p>
+</footer>
+
+</body>
+</html>

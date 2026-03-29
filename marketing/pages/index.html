@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cura — プライベート介護サービス</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .feature-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.4rem;
+      color: var(--gold);
+      opacity: 0.35;
+      line-height: 1;
+      margin-bottom: 0.8rem;
+    }
+    .area-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1.6rem;
+    }
+    .area-tag {
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      padding: 0.35rem 1rem;
+      border: 1px solid rgba(201,168,130,0.35);
+      color: rgba(250,247,242,0.7);
+    }
+    .value-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+    .value-cell {
+      padding: 2.6rem 2rem;
+      border-right: 1px solid var(--cream-dark);
+      border-bottom: 1px solid var(--cream-dark);
+    }
+    .value-cell:nth-child(2n) { border-right: none; }
+    .value-cell:nth-last-child(-n+2) { border-bottom: none; }
+    @media (max-width: 600px) {
+      .value-row { grid-template-columns: 1fr; }
+      .value-cell { border-right: none; }
+      .value-cell:nth-last-child(-n+2) { border-bottom: 1px solid var(--cream-dark); }
+      .value-cell:last-child { border-bottom: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">cura</a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">概要</a></li>
+      <li><a href="staff.html">スタッフ</a></li>
+      <li><a href="jv.html">JV</a></li>
+      <li><a href="pricing.html">料金</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <p class="hero-eyebrow">Private Care — Tokyo</p>
+  <h1>ひとりひとりに、<br>本当のケアを。</h1>
+  <div class="hero-divider"></div>
+  <p>cura は、文京区を拠点とする完全自費のプライベート介護サービスです。<br>
+  保険制度の枠を超えて、あなたの生活に寄り添います。</p>
+  <a href="pricing.html" class="btn btn-outline">料金・サービスを見る</a>
+</section>
+
+<!-- About -->
+<div class="section">
+  <p class="section-label">About cura</p>
+  <h2>介護を、もっと自由に。</h2>
+  <div class="gold-rule"></div>
+  <p class="lead">
+    公的介護保険は、多くの方の暮らしを支える大切な制度です。しかし、そこには時間・内容・担当者の制約がつきまといます。<br><br>
+    cura は「もっと自分らしく、自分のペースで」という思いから生まれた、完全自費のプライベートケア。
+    ご利用者様の価値観・生活リズム・ご希望を丁寧に伺い、あなただけのケアをお届けします。
+  </p>
+</div>
+
+<!-- Features -->
+<div class="section-mid">
+  <div class="section">
+    <p class="section-label text-center">Features</p>
+    <h2 class="text-center">cura が選ばれる理由</h2>
+    <div class="gold-rule gold-rule-center"></div>
+    <div class="grid-3">
+      <div class="card">
+        <div class="feature-num">01</div>
+        <h3>担当者固定制</h3>
+        <p style="font-size:0.87rem;color:var(--text-mid);line-height:2;">毎回同じスタッフが伺います。関係性を積み重ねることで、言葉にしなくても伝わるケアへ。</p>
+      </div>
+      <div class="card">
+        <div class="feature-num">02</div>
+        <h3>医療と介護の連携</h3>
+        <p style="font-size:0.87rem;color:var(--text-mid);line-height:2;">介護福祉士と看護師がチームを組みます。医療的ケアが必要な場面にも、安心してお任せください。</p>
+      </div>
+      <div class="card">
+        <div class="feature-num">03</div>
+        <h3>1 回から利用可</h3>
+        <p style="font-size:0.87rem;color:var(--text-mid);line-height:2;">月額契約不要。旅行中・手術後・急なお休み時など、必要なときだけご利用いただけます。</p>
+      </div>
+      <div class="card">
+        <div class="feature-num">04</div>
+        <h3>夜間オンコール</h3>
+        <p style="font-size:0.87rem;color:var(--text-mid);line-height:2;">夜間の急な変化にも対応。定額のオンコールプランで、ご家族の眠りも守ります。</p>
+      </div>
+      <div class="card">
+        <div class="feature-num">05</div>
+        <h3>完全オーダーメイド</h3>
+        <p style="font-size:0.87rem;color:var(--text-mid);line-height:2;">入会時のアセスメントで、ご利用者様の暮らしと価値観を丁寧に把握。画一的なケアはご提供しません。</p>
+      </div>
+      <div class="card">
+        <div class="feature-num">06</div>
+        <h3>プライバシーの保護</h3>
+        <p style="font-size:0.87rem;color:var(--text-mid);line-height:2;">大手事業所の多人数体制ではなく、少数精鋭のチームだから守られる、静かな信頼関係。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Area (dark) -->
+<div class="section-dark">
+  <div class="section">
+    <p class="section-label">Service Area</p>
+    <h2>サービスエリア</h2>
+    <div class="gold-rule"></div>
+    <p class="lead">文京区を中心に、番町・神楽坂・目白エリアへお伺いしています。<br>
+    エリア外についてはご相談ください。</p>
+    <div class="area-list">
+      <span class="area-tag">文京区</span>
+      <span class="area-tag">千石・白山・本駒込</span>
+      <span class="area-tag">番町</span>
+      <span class="area-tag">神楽坂</span>
+      <span class="area-tag">目白</span>
+      <span class="area-tag">その他エリアはご相談</span>
+    </div>
+  </div>
+</div>
+
+<!-- Values -->
+<div class="section">
+  <p class="section-label">Our Values</p>
+  <h2>cura が大切にすること</h2>
+  <div class="gold-rule"></div>
+  <div class="value-row" style="border:1px solid var(--cream-dark);margin-top:2.4rem;">
+    <div class="value-cell">
+      <p class="section-label" style="margin-bottom:0.5rem;">Respect</p>
+      <h3>生活の主役は、あなた</h3>
+      <p style="font-size:0.86rem;color:var(--text-mid);line-height:2;margin-top:0.5rem;">ケアとは管理することではありません。ご本人の意思・ペース・好みを最大限尊重します。</p>
+    </div>
+    <div class="value-cell">
+      <p class="section-label" style="margin-bottom:0.5rem;">Continuity</p>
+      <h3>継続する関係性</h3>
+      <p style="font-size:0.86rem;color:var(--text-mid);line-height:2;margin-top:0.5rem;">毎回違う人が来る不安をなくすために、担当制を徹底。信頼は時間をかけて育むものです。</p>
+    </div>
+    <div class="value-cell">
+      <p class="section-label" style="margin-bottom:0.5rem;">Expertise</p>
+      <h3>専門性という安心</h3>
+      <p style="font-size:0.86rem;color:var(--text-mid);line-height:2;margin-top:0.5rem;">介護福祉士と看護師、それぞれの専門知識を組み合わせて、複合的なニーズに応えます。</p>
+    </div>
+    <div class="value-cell">
+      <p class="section-label" style="margin-bottom:0.5rem;">Discretion</p>
+      <h3>静かな品格</h3>
+      <p style="font-size:0.86rem;color:var(--text-mid);line-height:2;margin-top:0.5rem;">ご家庭の様子・健康状態・生活習慣。すべてを深い守秘義務のもとでお預かりします。</p>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <p class="section-label text-center">Contact</p>
+  <h2>まずはご相談から</h2>
+  <p>料金・サービス内容・エリアなど、どうぞお気軽にお問い合わせください。</p>
+  <a href="pricing.html" class="btn btn-outline">料金を確認する</a>
+  &nbsp;&nbsp;
+  <a href="staff.html" class="btn btn-outline-light">スタッフを見る</a>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">cura</div>
+  <p>文京区千石 ／ 完全自費プライベート介護サービス</p>
+  <p style="margin-top:0.4rem;">© 2026 cura. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スタッフ — cura</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .cert-list {
+      list-style: none;
+      margin-top: 0.8rem;
+    }
+    .cert-list li {
+      font-size: 0.82rem;
+      color: var(--text-mid);
+      padding: 0.25rem 0;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .cert-list li::before {
+      content: '';
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+    .philosophy-block {
+      background: var(--dark);
+      color: var(--cream);
+      padding: 3.5rem 2.8rem;
+      margin-top: 4rem;
+      position: relative;
+    }
+    .philosophy-block::before {
+      content: '\201C';
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 6rem;
+      color: var(--gold);
+      opacity: 0.2;
+      position: absolute;
+      top: 1rem;
+      left: 2rem;
+      line-height: 1;
+    }
+    .philosophy-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.7;
+      color: var(--cream);
+      position: relative;
+      z-index: 1;
+    }
+    .philosophy-attr {
+      font-size: 0.78rem;
+      color: var(--gold);
+      letter-spacing: 0.15em;
+      margin-top: 1.2rem;
+    }
+    .recruit-bar {
+      background: var(--cream-mid);
+      border-left: 3px solid var(--rose);
+      padding: 1.6rem 1.8rem;
+      margin-top: 3rem;
+    }
+    .recruit-bar h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      margin-bottom: 0.4rem;
+    }
+    .recruit-bar p {
+      font-size: 0.84rem;
+      color: var(--text-mid);
+      line-height: 1.9;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">cura</a>
+    <ul class="nav-links">
+      <li><a href="index.html">概要</a></li>
+      <li><a href="staff.html" class="active">スタッフ</a></li>
+      <li><a href="jv.html">JV</a></li>
+      <li><a href="pricing.html">料金</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <p class="hero-eyebrow">Our Team</p>
+  <h1>ケアをする人が、<br>豊かであること。</h1>
+  <div class="hero-divider"></div>
+  <p>cura のスタッフは、資格と経験だけでなく、<br>
+  生活者としての感覚と誠実さで選ばれています。</p>
+</section>
+
+<!-- Staff List -->
+<div class="section">
+  <p class="section-label">Members</p>
+  <h2>スタッフ紹介</h2>
+  <div class="gold-rule"></div>
+
+  <!-- まさみ -->
+  <div class="staff-card">
+    <div class="staff-avatar">M</div>
+    <div>
+      <p class="staff-role">Founder &amp; Care Manager</p>
+      <p class="staff-name">まさみ</p>
+      <p class="staff-body">
+        介護福祉士として6年のキャリアを持つ代表。グループホームで4年、小規模多機能型居宅介護で2年の現場経験を経て、
+        「保険制度の枠では届けられないケアがある」という思いから cura を設立。<br><br>
+        「介護とは管理ではなく、その人の生活を一緒に守ること」という信念のもと、
+        ひとりひとりに丁寧に向き合うケアを提供します。文京区千石を拠点に活動。
+      </p>
+      <ul class="cert-list" style="margin-top:1rem;">
+        <li>介護福祉士</li>
+        <li>介護支援専門員（取得予定）</li>
+        <li>グループホーム勤務 4年</li>
+        <li>小規模多機能型居宅介護 2年</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 連携看護師 -->
+  <div class="staff-card">
+    <div class="staff-avatar" style="font-size:1.3rem;">RN</div>
+    <div>
+      <p class="staff-role">Registered Nurse — Partner</p>
+      <p class="staff-name">連携看護師</p>
+      <p class="staff-body">
+        医療的ケアが必要な場面や、健康状態の変化に対応するため、看護師と連携体制を構築しています。
+        介護福祉士と看護師がチームを組むことで、身体介護から医療的サポートまでシームレスにカバーします。<br><br>
+        訪問時の同行はもちろん、電話・オンラインでの相談窓口としても機能します。
+      </p>
+      <ul class="cert-list" style="margin-top:1rem;">
+        <li>看護師免許</li>
+        <li>訪問看護・在宅医療経験</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 介護福祉士スタッフ -->
+  <div class="staff-card">
+    <div class="staff-avatar" style="font-size:1.1rem;">CW</div>
+    <div>
+      <p class="staff-role">Care Worker — Staff</p>
+      <p class="staff-name">介護福祉士スタッフ（採用予定）</p>
+      <p class="staff-body">
+        cura では、現在介護福祉士スタッフを募集しています。
+        担当者固定制・手取り30万円以上・フレキシブルな勤務体制など、
+        スタッフが誇りを持って働ける環境を整えています。<br><br>
+        「利用者様に真摯に向き合いたい」「公的介護では実現できなかったケアをしたい」という方を歓迎します。
+      </p>
+      <ul class="cert-list" style="margin-top:1rem;">
+        <li>介護福祉士資格（必須）</li>
+        <li>在宅介護・訪問介護の経験（歓迎）</li>
+        <li>手取り 30万円以上を目標に設定</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Philosophy -->
+  <div class="philosophy-block">
+    <p class="philosophy-text">
+      「ケアをする人が疲弊していては、<br>
+      良いケアは生まれない。<br>
+      スタッフの幸福が、利用者様の幸福につながる。」
+    </p>
+    <p class="philosophy-attr">— cura の経営方針より</p>
+  </div>
+
+  <!-- Recruit Bar -->
+  <div class="recruit-bar">
+    <h4>スタッフ募集中</h4>
+    <p>介護福祉士・看護師として cura の理念に共感いただける方のご連絡をお待ちしています。<br>
+    勤務条件・給与体系・働き方についてはお気軽にご相談ください。</p>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-banner">
+  <p class="section-label text-center">Contact</p>
+  <h2>まずはご相談から</h2>
+  <p>ご利用・採用・パートナーシップ、どのようなご相談もお気軽にどうぞ。</p>
+  <a href="pricing.html" class="btn btn-outline">料金・サービスを見る</a>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">cura</div>
+  <p>文京区千石 ／ 完全自費プライベート介護サービス</p>
+  <p style="margin-top:0.4rem;">© 2026 cura. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

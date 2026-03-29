@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>料金・プラン比較・施設比較 — cura 内部資料</title>
+  <link rel="stylesheet" href="internal.css">
+  <style>
+    .price-breakdown {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 640px) { .price-breakdown { grid-template-columns: 1fr; } }
+    .pb-card {
+      border: 1px solid var(--cream-dark);
+      background: #fff;
+      overflow: hidden;
+    }
+    .pb-head {
+      background: var(--dark);
+      padding: 0.9rem 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .pb-head .name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.95rem;
+      color: var(--cream);
+      font-weight: 400;
+    }
+    .pb-head .price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+    }
+    .pb-body {
+      padding: 1rem 1.2rem;
+    }
+    .pb-body p { font-size: 0.8rem; color: var(--text-mid); line-height: 1.8; }
+    .pb-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.35rem 0;
+      border-bottom: 1px solid var(--cream-dark);
+      font-size: 0.8rem;
+    }
+    .pb-row:last-child { border-bottom: none; }
+    .pb-row .r-label { color: var(--text-mid); }
+    .pb-row .r-val { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; color: var(--dark); }
+    .pb-row .r-val.rose { color: var(--rose); }
+    .scenario-block {
+      border: 1px solid var(--cream-dark);
+      background: #fff;
+      margin-bottom: 1rem;
+      overflow: hidden;
+    }
+    .scenario-head {
+      background: var(--cream-mid);
+      padding: 0.8rem 1.2rem;
+      border-bottom: 1px solid var(--cream-dark);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .scenario-head h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--dark);
+    }
+    .scenario-head .s-total {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--rose);
+    }
+    .scenario-body {
+      padding: 0.9rem 1.2rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0.8rem;
+      font-size: 0.79rem;
+      color: var(--text-mid);
+      line-height: 1.7;
+    }
+    @media (max-width: 600px) { .scenario-body { grid-template-columns: 1fr; } }
+    .scenario-body strong { color: var(--dark); font-weight: 400; display: block; margin-bottom: 0.2rem; font-size: 0.7rem; letter-spacing: 0.1em; }
+  </style>
+</head>
+<body>
+
+<div class="internal-banner">社内共有資料 — Internal Use Only</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="cura_overview.html" class="nav-logo">cura <span>Internal</span></a>
+    <ul class="nav-links">
+      <li><a href="cura_overview.html">概要</a></li>
+      <li><a href="cura_staff.html">スタッフ</a></li>
+      <li><a href="cura_jv.html">JV</a></li>
+      <li><a href="cura_price.html" class="active">料金</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="page-tag">Doc 04 — Pricing</p>
+    <h1>料金体系・3プラン比較・施設比較</h1>
+    <p>料金設定の根拠・プラン構成・他サービスとの比較。価格交渉対策や利用者説明にも活用。</p>
+    <div class="page-header-meta">
+      <span class="meta-chip">更新：2026-03</span>
+      <span class="meta-chip">作成：まさみ</span>
+      <span class="meta-chip">社内限定</span>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+
+  <!-- ── 1. 基本料金一覧 ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2>基本料金一覧</h2>
+    </div>
+
+    <div class="doc-table-wrap">
+      <table class="doc-table">
+        <tr>
+          <th style="width:200px;">サービス</th>
+          <th>内容</th>
+          <th style="width:140px;">料金</th>
+          <th style="width:160px;">備考</th>
+        </tr>
+        <tr>
+          <td class="em">介護士のみ（L1）</td>
+          <td>介護福祉士による身体介護・生活支援。L1（標準）ケース。</td>
+          <td class="gold">¥8,000〜 / h</td>
+          <td>1時間以上から</td>
+        </tr>
+        <tr>
+          <td class="em">介護士のみ（L2）</td>
+          <td>L2（中程度）ケース。複雑度加算 ＋15%。</td>
+          <td class="gold">¥9,200〜 / h</td>
+          <td>要アセスメント</td>
+        </tr>
+        <tr>
+          <td class="em">介護士のみ（L3）</td>
+          <td>L3（高度）ケース。複雑度加算 ＋25%。</td>
+          <td class="gold">¥10,000〜 / h</td>
+          <td>要アセスメント</td>
+        </tr>
+        <tr>
+          <td class="em">看護師同行（L1）</td>
+          <td>介護福祉士＋看護師のペア訪問。医療的ケア含む。</td>
+          <td class="gold">¥12,000〜 / h</td>
+          <td>2名体制</td>
+        </tr>
+        <tr>
+          <td class="em">看護師同行（L2〜3）</td>
+          <td>複雑度加算（L2:＋15% / L3:＋25%）。</td>
+          <td class="gold">¥13,800〜 / h</td>
+          <td>要アセスメント</td>
+        </tr>
+        <tr>
+          <td class="em">夜間オンコール</td>
+          <td>夜間電話相談（無制限）＋ 緊急訪問対応。月額定額。</td>
+          <td class="gold">¥11,000 / 月</td>
+          <td>他プランと併用</td>
+        </tr>
+        <tr>
+          <td class="em">入会金（初回のみ）</td>
+          <td>アセスメント訪問（自宅訪問・ケアプラン提案）込み。</td>
+          <td class="gold">¥33,000</td>
+          <td>初回1回のみ</td>
+        </tr>
+        <tr>
+          <td class="em">交通費</td>
+          <td>エリア内：無料〜実費。エリア外：要相談。</td>
+          <td>実費</td>
+          <td>別途請求</td>
+        </tr>
+      </table>
+    </div>
+
+    <p class="note mt">※ 表示価格は税込目安。最終料金はアセスメント後に書面で提示。</p>
+    <p class="note">※ 値引き・割引は原則として対応しない。スタッフへの公正な報酬を守るため。</p>
+  </div>
+
+  <!-- ── 2. 3プラン比較 ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2>3プラン 比較</h2>
+    </div>
+
+    <p class="sub" style="margin-bottom:1rem;">利用者へのプラン提案・見積もりの際に使う内部基準。</p>
+
+    <div class="plan-grid">
+      <!-- Plan A -->
+      <div class="plan-card">
+        <div class="plan-header">
+          <div class="plan-name">ケアプラン A</div>
+          <div class="plan-sub">スポット / 介護士のみ</div>
+        </div>
+        <div class="plan-price-block">
+          <div class="plan-price">¥8,000<span style="font-size:1rem;">〜</span></div>
+          <div class="plan-price-unit">1時間 / 月1回から</div>
+        </div>
+        <ul class="plan-features">
+          <li>介護福祉士が単独で訪問</li>
+          <li>月額契約不要・1回から</li>
+          <li>身体介護・生活援助</li>
+          <li>外出・通院同行</li>
+          <li>入会金 ¥33,000（初回のみ）</li>
+          <li style="color:var(--text-light);">看護師同行なし</li>
+          <li style="color:var(--text-light);">夜間対応なし</li>
+        </ul>
+      </div>
+
+      <!-- Plan B （おすすめ） -->
+      <div class="plan-card featured">
+        <div class="plan-header">
+          <div class="plan-name">ケアプラン B</div>
+          <div class="plan-sub">定期 / 看護師同行</div>
+        </div>
+        <div class="plan-price-block">
+          <div class="plan-price">¥12,000<span style="font-size:1rem;">〜</span></div>
+          <div class="plan-price-unit">1時間 / 週1〜複数回</div>
+        </div>
+        <ul class="plan-features">
+          <li>介護福祉士 ＋ 看護師の2名体制</li>
+          <li>医療的ケア・バイタル管理</li>
+          <li>服薬管理・健康状態アセスメント</li>
+          <li>身体介護・生活援助すべて対応</li>
+          <li>定期訪問スケジュール設定</li>
+          <li>家族への状態報告</li>
+          <li>入会金 ¥33,000（初回のみ）</li>
+        </ul>
+      </div>
+
+      <!-- Plan C -->
+      <div class="plan-card">
+        <div class="plan-header">
+          <div class="plan-name">ケアプラン C</div>
+          <div class="plan-sub">フルサポート / 看護師 ＋ オンコール</div>
+        </div>
+        <div class="plan-price-block">
+          <div class="plan-price">¥12,000<span style="font-size:1rem;">〜</span></div>
+          <div class="plan-price-unit">訪問 ＋ ¥11,000/月（オンコール）</div>
+        </div>
+        <ul class="plan-features">
+          <li>プランBのすべての内容</li>
+          <li>夜間オンコール（月額¥11,000）</li>
+          <li>夜間電話相談（無制限）</li>
+          <li>緊急訪問対応</li>
+          <li>最も安心度の高い選択肢</li>
+          <li>ご家族の夜間の不安を解消</li>
+          <li>入会金 ¥33,000（初回のみ）</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 月額試算 -->
+    <h3 class="mt2" style="font-size:1rem;margin-bottom:1rem;">プラン別 月額試算（参考）</h3>
+    <div class="doc-table-wrap">
+      <table class="doc-table">
+        <thead>
+          <tr>
+            <th>利用パターン</th>
+            <th class="highlight" style="background:var(--rose);color:#fff;">プラン A</th>
+            <th>プラン B</th>
+            <th>プラン C</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>週1回・2時間</td>
+            <td class="gold">¥64,000〜</td>
+            <td class="gold">¥96,000〜</td>
+            <td class="gold">¥107,000〜</td>
+          </tr>
+          <tr>
+            <td>週2回・2時間</td>
+            <td class="gold">¥128,000〜</td>
+            <td class="gold">¥192,000〜</td>
+            <td class="gold">¥203,000〜</td>
+          </tr>
+          <tr>
+            <td>週3回・2時間</td>
+            <td class="gold">¥192,000〜</td>
+            <td class="gold">¥288,000〜</td>
+            <td class="gold">¥299,000〜</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note mt">※ 月4.3週換算。複雑度加算・交通費は含まず。入会金は別途初回のみ。</p>
+  </div>
+
+  <!-- ── 3. 施設比較 ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2>他サービスとの比較</h2>
+    </div>
+
+    <p class="sub" style="margin-bottom:1rem;">
+      利用者・家族への説明時、または価格交渉が生じた際の根拠資料として使用。
+      cura が「高い」のではなく、他が「安い理由がある」という説明軸で使う。
+    </p>
+
+    <div class="doc-table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th style="width:180px;">比較項目</th>
+            <th>公的訪問介護</th>
+            <th>民間大手介護会社</th>
+            <th>有料老人ホーム</th>
+            <th class="highlight">cura</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>担当者</td>
+            <td class="cross">毎回変わる</td>
+            <td class="cross">都度変わる場合あり</td>
+            <td>施設職員（複数）</td>
+            <td class="highlight check">完全固定制</td>
+          </tr>
+          <tr>
+            <td>訪問時間の自由度</td>
+            <td class="cross">制限あり（単位制）</td>
+            <td>やや柔軟</td>
+            <td class="cross">施設ルール依存</td>
+            <td class="highlight check">完全自由</td>
+          </tr>
+          <tr>
+            <td>サービス内容の自由度</td>
+            <td class="cross">介護保険の範囲のみ</td>
+            <td>やや柔軟</td>
+            <td class="cross">施設提供内容のみ</td>
+            <td class="highlight check">完全オーダーメイド</td>
+          </tr>
+          <tr>
+            <td>看護師との連携</td>
+            <td>別事業所に依頼</td>
+            <td>別途手配</td>
+            <td>施設内に在籍</td>
+            <td class="highlight check">同一チーム内</td>
+          </tr>
+          <tr>
+            <td>月額契約</td>
+            <td>ケアプラン必要</td>
+            <td>多くが契約制</td>
+            <td class="cross">入居契約必要</td>
+            <td class="highlight check">不要・1回から</td>
+          </tr>
+          <tr>
+            <td>プライバシー保護</td>
+            <td class="cross">多人数体制</td>
+            <td class="cross">多人数体制</td>
+            <td class="cross">施設職員が関与</td>
+            <td class="highlight check">少数精鋭・守秘徹底</td>
+          </tr>
+          <tr>
+            <td>夜間対応</td>
+            <td class="cross">別途夜間対応サービス</td>
+            <td>オプション</td>
+            <td>宿直職員対応</td>
+            <td class="highlight check">オンコールプラン</td>
+          </tr>
+          <tr>
+            <td>月額費用（目安）</td>
+            <td>自己負担1〜3割<br>（¥5,000〜50,000）</td>
+            <td>¥30,000〜150,000</td>
+            <td>¥150,000〜500,000</td>
+            <td class="highlight gold-val">¥64,000〜<br>（週1回2hから）</td>
+          </tr>
+          <tr>
+            <td>住み慣れた自宅で</td>
+            <td class="check">継続可</td>
+            <td class="check">継続可</td>
+            <td class="cross">施設に転居</td>
+            <td class="highlight check">継続可</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="highlight-box rose mt">
+      <p><strong>説明ポイント：</strong>有料老人ホームへの入居（月15〜50万円）と比較すれば、
+      週2〜3回の cura 利用（月13〜30万円）は「自宅継続」という最大の価値とともに、
+      コスト的にも合理的な選択肢となる。</p>
+    </div>
+  </div>
+
+  <!-- ── 4. 利用者ケース別試算 ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2>利用者ケース別 月額試算</h2>
+    </div>
+
+    <div class="scenario-block">
+      <div class="scenario-head">
+        <h4>ケース A — 術後リハビリ期（短期利用）</h4>
+        <span class="s-total">月額 ¥64,000〜（入会金別）</span>
+      </div>
+      <div class="scenario-body">
+        <div><strong>利用者像</strong>80代女性。入院後退院。家族が遠方のため在宅サポートが必要。</div>
+        <div><strong>サービス内容</strong>介護士のみ（L1）週1回・2時間。入浴補助・食事準備・状態確認。</div>
+        <div><strong>月額試算</strong>¥8,000 × 2h × 4回 ＝ ¥64,000 ＋ 入会金¥33,000（初回）</div>
+      </div>
+    </div>
+
+    <div class="scenario-block">
+      <div class="scenario-head">
+        <h4>ケース B — 認知症ご夫婦（定期利用）</h4>
+        <span class="s-total">月額 ¥203,000〜（入会金別）</span>
+      </div>
+      <div class="scenario-body">
+        <div><strong>利用者像</strong>90代男性（中度認知症）＋ 80代女性（軽度認知症）のご夫婦。子世代が費用負担。</div>
+        <div><strong>サービス内容</strong>看護師同行（L2）週2回・2時間＋ 夜間オンコール月額。2名対応のため割増なし。</div>
+        <div><strong>月額試算</strong>¥12,000 × 2h × 4週 × 2回 ＝ ¥192,000 ＋ オンコール¥11,000 ＝ ¥203,000</div>
+      </div>
+    </div>
+
+    <div class="scenario-block">
+      <div class="scenario-head">
+        <h4>ケース C — 旅行同行（単発・特別対応）</h4>
+        <span class="s-total">費用：要別途見積もり</span>
+      </div>
+      <div class="scenario-body">
+        <div><strong>利用者像</strong>80代男性。毎年の温泉旅行に同行者が必要になった。家族は多忙。</div>
+        <div><strong>サービス内容</strong>1泊2日の旅行同行（介護士のみ）。交通費・宿泊費は実費別途。</div>
+        <div><strong>費用イメージ</strong>介護時間分（¥8,000/h × 延べ8h）＋ 交通費・宿泊費実費 ＝ ¥64,000〜 ＋ 実費</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 5. 価格交渉対応指針 ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <h2>価格交渉・値引き要求への対応指針</h2>
+    </div>
+
+    <div class="doc-table-wrap">
+      <table class="doc-table">
+        <tr>
+          <th style="width:240px;">よくある発言・要求</th>
+          <th>推奨の対応・説明</th>
+        </tr>
+        <tr>
+          <td class="em">「もう少し安くなりませんか？」</td>
+          <td>「価格はスタッフへの適正な報酬を保証するために設定しています。担当者がいつも同じで、質の高いケアをお届けするための価格です。値引きは対応しておりません。」</td>
+        </tr>
+        <tr>
+          <td class="em">「ヘルパーさんの方が安い」</td>
+          <td>「公的訪問介護は税金・保険料で支えられたサービスです。cura は担当者固定・内容自由・時間制限なし、という点で全く異なるサービスです。有料老人ホームと比較していただければ、自宅継続という付加価値とともに合理的な選択肢です。」</td>
+        </tr>
+        <tr>
+          <td class="em">「まとめて頼むなら割引を」</td>
+          <td>「定期ご利用の場合も価格変更はございません。その分、優先スケジュール確保・担当者の固定・緊急時の優先対応という形でお応えしています。」</td>
+        </tr>
+        <tr>
+          <td class="em">「高齢者施設より高い」</td>
+          <td>「施設への転居と、住み慣れたご自宅での継続という選択肢の違いがあります。週2回のご利用であれば施設費用を大幅に下回り、かつ自宅生活を守れます。どちらを重視されますか？」</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="highlight-box rose mt">
+      <p><strong>原則：</strong>値引きは行わない。理由を丁寧に説明して納得していただくか、
+      予算に合うプラン（訪問回数・時間を調整）を提案する。
+      「安売りしない ＝ スタッフを守る ＝ サービスの質を守る」の一貫したメッセージ。</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="logo">cura</div>
+  <p>社内共有資料 — 外部への配布・転送禁止 ／ © 2026 cura</p>
+</footer>
+
+</body>
+</html>

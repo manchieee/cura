@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JV・パートナーシップ — cura</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .partner-card {
+      padding: 2rem 2rem 2rem 1.8rem;
+      border-left: 2px solid var(--gold);
+      background: #fff;
+      margin-bottom: 1.2rem;
+    }
+    .partner-card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.4rem;
+    }
+    .partner-card p {
+      font-size: 0.86rem;
+      color: var(--text-mid);
+      line-height: 1.9;
+    }
+    .merit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.4rem;
+      margin-top: 2.4rem;
+    }
+    @media (max-width: 640px) {
+      .merit-grid { grid-template-columns: 1fr; }
+    }
+    .merit-item {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(201,168,130,0.2);
+      padding: 1.8rem 1.6rem;
+    }
+    .merit-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      color: var(--gold);
+      opacity: 0.4;
+      line-height: 1;
+      margin-bottom: 0.6rem;
+    }
+    .merit-item h3 {
+      color: var(--cream);
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+    }
+    .merit-item p {
+      font-size: 0.83rem;
+      color: rgba(250,247,242,0.55);
+      line-height: 1.9;
+    }
+    .flow-dark {
+      list-style: none;
+      counter-reset: flow-counter;
+      margin-top: 2.4rem;
+    }
+    .flow-dark li {
+      counter-increment: flow-counter;
+      display: flex;
+      gap: 1.4rem;
+      align-items: flex-start;
+      padding: 1.4rem 0;
+      border-bottom: 1px solid rgba(201,168,130,0.15);
+    }
+    .flow-dark li:last-child { border-bottom: none; }
+    .flow-dark .flow-num { color: var(--gold); }
+    .flow-dark h4 { color: var(--cream); font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 400; margin-bottom: 0.25rem; }
+    .flow-dark p { font-size: 0.83rem; color: rgba(250,247,242,0.55); line-height: 1.9; }
+    .contact-box {
+      border: 1px solid rgba(201,168,130,0.3);
+      padding: 2.8rem;
+      margin-top: 3rem;
+      text-align: center;
+    }
+    .contact-box h3 { color: var(--cream); margin-bottom: 0.8rem; }
+    .contact-box p { font-size: 0.86rem; color: rgba(250,247,242,0.55); margin-bottom: 1.8rem; line-height: 1.9; }
+    .contact-email {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">cura</a>
+    <ul class="nav-links">
+      <li><a href="index.html">概要</a></li>
+      <li><a href="staff.html">スタッフ</a></li>
+      <li><a href="jv.html" class="active">JV</a></li>
+      <li><a href="pricing.html">料金</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <p class="hero-eyebrow">Joint Venture</p>
+  <h1>cura と、ともに。<br>上質なケアをお客様へ。</h1>
+  <div class="hero-divider"></div>
+  <p>cura は、富裕層のお客様を持つ事業者・専門家の皆様と<br>
+  パートナーシップを構築しています。</p>
+</section>
+
+<!-- What is JV -->
+<div class="section">
+  <p class="section-label">What is JV</p>
+  <h2>cura のパートナーシップとは</h2>
+  <div class="gold-rule"></div>
+  <p class="lead">
+    cura は「完全自費・プライベート介護」という特性上、公的な紹介経路ではなく、
+    お客様の生活に寄り添うパートナー企業・専門家からのご紹介が最も自然な形です。<br><br>
+    お互いのお客様・クライアントに付加価値を提供し合う、対等なパートナーシップを歓迎します。
+  </p>
+</div>
+
+<!-- Partner Types -->
+<div class="section-mid">
+  <div class="section">
+    <p class="section-label">Partner Types</p>
+    <h2>こんな方々と連携しています</h2>
+    <div class="gold-rule"></div>
+
+    <div class="partner-card">
+      <h3>高級マンション・不動産管理会社</h3>
+      <p>文京区・番町・目白・神楽坂エリアの高級住宅・マンションにお住まいの居住者に対し、
+      上質な在宅サービスとして cura をご案内いただけます。コンシェルジュサービスとの連携も歓迎です。</p>
+    </div>
+
+    <div class="partner-card">
+      <h3>クリニック・病院・在宅医療機関</h3>
+      <p>退院後の生活支援・通院サポート・医療処置後のフォローなど、
+      医療と介護の隙間を埋める役割として連携します。患者様の在宅生活の質を高める橋渡しを担います。</p>
+    </div>
+
+    <div class="partner-card">
+      <h3>フィナンシャルアドバイザー・税理士・弁護士</h3>
+      <p>資産管理や相続を支援する専門家として、クライアントの「老後の生活設計」に
+      プライベートケアという選択肢を提供できます。将来の安心を具体的なサービスで補完します。</p>
+    </div>
+
+    <div class="partner-card">
+      <h3>高級ホテル・ブライダル・ライフスタイルサービス</h3>
+      <p>ゲストや会員の特別なニーズに応えるため、介護・医療同行サービスをオプションとして
+      ご提案いただけます。旅行・冠婚葬祭・外出時の付き添い介護など、シーンを選びません。</p>
+    </div>
+
+    <div class="partner-card">
+      <h3>介護・福祉関連事業者</h3>
+      <p>自費対応が難しい事業者様からのオーバーフロー受け入れ、
+      または専門性の補完として連携します。保険外サービスのニーズをお持ちのご利用者様のご紹介を歓迎します。</p>
+    </div>
+  </div>
+</div>
+
+<!-- Merits (dark) -->
+<div class="section-dark">
+  <div class="section">
+    <p class="section-label">Benefits</p>
+    <h2>連携のメリット</h2>
+    <div class="gold-rule"></div>
+    <div class="merit-grid">
+      <div class="merit-item">
+        <div class="merit-num">01</div>
+        <h3>お客様への付加価値</h3>
+        <p>「介護が必要になったとき」という不安に対して、信頼できる選択肢を提示できます。顧客満足度・信頼度の向上につながります。</p>
+      </div>
+      <div class="merit-item">
+        <div class="merit-num">02</div>
+        <h3>紹介・協力報酬</h3>
+        <p>ご紹介いただいた場合の協力報酬について、個別にご相談の上で設定します。継続的な関係を大切にします。</p>
+      </div>
+      <div class="merit-item">
+        <div class="merit-num">03</div>
+        <h3>情報共有・勉強会</h3>
+        <p>介護・在宅ケアに関する情報共有や、スタッフ向け勉強会の実施など、知識面での連携も可能です。</p>
+      </div>
+      <div class="merit-item">
+        <div class="merit-num">04</div>
+        <h3>ブランドの親和性</h3>
+        <p>cura は「上品・信頼・温かみ」をブランドトーンとしています。富裕層向けサービスとのブランド親和性を大切にします。</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Flow (dark continued) -->
+<div class="section-dark" style="padding-top:0;">
+  <div class="section" style="padding-top:0;">
+    <p class="section-label">Flow</p>
+    <h2>連携までの流れ</h2>
+    <div class="gold-rule"></div>
+    <ol class="flow-dark">
+      <li>
+        <span class="flow-num">1</span>
+        <div>
+          <h4>ご連絡・初回ヒアリング</h4>
+          <p>メールまたはお電話にてご連絡ください。事業内容・ご希望の連携形態を伺います。</p>
+        </div>
+      </li>
+      <li>
+        <span class="flow-num">2</span>
+        <div>
+          <h4>面談・サービス説明</h4>
+          <p>cura のサービス内容・理念・対応エリアを詳しくご説明します。オンライン・対面どちらでも対応します。</p>
+        </div>
+      </li>
+      <li>
+        <span class="flow-num">3</span>
+        <div>
+          <h4>連携条件のご提案</h4>
+          <p>紹介フロー・報酬体系・情報共有方法など、双方にとって最適な形をご提案します。</p>
+        </div>
+      </li>
+      <li>
+        <span class="flow-num">4</span>
+        <div>
+          <h4>契約・連携開始</h4>
+          <p>合意いただいた内容をもとに連携契約を締結し、パートナーシップをスタートします。</p>
+        </div>
+      </li>
+    </ol>
+
+    <div class="contact-box">
+      <h3>パートナーシップのご相談</h3>
+      <p>まずはお気軽にご連絡ください。<br>どのような連携形態でも、丁寧にご対応します。</p>
+      <p class="contact-email">contact@cura-care.jp</p>
+      <p style="margin-top:1.4rem;"><a href="index.html" class="btn btn-outline">cura の概要を見る</a></p>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-logo">cura</div>
+  <p>文京区千石 ／ 完全自費プライベート介護サービス</p>
+  <p style="margin-top:0.4rem;">© 2026 cura. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

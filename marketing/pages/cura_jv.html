@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JVパートナー・エリア・サービス — cura 内部資料</title>
+  <link rel="stylesheet" href="internal.css">
+  <style>
+    .partner-type-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 700px) { .partner-type-grid { grid-template-columns: 1fr; } }
+    .partner-type-card {
+      border: 1px solid var(--cream-dark);
+      background: #fff;
+      padding: 1.3rem 1.4rem;
+    }
+    .pt-priority {
+      font-size: 0.65rem;
+      letter-spacing: 0.22em;
+      font-family: 'Cormorant Garamond', serif;
+      margin-bottom: 0.4rem;
+    }
+    .pt-priority.high { color: var(--rose); }
+    .pt-priority.mid { color: var(--gold); }
+    .pt-priority.low { color: var(--text-light); }
+    .partner-type-card h3 { margin-bottom: 0.4rem; }
+    .partner-type-card p { font-size: 0.81rem; color: var(--text-mid); line-height: 1.8; }
+    .pt-approach {
+      margin-top: 0.6rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid var(--cream-dark);
+      font-size: 0.78rem;
+      color: var(--text-light);
+    }
+    .pt-approach strong { color: var(--text-mid); font-weight: 400; }
+    .area-map {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 600px) { .area-map { grid-template-columns: 1fr; } }
+    .area-cell {
+      border-top: 2px solid var(--gold);
+      padding: 1rem 0.2rem 0;
+    }
+    .area-cell.secondary { border-top-color: var(--cream-dark); }
+    .area-cell h4 { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 400; margin-bottom: 0.3rem; }
+    .area-cell p { font-size: 0.79rem; color: var(--text-mid); line-height: 1.7; }
+    .area-cell .area-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      text-transform: uppercase;
+      margin-bottom: 0.3rem;
+      display: block;
+    }
+    .area-cell.secondary .area-tag { color: var(--text-light); }
+    .service-block {
+      border: 1px solid var(--cream-dark);
+      overflow: hidden;
+      margin-top: 1rem;
+    }
+    .service-block-head {
+      background: var(--dark);
+      padding: 0.7rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .service-block-head h3 {
+      color: var(--cream);
+      font-size: 0.95rem;
+      margin-bottom: 0;
+    }
+    .service-block-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0;
+    }
+    @media (max-width: 700px) { .service-block-body { grid-template-columns: 1fr; } }
+    .service-item {
+      padding: 1rem 1.2rem;
+      border-right: 1px solid var(--cream-dark);
+      border-bottom: 1px solid var(--cream-dark);
+    }
+    .service-item:nth-child(3n) { border-right: none; }
+    .service-item:nth-last-child(-n+3) { border-bottom: none; }
+    .service-item h4 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.92rem;
+      font-weight: 400;
+      margin-bottom: 0.3rem;
+    }
+    .service-item p { font-size: 0.78rem; color: var(--text-mid); line-height: 1.7; }
+    .service-item .s-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.88rem;
+      color: var(--rose);
+      margin-top: 0.3rem;
+    }
+    .jv-terms {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 600px) { .jv-terms { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<div class="internal-banner">社内共有資料 — Internal Use Only</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="cura_overview.html" class="nav-logo">cura <span>Internal</span></a>
+    <ul class="nav-links">
+      <li><a href="cura_overview.html">概要</a></li>
+      <li><a href="cura_staff.html">スタッフ</a></li>
+      <li><a href="cura_jv.html" class="active">JV</a></li>
+      <li><a href="cura_price.html">料金</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <p class="page-tag">Doc 03 — JV</p>
+    <h1>JVパートナー戦略・エリア・サービス一覧</h1>
+    <p>パートナー候補の優先順位・アプローチ方法・サービスエリア・提供サービスの内部定義資料。</p>
+    <div class="page-header-meta">
+      <span class="meta-chip">更新：2026-03</span>
+      <span class="meta-chip">作成：まさみ</span>
+      <span class="meta-chip">社内限定</span>
+    </div>
+  </div>
+</div>
+
+<div class="page-body">
+
+  <!-- ── 1. JV戦略 ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2>JVパートナー戦略</h2>
+    </div>
+
+    <div class="highlight-box">
+      <p><strong>JV の目的：</strong>広告費をかけずに、信頼度の高い紹介経路を構築する。
+      富裕層は「誰に勧められたか」を最重視する。既に信頼関係のある専門家・事業者経由の紹介が最も成約率が高い。</p>
+    </div>
+
+    <div class="doc-table-wrap mt">
+      <table class="doc-table">
+        <tr>
+          <th style="width:70px;">優先度</th>
+          <th>パートナー種別</th>
+          <th>紹介が生まれる文脈</th>
+          <th style="width:110px;">アクション時期</th>
+        </tr>
+        <tr>
+          <td><span class="pill pill-rose">高</span></td>
+          <td class="em">クリニック・在宅医療機関</td>
+          <td>退院後・外来通院継続中の患者で在宅ケアが必要になるタイミング</td>
+          <td>開業直後から</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-rose">高</span></td>
+          <td class="em">高級マンション管理・コンシェルジュ</td>
+          <td>居住者からの「信頼できる介護サービスを知らないか」という相談</td>
+          <td>開業直後から</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-gold">中</span></td>
+          <td class="em">FP・税理士・弁護士</td>
+          <td>相続・老後設計の文脈で「介護費用」「在宅継続」の話が出るとき</td>
+          <td>開業3ヶ月後〜</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-gold">中</span></td>
+          <td class="em">介護・福祉関連事業者</td>
+          <td>自費対応できないケース、専門性補完、エリア外ケースのオーバーフロー受け入れ</td>
+          <td>開業3ヶ月後〜</td>
+        </tr>
+        <tr>
+          <td><span class="pill pill-dark">低</span></td>
+          <td class="em">ホテル・ライフスタイルサービス</td>
+          <td>VIPゲストの旅行同行・外出介護・冠婚葬祭付き添いなど単発ニーズ</td>
+          <td>開業6ヶ月後〜</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+
+  <!-- ── 2. パートナー別アプローチ ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2>パートナー種別・アプローチ詳細</h2>
+    </div>
+
+    <div class="partner-type-grid">
+      <div class="partner-type-card">
+        <p class="pt-priority high">★★★ 最優先</p>
+        <h3>クリニック・病院・在宅医療</h3>
+        <p>文京区・新宿区内のかかりつけ医・在宅医療クリニックが主なターゲット。
+        退院後の生活支援、定期通院付き添い、医療処置後の在宅フォローなど、
+        医療と介護の隙間を埋める役割として提案する。</p>
+        <div class="pt-approach">
+          <strong>アプローチ：</strong>診療所への訪問→サービス概要1枚資料を置いてもらう。
+          連携看護師経由の紹介ルート構築が最速。
+        </div>
+      </div>
+
+      <div class="partner-type-card">
+        <p class="pt-priority high">★★★ 最優先</p>
+        <h3>高級マンション管理会社・コンシェルジュ</h3>
+        <p>文京区・番町・神楽坂・目白の高級タワーマンション・低層高級マンションの管理組合・コンシェルジュ担当者へのアプローチ。
+        居住者からの相談に対して「信頼できる在宅ケア」として紹介してもらう関係を構築する。</p>
+        <div class="pt-approach">
+          <strong>アプローチ：</strong>管理会社への挨拶→一棟ごとの担当者と名刺交換・資料渡し。
+          入居者向け勉強会の開催も提案可能。
+        </div>
+      </div>
+
+      <div class="partner-type-card">
+        <p class="pt-priority mid">★★ 中期</p>
+        <h3>FP・税理士・相続専門弁護士</h3>
+        <p>資産管理・相続・老後設計に関与する専門家は、クライアントの「介護」「老後の生活設計」に関する相談を受けやすいポジション。
+        「信頼できる在宅ケアの選択肢」として cura を紹介できる関係を作る。</p>
+        <div class="pt-approach">
+          <strong>アプローチ：</strong>既存の人脈から。勉強会・セミナーへの登壇も視野に入れる。
+          紹介者向けの資料セットを別途用意。
+        </div>
+      </div>
+
+      <div class="partner-type-card">
+        <p class="pt-priority mid">★★ 中期</p>
+        <h3>介護・福祉関連事業者</h3>
+        <p>保険介護のみ対応の訪問介護事業所・居宅介護支援事業所などから、
+        自費ニーズの高い利用者・エリア外ケースを受け入れる相互補完関係を構築する。
+        競合ではなく「補完関係」として位置づける。</p>
+        <div class="pt-approach">
+          <strong>アプローチ：</strong>地域の介護事業者との関係づくり（勉強会・地域ケア会議経由）。
+          「困ったときに連絡できる人」としての認知を先に作る。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 3. 紹介条件・報酬 ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2>紹介条件・報酬体系（内部基準）</h2>
+    </div>
+
+    <div class="doc-table-wrap">
+      <table class="doc-table">
+        <tr>
+          <th style="width:200px;">パートナー種別</th>
+          <th>紹介報酬の考え方</th>
+          <th>備考</th>
+        </tr>
+        <tr>
+          <td class="em">医療機関</td>
+          <td>報酬なし（法令リスクを避ける）。情報共有・勉強会で互いに価値提供する形を基本とする。</td>
+          <td>医療法・療養担当規則に注意</td>
+        </tr>
+        <tr>
+          <td class="em">マンション管理・コンシェルジュ</td>
+          <td>成約時に謝礼金（1件あたり¥5,000〜¥10,000 / 個別交渉）</td>
+          <td>書面で取り決め</td>
+        </tr>
+        <tr>
+          <td class="em">FP・士業</td>
+          <td>成約時に謝礼金または相互紹介の形（個別交渉）</td>
+          <td>弁護士法・FP規程に注意</td>
+        </tr>
+        <tr>
+          <td class="em">介護事業者</td>
+          <td>相互紹介・オーバーフロー受け入れ。金銭報酬より関係性を優先。</td>
+          <td>長期的信頼関係が目的</td>
+        </tr>
+      </table>
+    </div>
+
+    <p class="note mt">※ 紹介報酬の支払いには法令上の制約がある場合があります。医療機関への報酬は原則として支払わない。</p>
+  </div>
+
+  <!-- ── 4. サービスエリア ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2>サービスエリア詳細</h2>
+    </div>
+
+    <div class="area-map">
+      <div class="area-cell">
+        <span class="area-tag">Primary</span>
+        <h4>文京区</h4>
+        <p>千石・白山・本駒込・小石川・湯島・本郷・根津・弥生・水道・音羽・関口 など区内全域。拠点エリアのため最優先で対応。</p>
+      </div>
+      <div class="area-cell">
+        <span class="area-tag">Primary</span>
+        <h4>番町・麹町</h4>
+        <p>千代田区西部（一番町〜六番町・麹町）。高級低層住宅エリア。電車移動圏内で対応可能。</p>
+      </div>
+      <div class="area-cell">
+        <span class="area-tag">Primary</span>
+        <h4>神楽坂・牛込</h4>
+        <p>新宿区北部（神楽坂・矢来町・市谷）。文京区隣接エリア。徒歩・自転車・電車で対応。</p>
+      </div>
+      <div class="area-cell secondary">
+        <span class="area-tag">Secondary</span>
+        <h4>目白・雑司が谷</h4>
+        <p>豊島区南部〜文京区北部。電車移動（有楽町線・副都心線）でアクセス可能。</p>
+      </div>
+      <div class="area-cell secondary">
+        <span class="area-tag">Secondary</span>
+        <h4>本駒込・駒込・巣鴨</h4>
+        <p>文京区〜豊島区南部。拠点からのアクセス良好。高齢者人口多め。</p>
+      </div>
+      <div class="area-cell secondary">
+        <span class="area-tag">要相談</span>
+        <h4>その他エリア</h4>
+        <p>上記エリア外は交通費・時間を考慮の上で個別対応。遠距離の場合は交通費加算あり。</p>
+      </div>
+    </div>
+
+    <div class="highlight-box mt">
+      <p><strong>移動手段：</strong>代表（まさみ）＝ 自転車メイン。看護師 ＝ 電車メイン。
+      エリア拡大には自転車移動圏内かどうかが重要な判断軸。</p>
+    </div>
+  </div>
+
+  <!-- ── 5. サービス一覧 ── -->
+  <div class="doc-section">
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <h2>提供サービス一覧</h2>
+    </div>
+
+    <!-- 身体介護 -->
+    <div class="service-block">
+      <div class="service-block-head">
+        <span class="pill pill-rose">介護士</span>
+        <h3>身体介護</h3>
+      </div>
+      <div class="service-block-body">
+        <div class="service-item">
+          <h4>入浴介助</h4>
+          <p>全身浴・シャワー浴・清拭。自宅の浴室環境に合わせた安全な介助。</p>
+          <p class="s-price">基本料金内</p>
+        </div>
+        <div class="service-item">
+          <h4>食事介助</h4>
+          <p>口腔ケア含む。嚥下状態に応じた食形態の提案・調整。</p>
+          <p class="s-price">基本料金内</p>
+        </div>
+        <div class="service-item">
+          <h4>排泄介助</h4>
+          <p>トイレ誘導・オムツ交換・ストーマ管理（看護師連携）。</p>
+          <p class="s-price">基本料金内</p>
+        </div>
+        <div class="service-item">
+          <h4>移乗・移動介助</h4>
+          <p>ベッド〜車椅子〜トイレ等の移乗。転倒リスクを考慮した安全介助。</p>
+          <p class="s-price">基本料金内</p>
+        </div>
+        <div class="service-item">
+          <h4>外出・通院同行</h4>
+          <p>外来受診同行・買い物同行・散歩同行。移動手段の手配補助。</p>
+          <p class="s-price">基本料金内</p>
+        </div>
+        <div class="service-item">
+          <h4>旅行・遠距離同行</h4>
+          <p>国内旅行・法事・慶弔への同行介護。交通費・宿泊費は別途実費。</p>
+          <p class="s-price">基本料金 ＋ 実費</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 生活支援 -->
+    <div class="service-block" style="margin-top:1rem;">
+      <div class="service-block-head">
+        <span class="pill pill-gold">介護士</span>
+        <h3>生活支援</h3>
+      </div>
+      <div class="service-block-body">
+        <div class="service-item">
+          <h4>調理・食事準備</h4>
+          <p>献立提案・調理・後片付け。食事制限がある場合は看護師と連携して対応。</p>
+          <p class="s-price">基本料金内</p>
+        </div>
+        <div class="service-item">
+          <h4>掃除・整理整頓</h4>
+          <p>居室・水回り清掃。生活空間の整備・安全確認。</p>
+          <p class="s-price">基本料金内</p>
+        </div>
+        <div class="service-item">
+          <h4>洗濯・衣類管理</h4>
+          <p>洗濯・乾燥・収納。季節に合わせた衣替えのサポート。</p>
+          <p class="s-price">基本料金内</p>
+        </div>
+        <div class="service-item">
+          <h4>話し相手・見守り</h4>
+          <p>傾聴・日常会話。孤独感の軽減・認知機能維持を目的とした関わり。</p>
+          <p class="s-price">基本料金内</p>
+        </div>
+        <div class="service-item">
+          <h4>手続き・書類サポート</h4>
+          <p>各種書類記入補助・窓口同行・郵便対応など。法律行為には関与しない。</p>
+          <p class="s-price">基本料金内</p>
+        </div>
+        <div class="service-item">
+          <h4>緊急時駆けつけ</h4>
+          <p>急な体調変化・転倒等の連絡を受けて駆けつけ対応（オンコールプラン契約者優先）。</p>
+          <p class="s-price">オンコールプラン</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 看護師同行 -->
+    <div class="service-block" style="margin-top:1rem;">
+      <div class="service-block-head">
+        <span class="pill pill-rose">看護師同行</span>
+        <h3>医療的サポート（看護師同行時）</h3>
+      </div>
+      <div class="service-block-body">
+        <div class="service-item">
+          <h4>バイタルチェック</h4>
+          <p>血圧・体温・SpO2・脈拍の測定と記録。異常値の判断・家族報告。</p>
+          <p class="s-price">¥12,000〜/h</p>
+        </div>
+        <div class="service-item">
+          <h4>服薬管理</h4>
+          <p>薬の確認・飲み忘れ防止・副作用観察。かかりつけ医との情報共有。</p>
+          <p class="s-price">¥12,000〜/h</p>
+        </div>
+        <div class="service-item">
+          <h4>褥瘡管理・処置</h4>
+          <p>褥瘡の観察・洗浄・ドレッシング交換。在宅医との連携。</p>
+          <p class="s-price">¥12,000〜/h</p>
+        </div>
+        <div class="service-item">
+          <h4>健康状態アセスメント</h4>
+          <p>定期的な全身状態の評価。変化の記録と家族・医師への報告。</p>
+          <p class="s-price">¥12,000〜/h</p>
+        </div>
+        <div class="service-item">
+          <h4>医療機関との連絡調整</h4>
+          <p>受診前後の状態共有・主治医への報告書作成補助・薬局調整。</p>
+          <p class="s-price">¥12,000〜/h</p>
+        </div>
+        <div class="service-item">
+          <h4>ターミナルケア対応</h4>
+          <p>看取り期における在宅ケア（L3・L4）。家族支援・看取りのサポート。要相談。</p>
+          <p class="s-price">要相談</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="logo">cura</div>
+  <p>社内共有資料 — 外部への配布・転送禁止 ／ © 2026 cura</p>
+</footer>
+
+</body>
+</html>
