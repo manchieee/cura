@@ -308,6 +308,29 @@
 
         .story-text:last-child { margin-bottom: 0; }
 
+        .story-expand {
+            display: none;
+            margin-top: 0;
+        }
+        .story-expand.open { display: block; }
+
+        .story-read-more {
+            display: inline-block;
+            margin-top: 1.5rem;
+            font-family: 'Noto Serif JP', serif;
+            font-size: 0.85rem;
+            color: var(--rose-mid);
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            border-bottom: 1px solid var(--rose-mid);
+            padding-bottom: 2px;
+            background: none;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+        }
+        .story-read-more:hover { opacity: 0.7; }
+
         .highlight-block {
             background: var(--rose-pale);
             border-left: 3px solid var(--rose);
@@ -981,7 +1004,12 @@
 
             <p class="story-text">私には、グループホームや小規模多機能型居宅介護の現場で、ご高齢者の日々の生活に寄り添ってきた「介護福祉士としての目」と、重度障害や大病を抱える家族を持つ「当事者の目」があります。</p>
 
-            <p class="story-text">私の父は25年間、脊髄損傷という重い障害と共に生きました。2016年のクリスマスイブ、我が家の駐車場の上に中二階があって、花壇になっていた。母とすれ違って、数分後——「ドン」という音がして、振り返ると、そこに横たわっている母がいました。意識が戻ってから、母が言いました。「花を取りに行ったの」と。あの音から、母の人生も、私の人生も変わりました。背骨を16本骨折。父と同じ脊髄損傷という診断を受けました。事故の直前まで、母は世界各地を旅していました。友人と歩き続けた「奥の細道」も残りわずかのところまで来ていました。その夢が、一瞬で断ち切られました。それでも母は今、自宅で生活を続けながら、まだまだ行きたい場所を胸に描いています。2024年には大事な一人息子が20代で縦隔原発大細胞型Bリンパ腫（PMBCL）という希少な悪性リンパ腫を発症し、命の危機に直面しました（現在は無事に寛解しています）。そして2025年、父はこの世を去りました。</p>
+            <p class="story-text">私の父は25年間、脊髄損傷という重い障害と共に生きました。2016年のクリスマスイブ。我が家の駐車場の上には中二階があって、花壇になっていた。母とすれ違って、しばらくしたら、何かが飛んできた。スコップの柄だった。なんだ？——そう思って、車に戻った。でも、気になって。花壇を見に行ったら、母がいなかった。下を見たら、倒れていた。「ままー、ままー！」声が出た。気づいたら叫んでいた。弟が飛んできて、救急車を呼んだ。</p>
+
+            <button class="story-read-more" onclick="this.style.display='none';document.getElementById('story-more').classList.add('open')">続きを読む ↓</button>
+
+            <div class="story-expand" id="story-more">
+            <p class="story-text">あの日から、母の人生も、私の人生も変わりました。背骨を16本骨折。父と同じ脊髄損傷という診断を受けました。最初に告げられた言葉は、「この方法で手術すれば、寝たきりになる」でした。それを受け入れることができなかった。父がかつて入院していた国立病院機構 村山医療センターへ相談に行き、別の手術方法があることを知った。日本医科大学に戻り、その方法で手術してもらいました。次は初台リハビリテーション病院へ——数ヶ月のリハビリの末、退院を告げられた。国立障害者リハビリテーションセンターへ移っても、また退院を告げられた。それでも母は動き続けた。そして——車椅子で生活できるまでになりました。事故の直前まで、母は世界各地を旅していました。友人と歩き続けた「奥の細道」も残りわずかのところまで来ていました。その夢が、一瞬で断ち切られました。それでも母は今、自宅で生活を続けながら、まだまだ行きたい場所を胸に描いています。2024年には大事な一人息子が20代で縦隔原発大細胞型Bリンパ腫（PMBCL）という希少な悪性リンパ腫を発症し、命の危機に直面しました（現在は無事に寛解しています）。そして2025年、父はこの世を去りました。</p>
 
             <p class="story-text">父の25年にわたる介護、母の終わりのないリハビリ、息子の闘病——これらは決して特別な物語ではなく、私自身の人生に起きた事実です。</p>
 
@@ -1005,6 +1033,11 @@
             <div style="text-align:center; margin-top:48px;">
                 <a href="#reserve" class="contact-btn" style="display:inline-block; font-size:0.82rem; padding:13px 36px; letter-spacing:0.18em;">無料相談を予約する<span style="display:block; font-size:0.72rem; letter-spacing:0.12em; margin-top:4px; opacity:0.85;">初回問い合わせ無料</span></a>
             </div>
+
+            <div style="text-align:center; margin-top:1.5rem;">
+                <button class="story-read-more" onclick="document.getElementById('story-more').classList.remove('open');document.querySelector('.story-read-more').style.display='inline-block'">閉じる ↑</button>
+            </div>
+            </div><!-- /story-more -->
         </div>
     </div>
 
@@ -1395,7 +1428,7 @@
                 文京区を中心に活動しています。<br>
                 全国にいるご家族からのご相談も承ります。
             </p>
-            <a href="mailto:info@cura-care.jp" class="contact-btn">まさみに問い合わせる<span style="display:block; font-size:0.72rem; letter-spacing:0.12em; margin-top:4px; opacity:0.85;">初回問い合わせ無料</span></a>
+            <a href="/cdn-cgi/l/email-protection#e28b8c848da281979083cf81839087cc8892" class="contact-btn">まさみに問い合わせる<span style="display:block; font-size:0.72rem; letter-spacing:0.12em; margin-top:4px; opacity:0.85;">初回問い合わせ無料</span></a>
 
             <div style="margin-top:60px; padding-top:40px; border-top:1px solid rgba(181,100,122,0.2); max-width:560px; margin-left:auto; margin-right:auto; text-align:left;">
                 <p style="font-family:'Cormorant Garamond',serif; font-size:0.75rem; letter-spacing:0.25em; color:var(--text-muted); margin-bottom:16px;">— P.S.</p>
@@ -1437,7 +1470,7 @@
         </p>
     </footer>
 
-    <script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         function toggleStories() {
             const hidden = document.getElementById('stories-hidden');
             const btn = document.getElementById('stories-toggle-btn');
@@ -1685,8 +1718,4 @@
 
         const reserveSection = document.getElementById('reserve');
         const reserveObserver = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) { loadSlots(); reserveObserver.disconnect(); }
-        });
-        if (reserveSection) reserveObserver.observe(reserveSection);
-
-    </script>
+            if (entries[0].isIntersec
