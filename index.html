@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>cura | 自由と尊厳を守るプライベートケア</title>
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="cura | 自由と尊厳を守るプライベートケア">
+    <meta property="og:description" content="制度に縛られない、あなただけのケアを。文京区を拠点に、介護福祉士と看護師のチームが24時間伴走します。初回相談無料。">
+    <meta property="og:url" content="https://cura-care.jp">
+    <meta property="og:site_name" content="cura">
+    <meta property="og:locale" content="ja_JP">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="cura | 自由と尊厳を守るプライベートケア">
+    <meta name="twitter:description" content="制度に縛られない、あなただけのケアを。文京区を拠点に、介護福祉士と看護師のチームが24時間伴走します。初回相談無料。">
+    <meta name="description" content="制度に縛られない、あなただけのケアを。文京区を拠点に、介護福祉士と看護師のチームが24時間伴走します。初回相談無料。">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cormorant+Garamond:wght@300;400;500&family=Noto+Serif+JP:wght@200;300;400;500&display=swap" rel="stylesheet">
     <style>
@@ -33,7 +43,116 @@
             line-height: 2.0;
         }
 
-        /* ─── HERO ─── */
+        /* ─── PC用 上へ戻るボタン ─── */
+        .scroll-top-btn {
+            display: none;
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 52px;
+            height: 52px;
+            background: var(--navy);
+            border: 1px solid rgba(181,100,122,0.4);
+            border-radius: 50%;
+            color: var(--rose-light);
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 998;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            transition: opacity 0.3s, transform 0.2s;
+            align-items: center;
+            justify-content: center;
+        }
+        .scroll-top-btn:hover {
+            transform: translateY(0);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+        }
+        @media (min-width: 769px) {
+            .scroll-top-btn.visible { display: flex; }
+        }
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--navy);
+            z-index: 999;
+            box-shadow: 0 -2px 16px rgba(0,0,0,0.25);
+            display: none; /* デフォルト非表示 */
+        }
+        @media (max-width: 768px) {
+            .bottom-nav { display: block; }
+            body { padding-bottom: 64px; }
+        }
+        .bottom-nav-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 16px;
+            height: 60px;
+            gap: 12px;
+        }
+        .bottom-nav-top {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 10px;
+            color: white;
+            font-family: 'Noto Serif JP', serif;
+            font-size: 0.75rem;
+            letter-spacing: 0.04em;
+            padding: 8px 12px;
+            cursor: pointer;
+            white-space: nowrap;
+            line-height: 1.4;
+            text-align: center;
+            flex-shrink: 0;
+        }
+        .bottom-nav-menu-btn {
+            background: var(--rose);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-family: 'Noto Serif JP', serif;
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+            padding: 12px 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            justify-content: center;
+            box-shadow: 0 2px 12px rgba(181,100,122,0.4);
+        }
+        .bottom-nav-menu-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+            flex-shrink: 0;
+        }
+        .bottom-nav-links { display: none; }
+        .bottom-nav-drawer {
+            background: var(--navy);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: none;
+            flex-direction: column;
+            padding: 4px 16px 8px;
+        }
+        .bottom-nav-drawer.open {
+            display: flex;
+        }
+        .bottom-nav-drawer a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            padding: 16px 8px;
+            font-size: 1.1rem;
+            letter-spacing: 0.12em;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            font-family: 'Noto Serif JP', serif;
+            transition: color 0.15s;
+        }
+        .bottom-nav-drawer a:last-child { border-bottom: none; }
+        .bottom-nav-drawer a:hover { color: var(--rose-light); }
         .hero {
             min-height: 100vh;
             background: linear-gradient(145deg, #8a3a55 0%, #a85f78 50%, #b87888 100%);
@@ -442,7 +561,7 @@
             padding: 36px 32px;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: space-between;
         }
 
         .story-scene-card.muted {
@@ -648,6 +767,68 @@
             .nav-inner { padding: 0 24px; }
         }
 
+
+        /* ─── FLOATING CONTACT BUTTON ─── */
+        .float-contact-btn {
+            position: fixed;
+            bottom: 96px;
+            right: 32px;
+            z-index: 999;
+            background: linear-gradient(135deg, var(--rose-deep), var(--rose));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            width: 52px;
+            height: 52px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(181,100,122,0.45);
+            transition: width 0.35s cubic-bezier(0.4,0,0.2,1), box-shadow 0.2s;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+        .float-contact-btn:hover {
+            width: 196px;
+            box-shadow: 0 8px 28px rgba(181,100,122,0.55);
+        }
+        .float-contact-btn .float-icon {
+            min-width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.9rem;
+            line-height: 1;
+            transform: translateY(0);
+            order: 2;
+        }
+        .float-contact-btn .float-label {
+            font-family: 'Noto Serif JP', serif;
+            font-size: 0.76rem;
+            letter-spacing: 0.08em;
+            padding-left: 14px;
+            opacity: 0;
+            transition: opacity 0.2s 0.1s;
+            order: 1;
+        }
+        .float-contact-btn:hover .float-label {
+            opacity: 1;
+        }
+        @media (max-width: 640px) {
+            .float-contact-btn {
+                bottom: 80px;
+                right: 16px;
+            }
+            .float-contact-btn:hover {
+                width: 52px;
+            }
+            .float-contact-btn:hover .float-label {
+                opacity: 0;
+            }
+        }
         /* ─── ANIMATIONS ─── */
         @keyframes fadeUp {
             from { opacity: 0; transform: translateY(24px); }
@@ -677,12 +858,13 @@
             <a href="#hero" class="nav-logo">cura</a>
             <ul class="nav-links">
                 <li><a href="#story">想い</a></li>
-                <li><a href="#stories">記録</a></li>
                 <li><a href="#services">サービス</a></li>
-                <li><a href="#pricing">料金</a></li>
-                <li><a href="#faq">よくある質問</a></li>
                 <li><a href="#reserve">ご予約</a></li>
+                <li><a href="#stories">記録</a></li>
+                <li><a href="#faq">よくある質問</a></li>
+                <li><a href="#pricing">料金</a></li>
                 <li><a href="#contact">お問い合わせ</a></li>
+                <li><a href="memories.html">思い出の地図</a></li>
             </ul>
             <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
                 <span></span>
@@ -692,14 +874,69 @@
         </div>
         <div class="nav-mobile" id="mobileMenu">
             <a href="#story" onclick="closeMenu()">想い</a>
-            <a href="#stories" onclick="closeMenu()">記録</a>
             <a href="#services" onclick="closeMenu()">サービス</a>
-            <a href="#pricing" onclick="closeMenu()">料金</a>
-            <a href="#faq" onclick="closeMenu()">よくある質問</a>
             <a href="#reserve" onclick="closeMenu()">ご予約</a>
+            <a href="#stories" onclick="closeMenu()">記録</a>
+            <a href="#faq" onclick="closeMenu()">よくある質問</a>
+            <a href="#pricing" onclick="closeMenu()">料金</a>
             <a href="#contact" onclick="closeMenu()">お問い合わせ</a>
+            <a href="memories.html" onclick="closeMenu()">思い出の地図</a>
         </div>
     </nav>
+
+
+    <!-- FLOATING CONTACT BUTTON -->
+    <a href="#contact" class="float-contact-btn">
+        <span class="float-label">まさみに問い合わせる</span>
+        <span class="float-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg></span>
+    </a>
+    <!-- PC用 上へ戻るボタン -->
+    <button class="scroll-top-btn" id="scrollTopBtn" onclick="scrollToTop()">▲</button>
+
+    <!-- 固定ボトムナビ -->
+    <div class="bottom-nav" id="bottomNav">
+        <div class="bottom-nav-drawer" id="bottomDrawer">
+            <a href="#story" onclick="closeDrawer()">想い</a>
+            <a href="#stories" onclick="closeDrawer()">記録</a>
+            <a href="#services" onclick="closeDrawer()">サービス</a>
+            <a href="#pricing" onclick="closeDrawer()">料金</a>
+            <a href="#faq" onclick="closeDrawer()">よくある質問</a>
+            <a href="#reserve" onclick="closeDrawer()">ご予約</a>
+            <a href="#contact" onclick="closeDrawer()">お問い合わせ</a>
+            <a href="memories.html" onclick="closeDrawer()">思い出の地図</a>
+            <div style="display:flex; gap:10px; padding:14px 8px 6px;">
+                <button onclick="shareToLine();closeDrawer();" style="flex:1; display:flex; align-items:center; justify-content:center; gap:6px; background:#06C755; border:none; border-radius:8px; color:white; font-family:inherit; font-size:0.85rem; padding:12px; cursor:pointer;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.02 2 11c0 3.24 1.74 6.1 4.4 7.87L5.5 22l3.28-1.7C9.75 20.75 10.86 21 12 21c5.52 0 10-4.02 10-9S17.52 2 12 2z"/></svg>
+                    LINE
+                </button>
+                <button onclick="shareToInstagram();closeDrawer();" style="flex:1; display:flex; align-items:center; justify-content:center; gap:6px; background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); border:none; border-radius:8px; color:white; font-family:inherit; font-size:0.85rem; padding:12px; cursor:pointer;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                    Instagram
+                </button>
+
+                <button onclick="copyUrl();closeDrawer();" style="flex:1; display:flex; align-items:center; justify-content:center; gap:6px; background:rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.2); border-radius:8px; color:white; font-family:inherit; font-size:0.85rem; padding:12px; cursor:pointer;">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                    URLコピー
+                </button>
+            </div>
+        </div>
+        <div class="bottom-nav-bar">
+            <button class="bottom-nav-top" onclick="scrollToTop()">▲<br>上へ戻る</button>
+            <div class="bottom-nav-links">
+                <a href="#story">想い</a>
+                <a href="#stories">記録</a>
+                <a href="#services">サービス</a>
+                <a href="#pricing">料金</a>
+                <a href="#faq">Q&A</a>
+                <a href="#reserve">ご予約</a>
+                <a href="#contact">お問い合わせ</a>
+            </div>
+            <button class="bottom-nav-menu-btn" onclick="toggleDrawer()">
+                <svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="2" rx="1"/><rect x="3" y="11" width="18" height="2" rx="1"/><rect x="3" y="16" width="18" height="2" rx="1"/></svg>
+                メニュー
+            </button>
+        </div>
+    </div>
 
     <!-- HERO -->
     <section class="hero" id="hero">
@@ -710,13 +947,29 @@
             <div class="hero-divider"></div>
             <p class="hero-copy">
                 年齢も、障がいも、理由にしない。<br>
-                自分の人生を、最後まで自分で選び取りたい方へ。<br>
-                <em>あなたの「当たり前の日常」を、妥協なく守り続けるために。</em><br>
-                <span style="font-size:0.85em; color:rgba(255,255,255,0.65); letter-spacing:0.08em;">文京区付近在住のご家族のケアを、全国からご依頼いただけます。</span>
+                自分の人生を、自分で選び取りたい方へ。<br>
+                <em>あなたの「当たり前の日常」を、妥協なく守り続けるために。</em>
+            </p>
+            <div style="width:40px; height:1px; background:rgba(255,255,255,0.35); margin:28px auto;"></div>
+            <p class="hero-copy" style="font-size:0.97em;">
+                気づいてもらえなかったら、<br>
+                間に合わなかったかもしれない。<br>
+                <em>curaは、「何か違う」を見逃さない。</em><br>
+                <span style="font-size:0.88em; color:rgba(255,255,255,0.9); letter-spacing:0.1em; border-top:1px solid rgba(255,255,255,0.2); padding-top:12px; display:block; margin-top:12px;">文京区付近在住のご家族のケアを、全国からご依頼いただけます。</span>
             </p>
         </div>
         <div class="hero-scroll">scroll</div>
     </section>
+
+    <!-- LINE REGISTER BANNER -->
+    <div style="background:var(--navy); border-top:1px solid rgba(201,168,130,0.25); border-bottom:1px solid rgba(201,168,130,0.25); padding:20px 24px; text-align:center;">
+        <p style="color:var(--gold); font-family:'Cormorant Garamond',serif; font-size:0.78rem; letter-spacing:0.25em; margin-bottom:10px; text-transform:uppercase;">LINE Official Account</p>
+        <p style="color:rgba(255,255,255,0.75); font-family:'Noto Serif JP',serif; font-size:0.84rem; letter-spacing:0.08em; margin-bottom:14px;">開業のお知らせ・最新情報をLINEでお届けします</p>
+        <a href="https://line.me/R/ti/p/@cura" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:10px; background:transparent; color:var(--gold); border:1px solid var(--gold); border-radius:4px; padding:11px 28px; font-family:'Noto Serif JP',serif; font-size:0.88rem; text-decoration:none; letter-spacing:0.12em;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="5" fill="#06C755"/><path d="M12 4C7.03 4 3 7.36 3 11.5c0 2.7 1.73 5.08 4.35 6.46L6.5 21l3.1-1.62c.77.2 1.58.32 2.4.32 4.97 0 9-3.36 9-7.5S16.97 4 12 4z" fill="white"/></svg>
+            <span>LINEで友だち追加する（無料）</span>
+        </a>
+    </div>
 
     <!-- STORY -->
     <div class="story-bg" id="story">
@@ -748,77 +1001,15 @@
             <p class="story-text">「保険制度の枠組みでは、本人が本当に望む生活は取り戻せない。」これが、長年の経験と当事者としての葛藤から導き出した結論です。だからこそcuraは、時間や内容の制限を取り払った自費という形にこだわりました。</p>
 
             <p class="story-text">看護師と介護福祉士が強固なチームを組み、ご自宅での生活を視野に入れた完全オーダーメイドのケアをご提供します。いつ何が起こるか分からない現実の辛さと、ご家族が抱える孤独を、私は痛いほど知っています。だからこそ、プロフェッショナルとして、あなたの大切な方の日常を妥協なく守り続けます。</p>
-        </div>
-    </div>
 
-    <!-- STORIES -->
-    <div class="stories-bg" id="stories">
-        <div class="section">
-            <span class="section-label">Stories</span>
-            <h2 class="section-title">諦めなかった、日常の物語</h2>
-
-            <div class="philosophy-block">
-                <span class="philosophy-main">
-                    いつだって、最後になるかもしれない。<br>
-                    だから、やる。
-                </span>
-                <p class="philosophy-sub">
-                    脊髄損傷を抱えながら、介護者と共に出かけた、ある家族の実話です。<br>
-                    「もう無理かもしれない」と思っていたことが、ここにあるかもしれません。
-                </p>
-            </div>
-
-            <div class="story-scene-grid">
-                <div class="story-scene-card">
-                    <span class="story-scene-num">I.</span>
-                    <h4>仙台</h4>
-                    <p>友人が会いに来たかった。<br>でも高齢で、ひとりでは電車に乗れない。<br>だから、こちらから車で会いに行った。<br><em>——会いたい人に、ちゃんと会いに行ける。</em></p>
-                </div>
-                <div class="story-scene-card">
-                    <span class="story-scene-num">II.</span>
-                    <h4>大垣・白川郷</h4>
-                    <p>奥の細道を踏破し、終点の大垣へ。<br>夏の白川郷、合掌造りの集落を歩いた。<br>ゴールに立った瞬間、ふたりの目が潤んでいた。<br><em>——夢は、続きから始められる。</em></p>
-                </div>
-                <div class="story-scene-card">
-                    <span class="story-scene-num">III.</span>
-                    <h4>大洗港・沼津港</h4>
-                    <p>美味しいお刺身が食べたい。<br>お寿司が食べたい。<br>友達も連れて、海へ向かった。<br><em>——食べたいものを、食べに行ける。</em></p>
-                </div>
-                <div class="story-scene-card">
-                    <span class="story-scene-num">IV.</span>
-                    <h4>富士山5合目</h4>
-                    <p>「富士山を一度も見たことがない」という、<br>90歳を超えたおばあちゃんを連れて行った。<br>目の前に広がる景色に、心から喜んでいた。<br>その日、ほうとうを一緒に食べた。<br><em>——見たことのない景色が、まだある。</em></p>
-                </div>
-                <div class="story-scene-card">
-                    <span class="story-scene-num">V.</span>
-                    <h4>山梨・富士五湖</h4>
-                    <p>山梨へ、お墓参りに行く。<br>年に何度か、必ず会いに行きたい人がいる。<br>帰り道は富士五湖をぐるりと回って、<br>壮大な景色を眺めながら、美味しいものを食べて帰ってくる。<br><em>——大切な人に、ちゃんと会いに行ける。それが日常でいい。</em></p>
-                </div>
-                <div class="story-scene-card">
-                    <span class="story-scene-num">VI.</span>
-                    <h4>仲間</h4>
-                    <p>父が25年間共に闘った、脊髄損傷の仲間がいた。<br>当事者たちは逝ってしまった。<br>それでも家族同士の縁は続いていて、今でも会いに行く。<br>母も同じ脊髄損傷になって、分かち合えることが増えた。<br><em>——同じ痛みを知る人と、また会える。</em></p>
-                </div>
-                <div class="story-scene-card muted">
-                    <span class="story-scene-num" style="color: var(--rose-light);">—</span>
-                    <p>これは、ある一人の女性と<br>その家族の記録です。<br>あなたの「やりたいこと」は何ですか？</p>
-                </div>
-            </div>
-
-            <div class="scene-closing">
-                <div class="scene-closing-inner">
-                    <p>
-                        <em>会いたい人に、会いに行ける。</em><br>
-                        <em>行きたい場所に、行ける。</em><br>
-                        <em>食べたいものを、食べられる。</em>
-                    </p>
-                    <div class="scene-closing-divider"></div>
-                    <p class="scene-closing-tagline">あなたの「当たり前の幸せ」を、諦めなくていい。</p>
-                </div>
+            <div style="text-align:center; margin-top:48px;">
+                <a href="#reserve" class="contact-btn" style="display:inline-block; font-size:0.82rem; padding:13px 36px; letter-spacing:0.18em;">無料相談を予約する<span style="display:block; font-size:0.72rem; letter-spacing:0.12em; margin-top:4px; opacity:0.85;">初回問い合わせ無料</span></a>
             </div>
         </div>
     </div>
 
+
+    <!-- SERVICES -->
     <!-- SERVICES -->
     <div class="services-bg" id="services">
         <div class="section">
@@ -857,102 +1048,15 @@
                     <p>散歩・食事・動物病院への同行など、大切な家族の一員であるペットのケアもお任せください。ご本人が安心して療養できる環境を整えます。</p>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- PRICING -->
-    <div class="pricing-bg" id="pricing">
-        <div class="section">
-            <span class="section-label">Pricing</span>
-            <h2 class="section-title">料金のご案内</h2>
-
-            <p class="pricing-note">これは介護費用ではありません。<strong style="color:rgba(255,255,255,0.95);">あなた、またはあなたの大切な方が、最後まで自分らしく生きるための投資です。</strong><br>入会金のみで月額料金は不要。ご利用の都度、1回からお申し込みいただけます。</p>
-
-            <table class="price-table">
-                <tr>
-                    <td>
-                        看護師同行プラン
-                        <span class="price-sub">看護師＋介護福祉士のチームケア / 1時間・最低3時間〜</span>
-                    </td>
-                    <td>16,500</td>
-                </tr>
-                <tr>
-                    <td>
-                        プライベートケア
-                        <span class="price-sub">介護福祉士によるケア / 1時間・最低3時間〜</span>
-                    </td>
-                    <td>8,800</td>
-                </tr>
-                <tr>
-                    <td>
-                        24時間緊急相談
-                        <span class="price-sub">24時間緊急対応・日中は緊急のご連絡のみ / 1日3回まで含む<br>4回目以降 2,200 / 回</span>
-                    </td>
-                    <td>16,500 / 月</td>
-                </tr>
-                <tr>
-                    <td>
-                        入会金
-                        <span class="price-sub">アセスメント・ケアプラン作成費用含む</span>
-                    </td>
-                    <td>36,300</td>
-                </tr>
-            </table>
-
-            <p class="price-disclaimer" style="margin-top:16px; color:rgba(255,255,255,0.7);">※表示価格はすべて税込です。</p>
-            <div style="margin:24px auto; max-width:480px; border:1px solid var(--gold); padding:20px 28px; text-align:center;">
-                <p style="color:var(--gold); font-family:'Cormorant Garamond',serif; font-size:1.1rem; letter-spacing:0.1em; line-height:2.0;">1日あたり約550円。<br>24時間、いつでも繋がれる。</p>
-            </div>
-            <p class="price-disclaimer" style="margin-top:8px; color:rgba(255,255,255,0.7);">24時間緊急相談のみのご利用も可能です。入会金が必要となります。</p>
-            <p class="price-disclaimer" style="margin-top:8px; color:rgba(255,255,255,0.7);">現在、新規ご相談は月4名様限定で承っております。</p>
-            <p class="price-disclaimer">※上記エリア外の場合も対応可能です。最低4時間・30%割増＋交通費実費にてお受けしております。</p>
-            <p class="price-disclaimer">深夜の体制を安定して維持するため、1日3回を超えるご連絡については1回につき2,200を頂戴しております。</p>
-            <p class="price-disclaimer">※ご希望の内容・頻度に合わせて完全お見積もりいたします。まずはお気軽にご相談ください。</p>
-        </div>
-    </div>
-
-    <!-- FAQ -->
-    <div class="story-bg" id="faq">
-        <div class="section">
-            <span class="section-label">FAQ</span>
-            <h2 class="section-title">よくあるご質問</h2>
-
-            <div style="max-width:720px; margin:0 auto;">
-
-                <div style="border-bottom:1px solid var(--rose-pale); padding:28px 0;">
-                    <p style="font-weight:500; color:var(--rose-deep); margin-bottom:12px;">対応エリアを教えてください。</p>
-                    <p style="color:var(--text-muted); line-height:2.0;">文京区全域、および千代田区・新宿区・豊島区の一部、番町・神楽坂・目白エリアに対応しています。上記以外のエリアもまずはご相談ください。遠方の場合は最低4時間・30%割増＋交通費実費にてお受けしています。</p>
-                </div>
-
-                <div style="border-bottom:1px solid var(--rose-pale); padding:28px 0;">
-                    <p style="font-weight:500; color:var(--rose-deep); margin-bottom:12px;">保険が使えないのに、なぜこの料金なのですか？</p>
-                    <p style="color:var(--text-muted); line-height:2.0;">公的介護保険は、制度上「できること」と「できないこと」が厳密に決まっています。curaは保険外だからこそ、時間・内容・場所のすべてをあなたの希望に合わせることができます。看護師と介護福祉士のチームが動く体制と、圧倒的な安心感をご提供するための正直な料金です。</p>
-                </div>
-
-                <div style="border-bottom:1px solid var(--rose-pale); padding:28px 0;">
-                    <p style="font-weight:500; color:var(--rose-deep); margin-bottom:12px;">急に必要になった場合、当日や翌日の対応は可能ですか？</p>
-                    <p style="color:var(--text-muted); line-height:2.0;">できる限り対応いたします。夜間オンコールプランにご加入のお客様は、24時間専門スタッフへのご連絡が可能です。まずはご相談ください。</p>
-                </div>
-
-                <div style="border-bottom:1px solid var(--rose-pale); padding:28px 0;">
-                    <p style="font-weight:500; color:var(--rose-deep); margin-bottom:12px;">身寄りがいない場合でも対応してもらえますか？</p>
-                    <p style="color:var(--text-muted); line-height:2.0;">はい、むしろそのような方こそcuraが力になれると考えています。医療機関との連携・緊急時の対応・生活全般のサポートまで、おひとりでも安心して暮らし続けられるよう伴走します。</p>
-                </div>
-
-                <div style="border-bottom:1px solid var(--rose-pale); padding:28px 0;">
-                    <p style="font-weight:500; color:var(--rose-deep); margin-bottom:12px;">担当スタッフは毎回同じ方ですか？</p>
-                    <p style="color:var(--text-muted); line-height:2.0;">できる限り同じスタッフが担当します。curaは大規模な派遣型ではなく、少数精鋭のチーム制です。お客様のことを深く知るスタッフが継続的に関わることで、細やかな変化に気づける体制を大切にしています。</p>
-                </div>
-
-                <div style="padding:28px 0;">
-                    <p style="font-weight:500; color:var(--rose-deep); margin-bottom:12px;">まずは相談だけでも大丈夫ですか？</p>
-                    <p style="color:var(--text-muted); line-height:2.0;">もちろんです。相談＝契約ではありません。「こんなことを頼んでいいのか」という段階からお気軽にご連絡ください。まさみが直接お話を伺います。</p>
-                </div>
-
+            <div style="text-align:center; margin-top:48px;">
+                <a href="#reserve" class="contact-btn" style="display:inline-block; font-size:0.82rem; padding:13px 36px; letter-spacing:0.18em;">無料相談を予約する<span style="display:block; font-size:0.72rem; letter-spacing:0.12em; margin-top:4px; opacity:0.85;">初回問い合わせ無料</span></a>
             </div>
         </div>
     </div>
 
+
+    <!-- RESERVE -->
     <!-- CONTACT -->
     <!-- RESERVE -->
     <div class="story-bg" id="reserve">
@@ -997,9 +1101,13 @@
                 <div id="selected-slot-label" style="text-align:center; background:rgba(181,100,122,0.08); border:1px solid rgba(181,100,122,0.25); border-radius:8px; padding:12px 20px; margin-bottom:28px; color:var(--rose-deep); font-size:0.9rem;"></div>
 
                 <div style="display:flex; flex-direction:column; gap:16px;">
-                    <input id="r-name" type="text" placeholder="お名前（例：山田 花子）" style="width:100%; padding:14px 18px; border:1px solid rgba(181,100,122,0.3); border-radius:8px; background:rgba(255,255,255,0.6); font-family:inherit; font-size:0.9rem; color:var(--text); outline:none;">
-                    <input id="r-phone" type="tel" placeholder="電話番号（例：090-1234-5678）" style="width:100%; padding:14px 18px; border:1px solid rgba(181,100,122,0.3); border-radius:8px; background:rgba(255,255,255,0.6); font-family:inherit; font-size:0.9rem; color:var(--text); outline:none;">
-                    <input id="r-email" type="email" placeholder="メールアドレス" style="width:100%; padding:14px 18px; border:1px solid rgba(181,100,122,0.3); border-radius:8px; background:rgba(255,255,255,0.6); font-family:inherit; font-size:0.9rem; color:var(--text); outline:none;">
+                    <label for="r-name" style="font-size:0.78rem; letter-spacing:0.15em; color:var(--text-muted); display:block; margin-bottom:4px;">お名前 <span style="color:var(--rose);">*</span></label>
+                    <input id="r-name" type="text" placeholder="山田 花子" style="width:100%; padding:14px 18px; border:1px solid rgba(181,100,122,0.3); border-radius:8px; background:rgba(255,255,255,0.6); font-family:inherit; font-size:0.9rem; color:var(--text); outline:none;">
+                    <label for="r-phone" style="font-size:0.78rem; letter-spacing:0.15em; color:var(--text-muted); display:block; margin-bottom:4px; margin-top:8px;">電話番号 <span style="color:var(--rose);">*</span></label>
+                    <input id="r-phone" type="tel" placeholder="090-1234-5678" style="width:100%; padding:14px 18px; border:1px solid rgba(181,100,122,0.3); border-radius:8px; background:rgba(255,255,255,0.6); font-family:inherit; font-size:0.9rem; color:var(--text); outline:none;">
+                    <label for="r-email" style="font-size:0.78rem; letter-spacing:0.15em; color:var(--text-muted); display:block; margin-bottom:4px; margin-top:8px;">メールアドレス</label>
+                    <input id="r-email" type="email" placeholder="example@mail.com" style="width:100%; padding:14px 18px; border:1px solid rgba(181,100,122,0.3); border-radius:8px; background:rgba(255,255,255,0.6); font-family:inherit; font-size:0.9rem; color:var(--text); outline:none;">
+                    <label for="r-inquiry" style="font-size:0.78rem; letter-spacing:0.15em; color:var(--text-muted); display:block; margin-bottom:4px; margin-top:8px;">ご相談の内容（任意）</label>
                     <select id="r-inquiry" style="width:100%; padding:14px 18px; border:1px solid rgba(181,100,122,0.3); border-radius:8px; background:rgba(255,255,255,0.6); font-family:inherit; font-size:0.9rem; color:var(--text); outline:none;">
                         <option value="">ご相談の内容（任意）</option>
                         <option value="在宅ケア全般">在宅ケア全般について</option>
@@ -1026,6 +1134,257 @@
         </div>
     </div>
 
+
+    <!-- STORIES -->
+    <!-- STORIES -->
+    <div class="stories-bg" id="stories">
+        <div class="section">
+            <span class="section-label">Stories</span>
+            <h2 class="section-title">諦めなかった、日常の物語</h2>
+
+            <div class="philosophy-block">
+                <span class="philosophy-main">
+                    いつだって、最後になるかもしれない。<br>
+                    だから、やる。
+                </span>
+                <p class="philosophy-sub">
+                    脊髄損傷を抱えながら、介護者と共に出かけた、ある家族の実話です。<br>
+                    「もう無理かもしれない」と思っていたことが、ここにあるかもしれません。
+                </p>
+            </div>
+
+            <div class="story-scene-grid" id="stories-visible">
+                <div class="story-scene-card">
+                    <span class="story-scene-num">I.</span>
+                    <h4>仙台</h4>
+                    <p>友人が会いに来たかった。<br>でも高齢で、ひとりでは電車に乗れない。<br>だから、こちらから車で会いに行った。<br><em>——会いたい人に、ちゃんと会いに行ける。</em></p>
+                </div>
+                <div class="story-scene-card">
+                    <span class="story-scene-num">II.</span>
+                    <h4>大垣・白川郷</h4>
+                    <p>奥の細道を踏破し、終点の大垣へ。<br>夏の白川郷、合掌造りの集落を歩いた。<br>ゴールに立った瞬間、ふたりの目が潤んでいた。<br><em>——夢は、続きから始められる。</em></p>
+                </div>
+                <div class="story-scene-card">
+                    <span class="story-scene-num">III.</span>
+                    <h4>富士山5合目</h4>
+                    <p>「富士山を一度も見たことがない」という、<br>90歳を超えたおばあちゃんを連れて行った。<br>目の前に広がる景色に、心から喜んでいた。<br>その日、ほうとうを一緒に食べた。<br><em>——見たことのない景色が、まだある。</em></p>
+                </div>
+            </div>
+
+            <div class="story-scene-grid" id="stories-hidden" style="display:none;">
+                <div class="story-scene-card">
+                    <span class="story-scene-num">IV.</span>
+                    <h4>金沢</h4>
+                    <p>桜の季節に、金沢へ。<br>兼六園の枝垂れ桜を眺めながら、<br>新鮮な海鮮丼を一緒に食べた。<br><em>——食べたいものを、食べに行ける。</em></p>
+                </div>
+                <div class="story-scene-card">
+                    <span class="story-scene-num">V.</span>
+                    <h4>茨城の港・沼津港</h4>
+                    <p>美味しいお刺身が食べたい。<br>お寿司が食べたい。<br>友達も連れて、海へ向かった。<br><em>——食べたいものを、食べに行ける。</em></p>
+                </div>
+                <div class="story-scene-card">
+                    <span class="story-scene-num">VI.</span>
+                    <h4>河口湖</h4>
+                    <p>富士山を湖面に映したくて、河口湖へ。<br>水面に逆さ富士が浮かぶ朝、<br>ふたりでしばらく、ただそこにいた。<br><em>——行きたい場所に、行ける。</em></p>
+                </div>
+                <div class="story-scene-card">
+                    <span class="story-scene-num">VII.</span>
+                    <h4>群馬</h4>
+                    <p>先祖のお墓に会いに行く旅。<br>帰り道、温泉地で美味しいものをたっぷり食べた。<br>ルーツに触れることが、今を生きる力になる。<br><em>——大切な人に、ちゃんと会いに行ける。それが日常でいい。</em></p>
+                </div>
+                <div class="story-scene-card">
+                    <span class="story-scene-num">VIII.</span>
+                    <h4>仲間</h4>
+                    <p>父が25年間共に闘った、脊髄損傷の仲間がいた。<br>当事者たちは逝ってしまった。<br>それでも家族同士の縁は続いていて、今でも会いに行く。<br>母も同じ脊髄損傷になって、分かち合えることが増えた。<br><em>——同じ痛みを知る人と、また会える。</em></p>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin:32px 0 40px;">
+                <button id="stories-toggle-btn" onclick="toggleStories()" style="background:none; border:1px solid rgba(181,100,122,0.4); border-radius:4px; color:var(--rose); font-family:'Noto Serif JP',serif; font-size:0.82rem; letter-spacing:0.2em; padding:12px 32px; cursor:pointer; transition:all 0.2s;">
+                    続きを読む ＋
+                </button>
+            </div>
+
+            <div class="story-scene-card muted" style="max-width:320px; margin:0 auto 8px;">
+                <span class="story-scene-num" style="color: var(--rose-light);">—</span>
+                <p style="color:var(--text-muted); line-height:2.2; font-size:0.9rem;">まだ続きます。<br><br>これは、ある一人の女性と<br>その家族の記録です。<br>あなたの「やりたいこと」は何ですか？</p>
+            </div>
+
+            <div class="scene-closing">
+                <div class="scene-closing-inner">
+                    <p>
+                        <em>会いたい人に、会いに行ける。</em><br>
+                        <em>行きたい場所に、行ける。</em><br>
+                        <em>食べたいものを、食べられる。</em>
+                    </p>
+                    <div class="scene-closing-divider"></div>
+                    <p class="scene-closing-tagline">あなたの「当たり前の幸せ」を、諦めなくていい。</p>
+                </div>
+            </div>
+
+            <div style="text-align:center; margin-top:48px;">
+                <a href="#reserve" class="contact-btn" style="display:inline-block; font-size:0.82rem; padding:13px 36px; letter-spacing:0.18em;">無料相談を予約する<span style="display:block; font-size:0.72rem; letter-spacing:0.12em; margin-top:4px; opacity:0.85;">初回問い合わせ無料</span></a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- FAQ -->
+    <!-- FAQ -->
+    <style>
+        .faq-item { border-bottom:1px solid var(--rose-pale); }
+        .faq-item:last-child { border-bottom: none; }
+        .faq-btn {
+            width:100%; background:none; border:none; text-align:left;
+            padding:24px 0; cursor:pointer; display:flex; justify-content:space-between;
+            align-items:center; gap:16px;
+            font-family:'Noto Serif JP',serif; font-size:0.95rem;
+            font-weight:500; color:var(--rose-deep); line-height:1.7;
+        }
+        .faq-btn:hover { color:var(--rose); }
+        .faq-icon {
+            flex-shrink:0; width:24px; height:24px; border:1px solid var(--rose-light);
+            border-radius:50%; display:flex; align-items:center; justify-content:center;
+            font-size:1rem; color:var(--rose); transition:transform 0.3s;
+        }
+        .faq-item.open .faq-icon { transform:rotate(45deg); }
+        .faq-body { display:none; padding:0 0 24px; color:var(--text-muted); line-height:2.0; font-size:0.93rem; }
+        .faq-item.open .faq-body { display:block; }
+    </style>
+    <div class="story-bg" id="faq">
+        <div class="section">
+            <span class="section-label">FAQ</span>
+            <h2 class="section-title">よくあるご質問</h2>
+
+            <div style="max-width:720px; margin:0 auto;">
+
+                <div class="faq-item">
+                    <button class="faq-btn" onclick="toggleFaq(this)">
+                        知らない方を自宅に入れることに不安があります。
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-body">curaのスタッフは、まさみが直接面談・選定した有資格者のみです。担当スタッフが決まったら、ケアが始まる前に必ずご自宅でのご挨拶の機会を設けます。「この人なら安心できる」と感じていただけるまで、焦らずご一緒に進めます。不安なこと、気になることは何でも事前にお伝えください。</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-btn" onclick="toggleFaq(this)">
+                        対応エリアを教えてください。
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-body">文京区全域、および千代田区・新宿区・豊島区の一部、番町・神楽坂・目白エリアに対応しています。上記以外のエリアもまずはご相談ください。遠方の場合は最低4時間・30%割増＋交通費実費にてお受けしています。</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-btn" onclick="toggleFaq(this)">
+                        保険が使えないのに、なぜこの料金なのですか？
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-body">公的介護保険は、制度上「できること」と「できないこと」が厳密に決まっています。curaは保険外だからこそ、時間・内容・場所のすべてをあなたの希望に合わせることができます。看護師と介護福祉士のチームが動く体制と、圧倒的な安心感をご提供するための正直な料金です。</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-btn" onclick="toggleFaq(this)">
+                        急に必要になった場合、当日や翌日の対応は可能ですか？
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-body">できる限り対応いたします。夜間オンコールプランにご加入のお客様は、24時間専門スタッフへのご連絡が可能です。まずはご相談ください。現在は電話による緊急相談対応を行っており、順次夜間駆けつけ対応にも拡大予定です。</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-btn" onclick="toggleFaq(this)">
+                        身寄りがいない場合でも対応してもらえますか？
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-body">はい、むしろそのような方こそcuraが力になれると考えています。医療機関との連携・緊急時の対応・生活全般のサポートまで、おひとりでも安心して暮らし続けられるよう伴走します。</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-btn" onclick="toggleFaq(this)">
+                        担当スタッフは毎回同じ方ですか？
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-body">できる限り同じスタッフが担当します。curaは大規模な派遣型ではなく、少数精鋭のチーム制です。お客様のことを深く知るスタッフが継続的に関わることで、細やかな変化に気づける体制を大切にしています。</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-btn" onclick="toggleFaq(this)">
+                        夜間オンコールで何度でも連絡できますか？
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-body">1日3回までのご連絡は月額料金に含まれています。深夜の体制を安定して維持し、本当に必要な方へ確実に対応するため、4回目以降は1回につき2,200円を頂戴しております。緊急性の高いご連絡を最優先にお受けするための仕組みです。</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-btn" onclick="toggleFaq(this)">
+                        まずは相談だけでも大丈夫ですか？
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-body">もちろんです。相談＝契約ではありません。初回のご相談は無料です。「こんなことを頼んでいいのか」という段階からお気軽にご連絡ください。まさみが直接お話を伺います。2回目以降のご相談・サービスご利用には、入会金（36,300円／税込・アセスメント含む）が必要です。</div>
+                </div>
+
+            </div>
+
+            <div style="text-align:center; margin-top:48px;">
+                <a href="#reserve" class="contact-btn" style="display:inline-block; font-size:0.82rem; padding:13px 36px; letter-spacing:0.18em;">無料相談を予約する<span style="display:block; font-size:0.72rem; letter-spacing:0.12em; margin-top:4px; opacity:0.85;">初回問い合わせ無料</span></a>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- PRICING -->
+    <!-- PRICING -->
+    <div class="pricing-bg" id="pricing">
+        <div class="section">
+            <span class="section-label">Pricing</span>
+            <h2 class="section-title">料金のご案内</h2>
+
+            <p class="pricing-note">これは介護費用ではありません。<strong style="color:rgba(255,255,255,0.95);">あなた、またはあなたの大切な方が、最後まで自分らしく生きるための投資です。</strong><br>入会金のみで月額料金は不要。ご利用の都度、1回からお申し込みいただけます。</p>
+
+            <table class="price-table">
+                <tr>
+                    <td>
+                        看護師同行プラン
+                        <span class="price-sub">看護師＋介護福祉士のチームケア / 1時間・最低3時間〜</span>
+                    </td>
+                    <td>16,500</td>
+                </tr>
+                <tr>
+                    <td>
+                        プライベートケア
+                        <span class="price-sub">介護福祉士によるケア / 1時間・最低3時間〜</span>
+                    </td>
+                    <td>8,800</td>
+                </tr>
+                <tr>
+                    <td>
+                        24時間緊急相談
+                        <span class="price-sub">24時間緊急対応・日中は緊急のご連絡のみ / 1日3回まで含む<br>4回目以降 2,200 / 回</span>
+                    </td>
+                    <td>16,500 / 月</td>
+                </tr>
+                <tr>
+                    <td>
+                        入会金
+                        <span class="price-sub">アセスメント・ケアプラン作成費用含む</span>
+                    </td>
+                    <td>36,300</td>
+                </tr>
+            </table>
+
+            <p class="price-disclaimer" style="margin-top:16px; color:rgba(255,255,255,0.7);">※表示価格はすべて税込です。</p>
+            <div style="margin:24px auto; max-width:480px; border:1px solid var(--gold); padding:20px 28px; text-align:center;">
+                <p style="color:var(--gold); font-family:'Cormorant Garamond',serif; font-size:1.1rem; letter-spacing:0.1em; line-height:2.0;">1日あたり約550円。<br>24時間、いつでも繋がれる。</p>
+            </div>
+            <p class="price-disclaimer" style="margin-top:8px; color:rgba(255,255,255,0.7);">夜間オンコールのみの単独ご利用も可能です。別途入会金（36,300円／税込）が必要です。</p>
+            <p class="price-disclaimer">※上記エリア外の場合も対応可能です。最低4時間・30%割増＋交通費実費にてお受けしております。</p>
+            <p class="price-disclaimer">※ご希望の内容・頻度に合わせて完全お見積もりいたします。まずはお気軽にご相談ください。</p>
+
+            <div style="text-align:center; margin-top:48px;">
+                <a href="#reserve" class="contact-btn" style="display:inline-block; font-size:0.82rem; padding:13px 36px; letter-spacing:0.18em;">無料相談を予約する<span style="display:block; font-size:0.72rem; letter-spacing:0.12em; margin-top:4px; opacity:0.85;">初回問い合わせ無料</span></a>
+            </div>
+        </div>
+    </div>
+
     <div class="contact-bg" id="contact">
         <div class="section">
             <span class="section-label">Contact</span>
@@ -1036,7 +1395,7 @@
                 文京区を中心に活動しています。<br>
                 全国にいるご家族からのご相談も承ります。
             </p>
-            <a href="/cdn-cgi/l/email-protection#c8a1a6aea788abbdbaa9e5aba9baade6a2b8" class="contact-btn">まさみに直接相談する（無料）</a>
+            <a href="mailto:info@cura-care.jp" class="contact-btn">まさみに問い合わせる<span style="display:block; font-size:0.72rem; letter-spacing:0.12em; margin-top:4px; opacity:0.85;">初回問い合わせ無料</span></a>
 
             <div style="margin-top:60px; padding-top:40px; border-top:1px solid rgba(181,100,122,0.2); max-width:560px; margin-left:auto; margin-right:auto; text-align:left;">
                 <p style="font-family:'Cormorant Garamond',serif; font-size:0.75rem; letter-spacing:0.25em; color:var(--text-muted); margin-bottom:16px;">— P.S.</p>
@@ -1046,16 +1405,83 @@
         </div>
     </div>
 
+    <!-- SHARE -->
+    <div style="background:var(--bg); padding:40px 20px; text-align:center; border-top:1px solid rgba(181,100,122,0.15);">
+        <p style="font-size:0.78rem; letter-spacing:0.25em; color:var(--text-muted); margin-bottom:20px;">SHARE</p>
+        <p style="font-size:0.88rem; color:var(--text-muted); margin-bottom:24px; line-height:2;">このページを大切な方に伝えませんか</p>
+        <div style="display:flex; gap:12px; justify-content:center; flex-wrap:wrap;">
+            <button onclick="shareToLine()" style="display:flex; align-items:center; gap:8px; background:#06C755; border:none; border-radius:10px; color:white; font-family:inherit; font-size:0.92rem; padding:13px 24px; cursor:pointer; letter-spacing:0.06em;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2C6.48 2 2 6.02 2 11c0 3.24 1.74 6.1 4.4 7.87L5.5 22l3.28-1.7C9.75 20.75 10.86 21 12 21c5.52 0 10-4.02 10-9S17.52 2 12 2z"/></svg>
+                LINE
+            </button>
+            <button onclick="shareToInstagram()" style="display:flex; align-items:center; gap:8px; background:linear-gradient(45deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); border:none; border-radius:10px; color:white; font-family:inherit; font-size:0.92rem; padding:13px 24px; cursor:pointer; letter-spacing:0.06em;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+                Instagram
+            </button>
+
+            <button onclick="copyUrl()" id="copyBtn" style="display:flex; align-items:center; gap:8px; background:var(--navy); border:none; border-radius:10px; color:white; font-family:inherit; font-size:0.92rem; padding:13px 24px; cursor:pointer; letter-spacing:0.06em;">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                URLをコピー
+            </button>
+        </div>
+    </div>
+
     <!-- FOOTER -->
     <footer>
         <div class="footer-logo">cura</div>
         <p>
+            〒113-0021 東京都文京区千石4-43-<br>
+            Tel: <a href="tel:07054508818" style="color:inherit; text-decoration:none;">070-5450-8818</a><br>
             文京区・第2種社会福祉事業登録予定<br>
             &copy; 2026 cura All Rights Reserved.
         </p>
     </footer>
 
     <script>
+        function toggleStories() {
+            const hidden = document.getElementById('stories-hidden');
+            const btn = document.getElementById('stories-toggle-btn');
+            if (hidden.style.display === 'none') {
+                hidden.style.display = 'grid';
+                btn.textContent = '閉じる －';
+            } else {
+                hidden.style.display = 'none';
+                btn.textContent = '続きを読む ＋';
+                setTimeout(() => btn.scrollIntoView({ behavior: 'instant', block: 'center' }), 0);
+            }
+        }
+
+        function toggleFaq(btn) {
+            const item = btn.closest('.faq-item');
+            const isOpen = item.classList.contains('open');
+            document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+            if (!isOpen) item.classList.add('open');
+        }
+
+        function shareToInstagram() {
+            window.open('https://www.instagram.com/al_munchie/', '_blank');
+        }
+        function shareToLine() {
+            const url = encodeURIComponent(location.href);
+            const text = encodeURIComponent('cura｜自宅で最後まで、自分らしく。プライベートケアサービス');
+            window.open('https://social-plugins.line.me/lineit/share?url=' + url + '&text=' + text, '_blank');
+        }
+        function copyUrl() {
+            navigator.clipboard.writeText(location.href).then(() => {
+                const btn = document.getElementById('copyBtn');
+                if (btn) { btn.textContent = '✓ コピーしました'; setTimeout(() => { btn.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>URLをコピー'; }, 2000); }
+            }).catch(() => { alert('URLをコピーできませんでした。'); });
+        }
+
+        // 上へ戻るボタン（PC）
+        window.addEventListener('scroll', () => {
+            const btn = document.getElementById('scrollTopBtn');
+            if (btn) {
+                if (window.scrollY > 400) btn.classList.add('visible');
+                else btn.classList.remove('visible');
+            }
+        });
+
         // スクロールでナビ背景を出す
         window.addEventListener('scroll', () => {
             const nav = document.getElementById('nav');
@@ -1067,7 +1493,7 @@
         });
 
         // アクティブリンクのハイライト
-        const sections = ['hero','story','stories','services','pricing','reserve','contact'];
+        const sections = ['hero','story','stories','services','pricing','faq','reserve','contact'];
         const links = document.querySelectorAll('.nav-links a');
 
         window.addEventListener('scroll', () => {
@@ -1084,6 +1510,20 @@
                     a.classList.add('active');
                 }
             });
+        });
+
+        function toggleDrawer() {
+            document.getElementById('bottomDrawer').classList.toggle('open');
+        }
+        function closeDrawer() {
+            document.getElementById('bottomDrawer').classList.remove('open');
+        }
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        document.addEventListener('click', function(e) {
+            const nav = document.getElementById('bottomNav');
+            if (!nav.contains(e.target)) closeDrawer();
         });
 
         // ハンバーガーメニュー

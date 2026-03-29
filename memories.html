@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>一緒に見た景色 | cura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Noto+Serif+JP:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    :root {
+      --bg: #fdf6f3;
+      --navy: #2a1f1a;
+      --rose: #b5647a;
+      --rose-light: #d4a0b0;
+      --rose-deep: #9e4e68;
+      --gold: #c9a882;
+      --text: #2c2220;
+      --text-muted: #7a6560;
+      --white: #ffffff;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; font-family: 'Noto Serif JP', "Yu Mincho", serif; }
+
+    /* ── ヘッダー ── */
+    .header {
+      background: linear-gradient(145deg, #8a3a55 0%, #a85f78 50%, #b87888 100%);
+      padding: 24px 32px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1000;
+    }
+    .header-left { display: flex; flex-direction: column; gap: 4px; }
+    .header-logo {
+      font-family: 'Abril Fatface', serif;
+      font-size: 1.8rem;
+      color: var(--white);
+      letter-spacing: 0.12em;
+      text-decoration: none;
+    }
+    .header-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      color: rgba(255,255,255,0.7);
+      font-weight: 300;
+    }
+    .header-back {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      border: 1px solid rgba(255,255,255,0.3);
+      padding: 8px 16px;
+      border-radius: 20px;
+      transition: all 0.2s;
+    }
+    .header-back:hover {
+      background: rgba(255,255,255,0.15);
+      color: var(--white);
+    }
+
+    /* ── リード文 ── */
+    .lead {
+      background: var(--navy);
+      padding: 20px 32px;
+      text-align: center;
+    }
+    .lead p {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      font-weight: 300;
+      line-height: 1.9;
+    }
+    .lead em {
+      color: var(--rose-light);
+      font-style: normal;
+    }
+
+    /* ── マップ ── */
+    #map {
+      height: calc(100vh - 148px);
+      width: 100%;
+    }
+
+    /* ── Leaflet カスタムマーカー ── */
+    .custom-marker {
+      background: linear-gradient(135deg, #9e4e68, #b5647a);
+      border: 2px solid rgba(255,255,255,0.8);
+      border-radius: 50% 50% 50% 0;
+      transform: rotate(-45deg);
+      box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+    }
+    .custom-marker::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+    }
+
+    /* ── ポップアップ ── */
+    .leaflet-popup-content-wrapper {
+      background: var(--navy);
+      border: 1px solid rgba(181,100,122,0.4);
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      padding: 0;
+      overflow: hidden;
+    }
+    .leaflet-popup-content {
+      margin: 0;
+      min-width: 220px;
+    }
+    .leaflet-popup-tip {
+      background: var(--navy);
+    }
+    .leaflet-popup-close-button {
+      color: rgba(255,255,255,0.5) !important;
+      font-size: 1.2rem !important;
+      top: 8px !important;
+      right: 10px !important;
+    }
+
+    /* ── ポップアップ内コンテンツ ── */
+    .popup-photo {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
+    }
+    .popup-photo-placeholder {
+      width: 100%;
+      height: 120px;
+      background: rgba(255,255,255,0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.2);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+    }
+    .popup-body {
+      padding: 16px 18px 18px;
+    }
+    .popup-location {
+      font-size: 0.65rem;
+      letter-spacing: 0.25em;
+      color: var(--rose-light);
+      margin-bottom: 4px;
+      font-weight: 300;
+    }
+    .popup-title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--white);
+      margin-bottom: 8px;
+      letter-spacing: 0.08em;
+    }
+    .popup-comment {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.9;
+      font-weight: 300;
+    }
+
+    /* ── カウンター ── */
+    .map-counter {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--navy);
+      border: 1px solid rgba(181,100,122,0.3);
+      border-radius: 20px;
+      padding: 8px 20px;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      z-index: 999;
+      white-space: nowrap;
+    }
+    .map-counter span { color: var(--rose-light); }
+
+    /* ── モバイル ── */
+    @media (max-width: 768px) {
+      .header { padding: 16px 20px 14px; }
+      .header-logo { font-size: 1.4rem; }
+      .lead { padding: 14px 20px; }
+      .lead p { font-size: 0.78rem; }
+      #map { height: calc(100vh - 136px); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <a href="index.html" class="header-logo">cura</a>
+    <span class="header-title">一緒に見た景色</span>
+  </div>
+  <a href="index.html" class="header-back">← HPへ戻る</a>
+</div>
+
+<div class="lead">
+  <p>
+    ママと一緒に行った場所。<em>どこへでも、いける。</em>
+  </p>
+</div>
+
+<div id="map"></div>
+
+<div class="map-counter">
+  <span id="spot-count">0</span> か所の思い出
+</div>
+
+<script>
+  // ── マップ初期化 ──
+  const map = L.map('map', {
+    center: [36.5, 137.5],
+    zoom: 6,
+    zoomControl: true,
+  });
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://carto.com/">CARTO</a>',
+    maxZoom: 18,
+  }).addTo(map);
+
+  // ── カスタムアイコン ──
+  function makeIcon() {
+    return L.divIcon({
+      className: '',
+      html: `<div style="
+        width: 20px; height: 20px;
+        background: linear-gradient(135deg, #9e4e68, #d4a0b0);
+        border: 2px solid rgba(255,255,255,0.85);
+        border-radius: 50% 50% 50% 0;
+        transform: rotate(-45deg);
+        box-shadow: 0 3px 10px rgba(0,0,0,0.35);
+        position: relative;
+      ">
+        <div style="
+          position: absolute; top: 50%; left: 50%;
+          transform: translate(-50%,-50%) rotate(45deg);
+          width: 5px; height: 5px;
+          background: white; border-radius: 50%;
+        "></div>
+      </div>`,
+      iconSize: [20, 20],
+      iconAnchor: [10, 20],
+      popupAnchor: [0, -22],
+    });
+  }
+
+  // ── スポットデータ ──
+  const spots = [
+    {
+      lat: 38.2682, lng: 140.8694,
+      pref: '宮城県',
+      name: '仙台',
+      comment: '最後かもしれないと思って、友人に会いに行った。会えてよかった。',
+      photo: null,
+    },
+    {
+      lat: 35.3614, lng: 136.6137,
+      pref: '岐阜県',
+      name: '大垣',
+      comment: '奥の細道の終点。事故で断ち切られた夢を、最後は車で辿り着いた。',
+      photo: null,
+    },
+    {
+      lat: 36.2576, lng: 136.9069,
+      pref: '岐阜県',
+      name: '白川郷',
+      comment: '夏の奥の細道の旅で立ち寄った。合掌造りの集落が静かで美しかった。',
+      photo: null,
+    },
+    {
+      lat: 36.3120, lng: 140.5760,
+      pref: '茨城県',
+      name: '大洗',
+      comment: '港で食べた刺身が最高だった。海の風が気持ちよかった。',
+      photo: null,
+    },
+    {
+      lat: 35.0966, lng: 138.8629,
+      pref: '静岡県',
+      name: '沼津',
+      comment: '沼津港の海鮮。新鮮な寿司を一緒に食べた。',
+      photo: null,
+    },
+    {
+      lat: 35.3728, lng: 138.7307,
+      pref: '山梨県',
+      name: '富士山 5合目',
+      comment: '初めて見た富士山に感動していた。ほうとうも美味しかった。',
+      photo: null,
+    },
+    {
+      lat: 35.4082, lng: 138.8731,
+      pref: '山梨県',
+      name: '山中湖',
+      comment: 'お墓参りの帰りに立ち寄った。湖面に映る富士山が壮大だった。',
+      photo: null,
+    },
+    {
+      lat: 37.0400, lng: 140.0540,
+      pref: '栃木県',
+      name: '那須',
+      comment: '緑が深くて静かな場所。ゆっくり過ごした。',
+      photo: null,
+    },
+    {
+      lat: 36.9406, lng: 140.8900,
+      pref: '福島県',
+      name: 'いわき',
+      comment: '太平洋の海岸線。遠くまで来たねと話した。',
+      photo: null,
+    },
+    {
+      lat: 36.5613, lng: 136.6562,
+      pref: '石川県',
+      name: '金沢',
+      comment: '兼六園の夕暮れが美しかった。加賀料理も堪能した。',
+      photo: null,
+    },
+    {
+      lat: 36.1462, lng: 137.2522,
+      pref: '岐阜県',
+      name: '高山',
+      comment: '古い町並みを車椅子で一緒に歩いた。飛騨牛が絶品だった。',
+      photo: null,
+    },
+    {
+      lat: 35.8076, lng: 137.2457,
+      pref: '岐阜県',
+      name: '下呂',
+      comment: '温泉の町。湯けむりの中でゆったりした時間を過ごした。',
+      photo: null,
+    },
+    {
+      lat: 35.2765, lng: 136.2633,
+      pref: '滋賀県',
+      name: '彦根',
+      comment: '彦根城とひこにゃんに会いに。青い空が広がっていた。',
+      photo: null,
+    },
+    {
+      lat: 35.3681, lng: 136.4690,
+      pref: '岐阜県',
+      name: '関ヶ原',
+      comment: '歴史の舞台に立った。古戦場の風が吹いていた。',
+      photo: null,
+    },
+    {
+      lat: 35.1814, lng: 136.9065,
+      pref: '愛知県',
+      name: '名古屋',
+      comment: '大きな駅、賑やかな街。名古屋めしを楽しんだ。',
+      photo: null,
+    },
+    {
+      lat: 36.6486, lng: 138.1948,
+      pref: '長野県',
+      name: '長野',
+      comment: '山に囲まれた清々しい空気。善光寺に立ち寄った。',
+      photo: null,
+    },
+    {
+      lat: 35.6762, lng: 139.6503,
+      pref: '東京都',
+      name: '文京区（拠点）',
+      comment: 'ここから、全国へ。curaの出発点。',
+      photo: null,
+    },
+  ];
+
+  // ── マーカー追加 ──
+  spots.forEach(spot => {
+    const marker = L.marker([spot.lat, spot.lng], { icon: makeIcon() }).addTo(map);
+
+    const photoHtml = spot.photo
+      ? `<img src="${spot.photo}" class="popup-photo" alt="${spot.name}">`
+      : `<div class="popup-photo-placeholder">— 写真準備中 —</div>`;
+
+    const popupHtml = `
+      <div>
+        ${photoHtml}
+        <div class="popup-body">
+          <div class="popup-location">${spot.pref}</div>
+          <div class="popup-title">${spot.name}</div>
+          <div class="popup-comment">${spot.comment}</div>
+        </div>
+      </div>
+    `;
+
+    marker.bindPopup(popupHtml, {
+      maxWidth: 260,
+      minWidth: 220,
+    });
+  });
+
+  // ── カウンター ──
+  document.getElementById('spot-count').textContent = spots.length;
+</script>
+
+</body>
+</html>
