@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>創業計画書 | cura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;700&family=Noto+Sans+JP:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans JP', "Hiragino Kaku Gothic ProN", sans-serif;
+      font-size: 9pt;
+      color: #1a1a1a;
+      background: #f0f0f0;
+      line-height: 1.6;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto 16px;
+      background: white;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+      padding: 12mm 14mm 14mm;
+      position: relative;
+    }
+
+    /* ── タイトル ── */
+    .doc-title {
+      text-align: center;
+      margin-bottom: 6px;
+    }
+    .doc-title h1 {
+      font-size: 16pt;
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      border-bottom: 2.5px solid #1a1a1a;
+      display: inline-block;
+      padding-bottom: 4px;
+      margin-bottom: 6px;
+    }
+    .doc-meta {
+      display: flex;
+      justify-content: flex-end;
+      gap: 24px;
+      font-size: 8.5pt;
+      margin-bottom: 8px;
+    }
+    .doc-meta-item { display: flex; gap: 6px; align-items: center; }
+    .doc-meta-label { color: #666; }
+    .doc-meta-val { border-bottom: 1px solid #999; min-width: 120px; padding: 0 4px; }
+
+    /* ── セクション共通 ── */
+    .section {
+      border: 1px solid #999;
+      margin-bottom: -1px;
+    }
+    .section-header {
+      background: #2a1f1a;
+      color: white;
+      padding: 4px 8px;
+      font-size: 8.5pt;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .section-num {
+      background: #b5647a;
+      color: white;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8pt;
+      flex-shrink: 0;
+    }
+    .section-body {
+      padding: 8px 10px;
+    }
+
+    /* ── テキストエリア風 ── */
+    .text-area {
+      min-height: 48px;
+      border: none;
+      width: 100%;
+      font-family: inherit;
+      font-size: 9pt;
+      line-height: 1.9;
+      resize: none;
+      background: transparent;
+    }
+    .lined-area {
+      background-image: repeating-linear-gradient(
+        to bottom,
+        transparent,
+        transparent 22px,
+        #ddd 22px,
+        #ddd 23px
+      );
+      min-height: 66px;
+      padding: 2px 4px;
+      font-size: 9pt;
+      line-height: 23px;
+    }
+
+    /* ── グリッドレイアウト ── */
+    .row {
+      display: flex;
+      border-top: 1px solid #ccc;
+    }
+    .row:first-child { border-top: none; }
+    .cell {
+      padding: 5px 8px;
+      border-right: 1px solid #ccc;
+      font-size: 8.5pt;
+      line-height: 1.7;
+    }
+    .cell:last-child { border-right: none; }
+    .cell-label {
+      background: #f5f5f5;
+      font-weight: 500;
+      color: #333;
+      min-width: 80px;
+      white-space: nowrap;
+      display: flex;
+      align-items: flex-start;
+    }
+    .cell-val { flex: 1; }
+
+    /* ── 略歴テーブル ── */
+    .history-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 8.5pt;
+    }
+    .history-table th {
+      background: #f0ece8;
+      padding: 4px 6px;
+      border: 1px solid #ccc;
+      font-weight: 500;
+      text-align: center;
+    }
+    .history-table td {
+      padding: 4px 6px;
+      border: 1px solid #ccc;
+      vertical-align: top;
+      line-height: 1.7;
+    }
+    .history-table .yr { width: 60px; text-align: center; }
+    .history-table .content { }
+
+    /* ── 資金調達テーブル ── */
+    .fund-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 8.5pt;
+    }
+    .fund-table th {
+      background: #f0ece8;
+      padding: 4px 6px;
+      border: 1px solid #ccc;
+      font-weight: 500;
+      text-align: center;
+    }
+    .fund-table td {
+      padding: 5px 8px;
+      border: 1px solid #ccc;
+      vertical-align: top;
+    }
+    .fund-table .amt { text-align: right; font-weight: 500; }
+    .fund-table .total-row td { background: #2a1f1a; color: white; font-weight: 500; }
+    .fund-table .total-row .amt { color: #f0d0a0; }
+
+    /* ── 見通しテーブル ── */
+    .outlook-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 8.5pt;
+    }
+    .outlook-table th {
+      background: #2a1f1a;
+      color: white;
+      padding: 5px 6px;
+      border: 1px solid #555;
+      font-weight: 400;
+      text-align: center;
+    }
+    .outlook-table td {
+      padding: 5px 8px;
+      border: 1px solid #ccc;
+      text-align: right;
+      vertical-align: middle;
+    }
+    .outlook-table .label-cell {
+      text-align: left;
+      background: #f5f5f5;
+      font-weight: 500;
+    }
+    .outlook-table .sub-label {
+      text-align: left;
+      padding-left: 16px;
+      color: #555;
+    }
+    .outlook-table .total-row td { background: #f0ece8; font-weight: 700; }
+    .outlook-table .profit-row td { background: #2a1f1a; color: white; font-weight: 700; }
+
+    /* ── 注釈 ── */
+    .note {
+      font-size: 7.5pt;
+      color: #666;
+      margin-top: 4px;
+      line-height: 1.6;
+    }
+
+    /* ── フッター ── */
+    .page-footer {
+      position: absolute;
+      bottom: 8mm;
+      left: 14mm; right: 14mm;
+      display: flex;
+      justify-content: space-between;
+      font-size: 7pt;
+      color: #999;
+      border-top: 1px solid #ddd;
+      padding-top: 4px;
+    }
+
+    /* ── 印刷 ── */
+    @media print {
+      body { background: white; }
+      .page {
+        width: 100%;
+        margin: 0;
+        box-shadow: none;
+        padding: 10mm 12mm 12mm;
+        page-break-after: always;
+      }
+      .page:last-child { page-break-after: auto; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════
+     P1：創業計画書
+════════════════════ -->
+<div class="page">
+
+  <div class="doc-title">
+    <h1>創　業　計　画　書</h1>
+  </div>
+
+  <div class="doc-meta">
+    <div class="doc-meta-item">
+      <span class="doc-meta-label">申請日</span>
+      <span class="doc-meta-val">2026年　　月　　日</span>
+    </div>
+    <div class="doc-meta-item">
+      <span class="doc-meta-label">氏名</span>
+      <span class="doc-meta-val">高野　まさみ　　　　　　　印</span>
+    </div>
+  </div>
+
+  <!-- 1. 創業の動機 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">1</span>
+      創業の動機（創業しようとした動機・きっかけ）
+    </div>
+    <div class="section-body">
+      <div class="lined-area">
+        父が脊髄損傷で25年間自宅で生き続けた。母は2016年のクリスマスイブに転落事故で背骨を16本骨折し、同じ脊髄損傷の診断を受けた。25年にわたる家族の介護を通じて、「本当に必要なケアは介護保険制度の外にある」という現実を痛感した。<br>
+        介護福祉士として25年のキャリアを積む中で、富裕層の高齢者やその家族が「もっと自由に、もっと尊厳を持って生きたい」というニーズを持ちながら、それに応えるサービスが文京区エリアにほぼ存在しないことを確認した。<br>
+        「最期まで、自宅で。自分らしく。」を実現するプライベートケアサービスとして、curaを創業する。
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. 経営者略歴 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">2</span>
+      経営者の略歴等
+    </div>
+    <div class="section-body">
+      <table class="history-table">
+        <tr>
+          <th class="yr">年月</th>
+          <th class="content">経歴・保有資格・事業経験等</th>
+        </tr>
+        <tr>
+          <td class="yr">平成14年〜</td>
+          <td>父（脊髄損傷）の介護開始。以降約23年にわたり家族介護に従事（介護以外の職歴並行あり）</td>
+        </tr>
+        <tr>
+          <td class="yr">令和2年4月</td>
+          <td>社会福祉法人泉湧く家 入職・グループホーム勤務開始（豊島区）・介護職員としてのキャリア開始</td>
+        </tr>
+        <tr>
+          <td class="yr">令和5年</td>
+          <td>介護福祉士資格取得</td>
+        </tr>
+        <tr>
+          <td class="yr">令和6年4月</td>
+          <td>同法人・小規模多機能こまごめに異動（現在3年目）</td>
+        </tr>
+        <tr>
+          <td class="yr">令和8年9月</td>
+          <td>cura 開業予定</td>
+        </tr>
+        <tr>
+          <td class="yr">（取得予定）</td>
+          <td>簿記資格（経営管理のため取得目標）</td>
+        </tr>
+        <tr>
+          <td class="yr"></td>
+          <td></td>
+        </tr>
+      </table>
+      <div class="note">※家族の介護経験：父（脊髄損傷25年）・母（2016年転落事故・脊髄損傷）・長男（2024年希少悪性リンパ腫・現在寛解）</div>
+    </div>
+  </div>
+
+  <!-- 3. 取扱商品・サービス -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">3</span>
+      取扱商品・サービス（予定）
+    </div>
+    <div class="section-body">
+      <div class="row">
+        <div class="cell cell-label">サービス名</div>
+        <div class="cell cell-val">プライベートケアサービス「cura（クーラ）」</div>
+      </div>
+      <div class="row">
+        <div class="cell cell-label">内容</div>
+        <div class="cell cell-val">
+          介護保険外の完全自費プライベートケア。介護福祉士が利用者のご自宅を訪問し、身体介護・生活支援・外出同行・旅行同行・病院同行・ペット対応等、利用者の「したいこと」を軸にオーダーメイドで提供。看護師（業務委託）がバックアップし、健康管理・医療的判断を電話でサポートする体制。夜間オンコールにも対応。
+        </div>
+      </div>
+      <div class="row">
+        <div class="cell cell-label">セールス<br>ポイント</div>
+        <div class="cell cell-val">
+          ①介護福祉士＋看護師のW資格体制（文京区エリアで同形態の競合ほぼなし）<br>
+          ②24時間電話相談対応（担当者直通・本部電話ではない）<br>
+          ③富裕層特化・完全オーダーメイド（制度に縛られない自由なケア設計）<br>
+          ④代表自身の25年介護経験と家族介護の実体験に基づく信頼性
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. 取引先・競合等 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">4</span>
+      取引先・競合等（予定）
+    </div>
+    <div class="section-body">
+      <div class="row">
+        <div class="cell cell-label">販売先</div>
+        <div class="cell cell-val">文京区・千代田区・新宿区・豊島区エリア在住の富裕層高齢者およびその家族（全国からの依頼対応）</div>
+      </div>
+      <div class="row">
+        <div class="cell cell-label">紹介元<br>（予定）</div>
+        <div class="cell cell-val">クリニック・医療ソーシャルワーカー・ケアマネジャー・相続弁護士・高級不動産会社との紹介ネットワーク構築予定</div>
+      </div>
+      <div class="row">
+        <div class="cell cell-label">競合</div>
+        <div class="cell cell-val">大手訪問介護事業者・自費介護マッチングアプリ・家政婦紹介サービス等</div>
+      </div>
+      <div class="row">
+        <div class="cell cell-label">差別化</div>
+        <div class="cell cell-val">大手は標準化ケアのみ・マッチングは質の保証なし。W資格体制×24時間対応×富裕層特化の組み合わせは文京区エリアで空白市場</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>cura 創業計画書</span>
+    <span>高野まさみ — 社外秘</span>
+  </div>
+</div>
+
+<!-- ════════════════════
+     P2：資金・見通し
+════════════════════ -->
+<div class="page">
+
+  <div style="text-align:right; font-size:8pt; color:#666; margin-bottom:6px;">
+    高野まさみ（cura）— 創業計画書（続き）
+  </div>
+
+  <!-- 5. 従業員 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">5</span>
+      従業員（予定）
+    </div>
+    <div class="section-body">
+      <div class="row">
+        <div class="cell cell-label">開業時</div>
+        <div class="cell cell-val">代表（高野まさみ）1名 ＋ 看護師1名（業務委託契約・月固定5万円＋現場稼働時間給）</div>
+      </div>
+      <div class="row">
+        <div class="cell cell-label">拡大時</div>
+        <div class="cell cell-val">顧客が月12件を超えたタイミングで介護福祉士1〜2名を直接雇用予定（手取り30万円以上を目標報酬として設定）</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. 必要な資金と調達方法 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">6</span>
+      必要な資金と調達方法
+    </div>
+    <div class="section-body">
+      <table class="fund-table">
+        <tr>
+          <th style="width:35%">必要な資金</th>
+          <th style="width:15%">金額</th>
+          <th style="width:50%">内訳・用途</th>
+        </tr>
+        <tr>
+          <td>【設備資金】</td><td class="amt"></td><td></td>
+        </tr>
+        <tr>
+          <td style="padding-left:16px;">PC・タブレット・周辺機器</td>
+          <td class="amt">¥200,000</td>
+          <td>業務管理・請求書発行・顧客管理システム用</td>
+        </tr>
+        <tr>
+          <td style="padding-left:16px;">ウェブサイト・ブランディング</td>
+          <td class="amt">¥100,000</td>
+          <td>HP制作・名刺・パンフレット・営業ツール</td>
+        </tr>
+        <tr>
+          <td>【運転資金】</td><td class="amt"></td><td></td>
+        </tr>
+        <tr>
+          <td style="padding-left:16px;">看護師業務委託費（3ヶ月）</td>
+          <td class="amt">¥150,000</td>
+          <td>月5万円×3ヶ月</td>
+        </tr>
+        <tr>
+          <td style="padding-left:16px;">通信・システム費（6ヶ月）</td>
+          <td class="amt">¥90,000</td>
+          <td>携帯・クラウドサービス・予約管理システム等</td>
+        </tr>
+        <tr>
+          <td style="padding-left:16px;">保険料・登録費</td>
+          <td class="amt">¥60,000</td>
+          <td>賠償責任保険・第2種社会福祉事業届出費用等</td>
+        </tr>
+        <tr>
+          <td style="padding-left:16px;">交通費・営業活動費</td>
+          <td class="amt">¥100,000</td>
+          <td>JVパートナー開拓・ケアマネ挨拶回り等</td>
+        </tr>
+        <tr>
+          <td style="padding-left:16px;">予備費</td>
+          <td class="amt">¥300,000</td>
+          <td>開業後3〜6ヶ月の収支安定までのバッファ</td>
+        </tr>
+        <tr class="total-row">
+          <td>合計</td>
+          <td class="amt">¥1,000,000</td>
+          <td></td>
+        </tr>
+      </table>
+
+      <div style="margin-top:10px;">
+        <table class="fund-table">
+          <tr>
+            <th style="width:35%">調達方法</th>
+            <th style="width:15%">金額</th>
+            <th style="width:50%">備考</th>
+          </tr>
+          <tr>
+            <td>自己資金</td>
+            <td class="amt">¥300,000</td>
+            <td>自己貯蓄</td>
+          </tr>
+          <tr>
+            <td>日本政策金融公庫（本借入）</td>
+            <td class="amt">¥700,000</td>
+            <td>新創業融資制度</td>
+          </tr>
+          <tr class="total-row">
+            <td>合計</td>
+            <td class="amt">¥1,000,000</td>
+            <td></td>
+          </tr>
+        </table>
+      </div>
+      <div class="note">※自己資金・借入額は概算。面談時に調整可。</div>
+    </div>
+  </div>
+
+  <!-- 7. 事業の見通し -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">7</span>
+      事業の見通し（月平均）
+    </div>
+    <div class="section-body">
+      <table class="outlook-table">
+        <tr>
+          <th style="width:40%">項目</th>
+          <th style="width:30%">創業当初<br>（開業〜3ヶ月）</th>
+          <th style="width:30%">軌道に乗った後<br>（7ヶ月〜）</th>
+        </tr>
+        <tr>
+          <td class="label-cell">【売上高】</td>
+          <td></td><td></td>
+        </tr>
+        <tr>
+          <td class="sub-label">プライベートケア（月4件→12件 × 3h）</td>
+          <td>¥105,600</td>
+          <td>¥316,800</td>
+        </tr>
+        <tr>
+          <td class="sub-label">入会金（月1件→3件）</td>
+          <td>¥36,300</td>
+          <td>¥108,900</td>
+        </tr>
+        <tr>
+          <td class="sub-label">夜間オンコール（月1件→4件）</td>
+          <td>¥16,500</td>
+          <td>¥66,000</td>
+        </tr>
+        <tr>
+          <td class="sub-label">看護師同行（軌道後 月3件 × 3h）</td>
+          <td>—</td>
+          <td>¥148,500</td>
+        </tr>
+        <tr class="total-row">
+          <td>売上合計</td>
+          <td>¥158,400</td>
+          <td>¥640,200</td>
+        </tr>
+        <tr>
+          <td class="label-cell">【経費】</td>
+          <td></td><td></td>
+        </tr>
+        <tr>
+          <td class="sub-label">看護師業務委託費</td>
+          <td>¥50,000</td>
+          <td>¥50,000</td>
+        </tr>
+        <tr>
+          <td class="sub-label">通信・システム費</td>
+          <td>¥15,000</td>
+          <td>¥15,000</td>
+        </tr>
+        <tr>
+          <td class="sub-label">交通費・保険料・その他</td>
+          <td>¥15,000</td>
+          <td>¥20,000</td>
+        </tr>
+        <tr class="total-row">
+          <td>経費合計</td>
+          <td>¥80,000</td>
+          <td>¥85,000</td>
+        </tr>
+        <tr class="profit-row">
+          <td>利益（代表報酬含む）</td>
+          <td>¥78,400</td>
+          <td>¥555,200</td>
+        </tr>
+      </table>
+      <div class="note">
+        ※創業当初の代表生活費は退職後の雇用保険給付金でカバー予定。給付期間中は顧客との契約・金銭授受なし、準備活動・問い合わせ対応のみ実施。<br>
+        ※売上単価：プライベートケア¥8,800/h・看護師同行¥16,500/h・入会金¥36,300・夜間オンコール¥16,500/月（すべて税込）<br>
+        ※軌道に乗った後の月12件がまさみ1人の現場限界ラインと想定。その時点で介護士採用を検討。
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. 特記事項 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">8</span>
+      特記事項・補足
+    </div>
+    <div class="section-body">
+      <div class="lined-area" style="min-height:44px;">
+        ・特定創業支援等事業セミナー（文京区）：2026年6月受講予定<br>
+        ・第2種社会福祉事業として届出予定（届出のみ・許認可不要）<br>
+        ・HPは開業前より公開・JVパートナーへの営業活動を給付期間中に実施し、開業日に複数件同時スタートを目指す
+      </div>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <span>cura 創業計画書</span>
+    <span>高野まさみ — 社外秘</span>
+  </div>
+</div>
+
+</body>
+</html>
