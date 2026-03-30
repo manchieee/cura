@@ -407,6 +407,8 @@
       maxWidth: 260,
       minWidth: 220,
     });
+    marker.on('mouseover', function() { this.openPopup(); });
+    marker.on('mouseout', function() { this.closePopup(); });
   });
 
   // ── カウンター ──
