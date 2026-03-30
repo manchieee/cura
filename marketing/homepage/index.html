@@ -202,7 +202,7 @@
             font-size: 0.85rem;
             font-weight: 300;
             letter-spacing: 0.2em;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255,255,255,0.85);
             margin-bottom: 40px;
             opacity: 0;
             animation: fadeUp 1.2s ease forwards 0.65s;
@@ -984,6 +984,11 @@
         <div class="hero-scroll">scroll</div>
     </section>
 
+    <!-- FAMILY MESSAGE -->
+    <div style="background:var(--white); padding:28px 24px; text-align:center; border-bottom:1px solid rgba(138,58,85,0.1);">
+        <p style="font-family:'Noto Serif JP',serif; font-size:0.95rem; color:var(--navy); letter-spacing:0.08em; line-height:2.0; margin:0;">「してあげたいのに、できない。」<br><span style="font-size:0.85rem; color:rgba(42,31,26,0.6);">その重荷を、curaが引き受けます。</span></p>
+    </div>
+
     <!-- LINE REGISTER BANNER -->
     <div style="background:var(--navy); border-top:1px solid rgba(201,168,130,0.25); border-bottom:1px solid rgba(201,168,130,0.25); padding:20px 24px; text-align:center;">
         <p style="color:var(--gold); font-family:'Cormorant Garamond',serif; font-size:0.78rem; letter-spacing:0.25em; margin-bottom:10px; text-transform:uppercase;">LINE Official Account</p>
@@ -1053,32 +1058,37 @@
                 <div class="service-card">
                     <span class="service-icon">I.</span>
                     <h3>オーダーメイド・ケア</h3>
-                    <p>ご自宅での生活支援から外出・旅行の同行まで、制限なくサポートします。あなたの「やりたい」を形にします。</p>
+                    <p>公的介護保険では制限される時間・内容・場所を、すべてあなたの希望に合わせます。ご自宅での生活支援・身体介助から日常のお手伝いまで、制限なくサポートします。</p>
                 </div>
                 <div class="service-card">
                     <span class="service-icon">II.</span>
-                    <h3>24時間オンコール体制</h3>
-                    <p>夜間・早朝・緊急時にも専門スタッフと繋がれる安心をお届けします。</p>
+                    <h3>ご家族の休息支援</h3>
+                    <p>ご家族が自分の時間を取り戻し、心からの笑顔でご本人と向き合えるよう全力でサポートします。</p>
                 </div>
                 <div class="service-card">
                     <span class="service-icon">III.</span>
-                    <h3>看護師バックアップ</h3>
-                    <p>医療的な視点からの健康管理とアドバイスで、生活の質を高める安心の土台を築きます。</p>
+                    <h3>外出・旅行同行</h3>
+                    <p>お買い物、お食事、美術館、温泉、国内旅行まで。「行きたい場所がある」その気持ちを、私たちが形にします。</p>
                 </div>
                 <div class="service-card">
                     <span class="service-icon">IV.</span>
-                    <h3>ご家族の休息支援</h3>
-                    <p>ご家族が自分の時間を取り戻し、心からの笑顔でご本人と向き合えるよう全力で伴走します。</p>
+                    <h3>受診・入退院同行</h3>
+                    <p>受診の付き添い・診察室での代理聴取から、検査・入退院時の同行まで対応します。医療者とご本人・ご家族の橋渡し役を担います。</p>
                 </div>
                 <div class="service-card">
                     <span class="service-icon">V.</span>
-                    <h3>病院・外出同行</h3>
-                    <p>受診の付き添い・診察室での代理聴取から、検査・入退院時の同行まで対応します。医療者とご本人・ご家族の橋渡し役として、大切な場面に寄り添います。</p>
+                    <h3>ペットのお世話</h3>
+                    <p>散歩・食事・動物病院への同行など、大切な家族の一員であるペットのケアもお任せください。ご本人が安心して療養できる環境を整えます。</p>
                 </div>
                 <div class="service-card">
                     <span class="service-icon">VI.</span>
-                    <h3>ペットのお世話</h3>
-                    <p>散歩・食事・動物病院への同行など、大切な家族の一員であるペットのケアもお任せください。ご本人が安心して療養できる環境を整えます。</p>
+                    <h3>看護師バックアップ</h3>
+                    <p>介護福祉士が担えない医療的判断・健康管理・緊急時のアドバイスを看護師が担います。「何かおかしい」と感じた時の専門的な判断が、自宅療養の安心を支えます。</p>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon">VII.</span>
+                    <h3>24時間オンコール体制</h3>
+                    <p>夜間・早朝・緊急時にも専門スタッフと繋がれます。現在は電話による緊急相談対応。順次夜間駆けつけ対応に拡大予定です。</p>
                 </div>
             </div>
 
@@ -1345,6 +1355,14 @@
                         <span class="faq-icon">+</span>
                     </button>
                     <div class="faq-body">1日3回までのご連絡は月額料金に含まれています。深夜の体制を安定して維持し、本当に必要な方へ確実に対応するため、4回目以降は1回につき2,200円を頂戴しております。緊急性の高いご連絡を最優先にお受けするための仕組みです。</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-btn" onclick="toggleFaq(this)">
+                        介護福祉士と看護師では、何が違うのですか？
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-body">介護福祉士は生活支援・身体介助・外出同行などを担います。一方、看護師は医療的な判断・健康状態の評価・緊急時のアドバイスなど、介護福祉士では法律上行えない医療行為や判断を担います。curaはこの両者がチームを組むことで、生活面と医療面の両方をカバーします。</div>
                 </div>
 
                 <div class="faq-item">
