@@ -1736,4 +1736,8 @@
 
         const reserveSection = document.getElementById('reserve');
         const reserveObserver = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersec
+            if (entries[0].isIntersecting) { loadSlots(); reserveObserver.disconnect(); }
+        });
+        if (reserveSection) reserveObserver.observe(reserveSection);
+
+    </script>
