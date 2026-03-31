@@ -1,0 +1,29 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Homepage (static)",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [".claude/serve.js"],
+      "port": 3000
+    },
+    {
+      "name": "cura-pages",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [".claude/serve-pages.js"],
+      "port": 3001
+    },
+    {
+      "name": "business-plan",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [".claude/serve-business.js"],
+      "port": 3002
+    },
+    {
+      "name": "ops",
+      "runtimeExecutable": "node",
+      "runtimeArgs": [".claude/serve-ops.js"],
+      "port": 3003
+    }
+  ]
+}

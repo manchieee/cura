@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cura — 複雑度判定基準書</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Serif JP', serif;
+    background: #f9f6f2;
+    color: #2a1f1a;
+    padding: 40px 20px;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 48px 56px;
+  }
+
+  .doc-header {
+    border-bottom: 2px solid #8a3a55;
+    padding-bottom: 20px;
+    margin-bottom: 36px;
+  }
+
+  .doc-title {
+    font-size: 22px;
+    font-weight: 600;
+    color: #8a3a55;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .doc-meta {
+    font-size: 12px;
+    color: #888;
+    letter-spacing: 1px;
+  }
+
+  .doc-note {
+    font-size: 12px;
+    color: #a85f78;
+    margin-top: 8px;
+    padding: 10px 14px;
+    border-left: 3px solid #c9a882;
+    background: #faf7f4;
+  }
+
+  h2 {
+    font-size: 14px;
+    letter-spacing: 2px;
+    color: #8a3a55;
+    text-transform: uppercase;
+    margin: 36px 0 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e8ddd5;
+  }
+
+  h3 {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #2a1f1a;
+    margin: 20px 0 10px;
+  }
+
+  p {
+    font-size: 13px;
+    line-height: 2;
+    color: #3a2e2a;
+    margin-bottom: 12px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    margin-bottom: 24px;
+  }
+
+  th {
+    background: #8a3a55;
+    color: #fff;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #e8ddd5;
+    line-height: 1.8;
+    vertical-align: top;
+  }
+
+  tr:nth-child(even) td { background: #faf7f4; }
+
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 2px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  .badge-std { background: #e8ddd5; color: #5a4a42; }
+  .badge-a { background: #f5e6c8; color: #8a6020; }
+  .badge-b { background: #fde8d8; color: #a04020; }
+  .badge-c { background: #f8d8d8; color: #a02020; }
+
+  ul {
+    list-style: none;
+    font-size: 13px;
+    line-height: 2;
+    color: #3a2e2a;
+    margin-bottom: 16px;
+    padding-left: 4px;
+  }
+
+  ul li::before {
+    content: '・';
+    color: #c9a882;
+  }
+
+  .process-box {
+    background: #faf7f4;
+    border: 1px solid #e8ddd5;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+
+  .process-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 14px;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+
+  .step-num {
+    background: #8a3a55;
+    color: #fff;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .alert-box {
+    background: #fff8f0;
+    border: 1px solid #f0c080;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    line-height: 2;
+  }
+
+  .alert-box strong {
+    color: #a04020;
+  }
+
+  .refusal-box {
+    background: #f8f8f8;
+    border-left: 4px solid #8a3a55;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    font-size: 13px;
+    line-height: 2;
+    color: #3a2e2a;
+  }
+
+  .phase-table th:first-child { width: 140px; }
+
+  .sign-area {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .sign-box {
+    border-top: 1px solid #2a1f1a;
+    padding-top: 10px;
+    font-size: 12px;
+    color: #888;
+  }
+
+  .footer {
+    margin-top: 48px;
+    padding-top: 16px;
+    border-top: 1px solid #e8ddd5;
+    font-size: 11px;
+    color: #aaa;
+    text-align: center;
+    letter-spacing: 1px;
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .page { padding: 32px 40px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="doc-header">
+    <div class="doc-title">複雑度判定基準書</div>
+    <div class="doc-meta">cura — 内部運用文書　／　作成：2026-03-31　／　版：1.0</div>
+    <div class="doc-note">この文書はアセスメント時に使用する内部基準です。判定結果はケアプランに記載し、利用者・家族に説明のうえ確認署名をいただきます。</div>
+  </div>
+
+  <!-- 1. 複雑度区分 -->
+  <h2>1. 複雑度区分と料金加算</h2>
+  <p>基本料金（¥12,000/h）に以下の加算が適用されます。判定はアセスメント時に行います（フェーズ1はまさみ単独判定・フェーズ2以降は看護師との合議制）。</p>
+
+  <table>
+    <tr>
+      <th>区分</th>
+      <th>内容</th>
+      <th>顧客加算</th>
+      <th>スタッフ手当</th>
+    </tr>
+    <tr>
+      <td><span class="badge badge-std">標準</span></td>
+      <td>身体介護メイン・医療的ケアなし・行動障害なし</td>
+      <td>なし</td>
+      <td>なし</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-a">A</span></td>
+      <td>認知症・精神疾患・軽度の行動障害あり</td>
+      <td>+¥500/h</td>
+      <td>+¥200〜300/h</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-b">B</span></td>
+      <td>医療的ケア補助が必要なケース</td>
+      <td>+¥1,000/h</td>
+      <td>+¥400〜500/h</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-c">C</span></td>
+      <td>高度医療リスク・常時観察が必要なケース</td>
+      <td>+¥1,500/h</td>
+      <td>+¥500〜600/h</td>
+    </tr>
+  </table>
+
+  <!-- 2. 判定条件 -->
+  <h2>2. 判定条件</h2>
+
+  <h3><span class="badge badge-std">標準</span>　以下をすべて満たす</h3>
+  <ul>
+    <li>介護度1〜2・または要支援</li>
+    <li>身体介護・生活支援メイン</li>
+    <li>医療的ケアなし</li>
+    <li>精神疾患・認知症の診断なし（または日常生活への支障が軽微）</li>
+    <li>行動障害なし</li>
+  </ul>
+
+  <h3><span class="badge badge-a">A</span>　以下のいずれかに該当</h3>
+  <ul>
+    <li>認知症高齢者日常生活自立度 Ⅱ以上</li>
+    <li>精神保健福祉手帳を所持</li>
+    <li>大声・暴言・徘徊・繰り返し電話等の行動障害あり（暴力は除く→別途判断）</li>
+    <li>介護度が低くてもアセスメントでメンタル重度と判断された場合</li>
+  </ul>
+
+  <h3><span class="badge badge-b">B</span>　以下のいずれかに該当</h3>
+  <ul>
+    <li>口腔・鼻腔吸引が必要</li>
+    <li>胃ろう・経鼻経管栄養の管理補助</li>
+    <li>インスリン注射・点滴管理</li>
+    <li>褥瘡処置・カテーテル管理</li>
+    <li>身体障害者手帳1〜2級（医療依存度が高いケース）</li>
+    <li>※介護士が研修修了済みの場合は対応可。未修了の場合は看護師同行必須</li>
+  </ul>
+
+  <h3><span class="badge badge-c">C</span>　以下のいずれかに該当</h3>
+  <ul>
+    <li>常時バイタル観察が必要と看護師が判断したケース</li>
+    <li>介護度4〜5かつ医療依存度が高い</li>
+    <li>単独での医療リスクが高くまさみ＋看護師合議でCと判定</li>
+    <li>看護師同行必須（毎回）</li>
+  </ul>
+
+  <!-- 3. 看護師ができること -->
+  <h2>3. 看護師対応範囲（B/C判断の軸）</h2>
+  <p>以下は看護師が対応可能な医療的ケアです。介護士が研修修了すれば吸引・経管栄養は一部対応可能ですが、それ以外は看護師が必要です。</p>
+  <ul>
+    <li>吸引（口腔・鼻腔・気管カニューレ）</li>
+    <li>経管栄養（胃ろう・経鼻）</li>
+    <li>インスリン注射・点滴管理</li>
+    <li>褥瘡処置・カテーテル管理</li>
+    <li>バイタル測定＋医療的判断</li>
+    <li>服薬管理・指導</li>
+  </ul>
+
+  <!-- 4. 判定プロセス -->
+  <h2>4. 判定プロセス</h2>
+
+  <div class="process-box">
+    <div class="process-step">
+      <div class="step-num">1</div>
+      <div>初回問い合わせ時に基本情報を確認（介護度・手帳の有無・既往歴・家族の懸念点）</div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">2</div>
+      <div>アセスメント実施。介護度・手帳を一次判断の軸とし、実態をアセスメントで確認して最終判定<br>
+        <small style="color:#a85f78;">・フェーズ1（開業〜介護士追加まで）：まさみによる単独判定<br>
+        ・フェーズ2以降：まさみ＋看護師による合議制・両者サイン</small>
+      </div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">3</div>
+      <div>判定結果を記録用紙に記載・署名（フェーズ2以降は両者署名）</div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">4</div>
+      <div>ケアプランに判定区分・加算額・理由を明記。利用者または家族に説明・確認署名をいただく（全フェーズ共通）</div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">5</div>
+      <div>状態変化時は随時見直し。利用者・家族から異議がある場合は再アセスメントを実施</div>
+    </div>
+  </div>
+
+  <!-- 5. メンタル・行動障害ありの受け入れ条件 -->
+  <h2>5. メンタル・行動障害ありの受け入れ条件</h2>
+
+  <div class="alert-box">
+    <strong>デイサービス等で出禁歴がある方・暴力歴がある方は必ず下記を確認してください。</strong>
+  </div>
+
+  <h3>受け入れ前に必須の確認事項</h3>
+  <ul>
+    <li>出禁・退所になった理由の確認（施設・家族から）</li>
+    <li>主治医（精神科・心療内科）への通院継続の確認</li>
+    <li>主治医意見書の提出</li>
+    <li>初回面談：まさみ＋看護師で対面必須（電話のみ不可）</li>
+    <li>暴力歴がある場合→フェーズ2以降まで受け入れ不可</li>
+  </ul>
+
+  <h3>受け入れ後の条件</h3>
+  <ul>
+    <li>初回ケアは看護師同行必須</li>
+    <li>暴言・暴力が発生した場合は即日契約解除の条件を事前に書面で合意</li>
+    <li>2名体制が必要と判断した場合は2名体制料金を適用（別途見積もり）</li>
+  </ul>
+
+  <!-- 6. フェーズ別受け入れ範囲 -->
+  <h2>6. フェーズ別受け入れ範囲</h2>
+
+  <table class="phase-table">
+    <tr>
+      <th>フェーズ</th>
+      <th>体制</th>
+      <th>受け入れ範囲</th>
+      <th>受け入れ不可</th>
+    </tr>
+    <tr>
+      <td>フェーズ1<br><small>開業〜</small></td>
+      <td>まさみ1名</td>
+      <td>標準・A（メンタル軽度まで）</td>
+      <td>暴力リスクあり・B・C</td>
+    </tr>
+    <tr>
+      <td>フェーズ2<br><small>介護士追加後</small></td>
+      <td>2名体制可</td>
+      <td>B・暴力リスクあり（2名必須）</td>
+      <td>C（看護師常時同行不可の場合）</td>
+    </tr>
+    <tr>
+      <td>フェーズ3<br><small>体制拡充後</small></td>
+      <td>複数名・看護師同行可</td>
+      <td>C・重度医療依存</td>
+      <td>—</td>
+    </tr>
+  </table>
+
+  <!-- 7. 断り方テンプレ -->
+  <h2>7. お断りテンプレート</h2>
+  <p>現時点で受け入れができないケースには、以下の文言を参考に丁寧にお断りします。</p>
+
+  <div class="refusal-box">
+    「お問い合わせいただきありがとうございます。現在、curaは少人数体制でスタートしており、安全なケアを提供するために受け入れ範囲を段階的に広げております。現時点では〇〇様の状況に対応できる体制が整っておらず、大変申し訳ございません。体制が整い次第、あらためてご連絡させていただくことは可能です。ご希望の場合はお名前と連絡先をお知らせください。」
+  </div>
+
+  <!-- 8. 申告内容と実態が異なる場合 -->
+  <h2>8. 申告内容と実態が異なる場合の対応</h2>
+
+  <p>アセスメント時の申告内容と実際のケア状況が著しく異なる場合、以下の対応を行います。</p>
+
+  <h3>契約条項（契約書・ケアプランに明記）</h3>
+  <div class="refusal-box">
+    「申告内容と実態が著しく異なる場合、複雑度区分を見直し料金を変更いたします。また状況によっては契約を解除する場合があります。」
+  </div>
+
+  <h3>実態確認のプロセス</h3>
+  <div class="process-box">
+    <div class="process-step">
+      <div class="step-num">1</div>
+      <div>初回ケア後、まさみが「実態確認レポート」を作成（申告内容との差異を記録）</div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">2</div>
+      <div>初回ケアから1ヶ月以内に再判定を実施（まさみ＋看護師の合議）</div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">3</div>
+      <div>区分変更が生じる場合は利用者・家族に説明し、変更後の料金を書面で合意</div>
+    </div>
+    <div class="process-step">
+      <div class="step-num">4</div>
+      <div>実態が受け入れ範囲を超えている場合（暴力リスク等）は契約解除・丁寧にご説明のうえ他機関へ引き継ぎ</div>
+    </div>
+  </div>
+
+  <div class="alert-box">
+    <strong>顧客への伝え方：</strong>「申告内容と異なる」という表現は使わず、「より適切なケアを提供するための実態確認・再判定」として説明します。責める形ではなく、安全とケアの質を守るための仕組みとして案内してください。
+  </div>
+
+  <!-- 9. 異議申し立て -->
+  <h2>9. 異議申し立て</h2>
+  <p>判定結果にご不明点・ご異議がある場合は、まさみまで直接お申し出ください。再アセスメントを実施いたします。再アセスメントは1回無料です。</p>
+  <ul>
+    <li>連絡先：070-5450-8818（まさみ直通）</li>
+    <li>受付時間：8:00〜18:00</li>
+  </ul>
+
+  <!-- 署名欄 -->
+  <div class="sign-area">
+    <div class="sign-box">
+      判定者（介護福祉士）：高野 まさみ<br><br>
+      署名：＿＿＿＿＿＿＿＿＿＿＿　日付：＿＿＿＿＿＿＿
+    </div>
+    <div class="sign-box">
+      判定者（看護師）：<br><br>
+      署名：＿＿＿＿＿＿＿＿＿＿＿　日付：＿＿＿＿＿＿＿
+    </div>
+  </div>
+
+  <div class="footer">
+    cura — 複雑度判定基準書 v1.0　／　内部文書・取り扱い注意
+  </div>
+
+</div>
+</body>
+</html>
