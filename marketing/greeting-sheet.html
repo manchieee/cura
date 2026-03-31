@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cura — 開業のご挨拶</title>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Noto+Serif+JP:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Serif JP', serif;
+    background: #f9f6f2;
+    color: #2a1f1a;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    margin: 0 auto;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(135deg, #8a3a55 0%, #a85f78 50%, #b87888 100%);
+    padding: 40px 50px 32px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    right: 0;
+    height: 24px;
+    background: #fff;
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+
+  .logo {
+    font-family: 'Abril Fatface', serif;
+    font-size: 42px;
+    letter-spacing: 4px;
+    color: #fff;
+    line-height: 1;
+  }
+
+  .logo-sub {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.75);
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  .header-right {
+    position: absolute;
+    top: 40px;
+    right: 50px;
+    text-align: right;
+  }
+
+  .greeting-label {
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.85);
+    border: 1px solid rgba(255,255,255,0.4);
+    padding: 5px 14px;
+    display: inline-block;
+  }
+
+  /* Body */
+  .body {
+    padding: 44px 50px 36px;
+    flex: 1;
+  }
+
+  .tagline {
+    font-size: 22px;
+    font-weight: 500;
+    color: #8a3a55;
+    letter-spacing: 1px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .tagline span {
+    display: block;
+    font-size: 13px;
+    font-weight: 300;
+    color: #888;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+
+  .intro {
+    font-size: 13.5px;
+    line-height: 2;
+    color: #3a2e2a;
+    margin-bottom: 32px;
+    border-left: 3px solid #c9a882;
+    padding-left: 18px;
+  }
+
+  /* Two columns */
+  .columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 28px;
+  }
+
+  .section-title {
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: #c9a882;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e8ddd5;
+  }
+
+  .service-list {
+    list-style: none;
+    font-size: 13px;
+    line-height: 2;
+    color: #3a2e2a;
+  }
+
+  .service-list li::before {
+    content: '—　';
+    color: #c9a882;
+  }
+
+  /* Who section */
+  .who-box {
+    background: #faf7f4;
+    border: 1px solid #e8ddd5;
+    padding: 20px 22px;
+    margin-bottom: 28px;
+  }
+
+  .who-list {
+    list-style: none;
+    font-size: 13px;
+    line-height: 2.2;
+    color: #3a2e2a;
+  }
+
+  .who-list li::before {
+    content: '◦ ';
+    color: #a85f78;
+    font-size: 16px;
+    vertical-align: middle;
+  }
+
+  /* Pricing */
+  .pricing {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+
+  .price-item {
+    border: 1px solid #e8ddd5;
+    padding: 14px 16px;
+    text-align: center;
+  }
+
+  .price-label {
+    font-size: 10.5px;
+    color: #888;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    line-height: 1.5;
+  }
+
+  .price-amount {
+    font-size: 17px;
+    font-weight: 600;
+    color: #8a3a55;
+  }
+
+  .price-amount small {
+    font-size: 11px;
+    font-weight: 300;
+    color: #888;
+  }
+
+  /* Profile */
+  .profile {
+    background: linear-gradient(135deg, #8a3a55 0%, #a85f78 100%);
+    padding: 22px 26px;
+    color: #fff;
+    margin-bottom: 28px;
+  }
+
+  .profile-name {
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+
+  .profile-name small {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: rgba(255,255,255,0.7);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .profile-desc {
+    font-size: 12.5px;
+    line-height: 2;
+    color: rgba(255,255,255,0.88);
+  }
+
+  /* Footer */
+  .footer {
+    border-top: 1px solid #e8ddd5;
+    padding: 20px 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #faf7f4;
+  }
+
+  .contact-block .contact-line {
+    font-size: 12.5px;
+    color: #3a2e2a;
+    line-height: 2;
+  }
+
+  .contact-block .contact-line strong {
+    color: #8a3a55;
+    font-weight: 500;
+  }
+
+  .footer-logo {
+    font-family: 'Abril Fatface', serif;
+    font-size: 24px;
+    color: #8a3a55;
+    letter-spacing: 3px;
+    opacity: 0.6;
+  }
+
+  .note {
+    font-size: 10.5px;
+    color: #aaa;
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  @media print {
+    body { background: #fff; }
+    .page { margin: 0; width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="logo">cura</div>
+    <div class="logo-sub">Private Care Service · 文京区</div>
+    <div class="header-right">
+      <div class="greeting-label">開業のご挨拶</div>
+    </div>
+  </div>
+
+  <div class="body">
+
+    <div class="tagline">
+      <span>CONCEPT</span>
+      最期まで、自宅で。
+    </div>
+
+    <p class="intro">
+      父の脊髄損傷介護から始まり、23年間にわたり家族介護と向き合ってきました。<br>
+      介護福祉士として6年の現場経験を経て、文京区を中心にプライベートケアサービス「cura」を開業いたします。<br>
+      「施設はまだ早い。でも今のままでは不安」——そのあいだを埋めるサービスです。
+    </p>
+
+    <div class="who-box">
+      <div class="section-title">こんなご家族・ご本人に</div>
+      <ul class="who-list">
+        <li>自宅での生活を続けたいが、介護保険サービスだけでは不安がある</li>
+        <li>病院への同行・入退院対応など、突発的な場面を任せられる人が必要</li>
+        <li>遠方にいて、親の日常をプロに見守ってほしい</li>
+        <li>旅行・外出に同行してくれる信頼できるスタッフを探している</li>
+      </ul>
+    </div>
+
+    <div class="columns">
+      <div>
+        <div class="section-title">サービス内容</div>
+        <ul class="service-list">
+          <li>自宅生活全般のサポート</li>
+          <li>病院・外出・旅行同行</li>
+          <li>夜間オンコール対応</li>
+          <li>看護師による健康管理バックアップ</li>
+          <li>レスパイトケア（ご家族の休息支援）</li>
+          <li>ペットのお世話</li>
+        </ul>
+      </div>
+      <div>
+        <div class="section-title">対応エリア</div>
+        <ul class="service-list">
+          <li>文京区全域</li>
+          <li>千代田区・新宿区・豊島区の一部</li>
+          <li>番町・神楽坂・目白エリア</li>
+          <li>全国からのご家族によるご依頼も承ります</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pricing">
+      <div class="price-item">
+        <div class="price-label">入会金<br>（アセスメント・ケアプラン含む）</div>
+        <div class="price-amount">¥60,000<small>（税込）</small></div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">プライベートケア<br>介護福祉士 / 1時間</div>
+        <div class="price-amount">¥12,000<small>〜（税込）</small></div>
+      </div>
+      <div class="price-item">
+        <div class="price-label">夜間オンコール<br>月額（月3回まで）</div>
+        <div class="price-amount">¥17,000<small>（税込）</small></div>
+      </div>
+    </div>
+
+    <div class="profile">
+      <div class="profile-name">
+        <small>FOUNDER &amp; CARE DIRECTOR</small>
+        高野 まさみ
+      </div>
+      <div class="profile-desc">
+        介護福祉士。2002年より父の脊髄損傷介護に携わり、家族介護歴23年。<br>
+        介護福祉士取得後6年の現場経験（グループホーム4年・小規模多機能2年）。<br>
+        メディカルアドバイザーとして救急外科バックグラウンドを持つ看護師が常時バックアップ。
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="contact-block">
+      <div class="contact-line"><strong>TEL</strong>　070-5450-8818</div>
+      <div class="contact-line"><strong>所在地</strong>　〒113-0021　東京都文京区千石4-43-</div>
+      <div class="note">※ 最低利用時間 3時間〜　／　移動費は別途実費</div>
+    </div>
+    <div class="footer-logo">cura</div>
+  </div>
+
+</div>
+</body>
+</html>
