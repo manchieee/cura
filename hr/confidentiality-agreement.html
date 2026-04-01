@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>個人情報・業務情報 取り扱い誓約書 — cura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark: #2a1f1a;
+      --rose: #8a3a55;
+      --gold: #c9a882;
+      --cream: #faf7f2;
+      --border: #d8cec6;
+      --text: #2a1f1a;
+      --text-mid: #5c4a40;
+      --text-light: #9c8a7e;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Serif JP', "Yu Mincho", serif;
+      background: var(--cream);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 2.0;
+      -webkit-font-smoothing: antialiased;
+      padding: 24px 16px 60px;
+    }
+
+    .doc-wrap {
+      max-width: 780px;
+      margin: 0 auto;
+      background: #fff;
+      border: 1px solid var(--border);
+      padding: 40px 44px 48px;
+    }
+
+    /* ── ヘッダー ── */
+    .doc-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 36px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .doc-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 400;
+      color: var(--rose);
+      letter-spacing: 0.15em;
+      line-height: 1;
+    }
+    .doc-logo-sub {
+      font-size: 9px;
+      letter-spacing: 0.3em;
+      color: var(--text-light);
+      font-family: 'Cormorant Garamond', serif;
+      margin-top: 4px;
+    }
+    .doc-meta {
+      text-align: right;
+      font-size: 11px;
+      color: var(--text-light);
+      line-height: 1.8;
+    }
+
+    /* ── タイトル ── */
+    .doc-title-block {
+      text-align: center;
+      margin-bottom: 28px;
+    }
+    .doc-title {
+      font-size: 18px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      color: var(--dark);
+      margin-bottom: 4px;
+    }
+    .doc-title-en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 10px;
+      letter-spacing: 0.35em;
+      color: var(--text-light);
+      text-transform: uppercase;
+    }
+
+    /* ── 前文 ── */
+    .preamble {
+      font-size: 13px;
+      color: var(--text-mid);
+      line-height: 2.1;
+      margin-bottom: 28px;
+      padding: 14px 18px;
+      background: rgba(138,58,85,0.04);
+      border-left: 3px solid var(--rose);
+    }
+
+    /* ── 条文 ── */
+    .article {
+      margin-bottom: 24px;
+    }
+    .article-title {
+      font-size: 13.5px;
+      font-weight: 500;
+      color: var(--dark);
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+      display: flex;
+      gap: 12px;
+      align-items: baseline;
+    }
+    .article-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 12px;
+      color: var(--rose);
+      white-space: nowrap;
+      letter-spacing: 0.1em;
+    }
+    .article-body {
+      font-size: 13px;
+      color: var(--text-mid);
+      line-height: 2.0;
+      padding-left: 22px;
+    }
+    .article-body ol {
+      padding-left: 18px;
+      margin: 6px 0;
+    }
+    .article-body ol li { margin-bottom: 3px; }
+
+    /* ── 罰則表 ── */
+    .penalty-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      margin: 8px 0;
+    }
+    .penalty-table th {
+      background: var(--dark);
+      color: rgba(250,247,242,0.75);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      padding: 8px 12px;
+      text-align: left;
+      font-weight: 400;
+    }
+    .penalty-table td {
+      padding: 9px 12px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.7;
+      color: var(--text-mid);
+    }
+    .penalty-table tr:last-child td { border-bottom: none; }
+    .penalty-table tr:nth-child(even) td { background: rgba(242,236,227,0.35); }
+
+    /* ── 署名セクション ── */
+    .signature-section {
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+    .signature-intro {
+      font-size: 13px;
+      color: var(--text-mid);
+      line-height: 2.0;
+      margin-bottom: 24px;
+    }
+
+    /* ── 入力フォーム ── */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+    @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .form-label {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--text-light);
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .form-input {
+      border: none;
+      border-bottom: 1px solid var(--border);
+      padding: 8px 0;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 14px;
+      color: var(--dark);
+      background: transparent;
+      outline: none;
+      width: 100%;
+      -webkit-appearance: none;
+    }
+    .form-input:focus { border-bottom-color: var(--rose); }
+
+    /* ── サイン欄 ── */
+    .sig-block {
+      border: 1px solid var(--border);
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+    .sig-block-label {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .sig-block-label .clear-btn {
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--text-light);
+      cursor: pointer;
+      padding: 3px 10px;
+      border: 1px solid var(--border);
+      background: #fff;
+      font-family: 'Noto Serif JP', serif;
+      -webkit-appearance: none;
+    }
+    .sig-block-label .clear-btn:active { background: var(--cream); }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 120px;
+      border: 1px solid var(--border);
+      background: var(--cream);
+      cursor: crosshair;
+      touch-action: none;
+    }
+    .sig-hint {
+      font-size: 10px;
+      color: var(--text-light);
+      margin-top: 5px;
+      letter-spacing: 0.05em;
+    }
+
+    /* ── 同意ボタン ── */
+    .action-bar {
+      margin-top: 32px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn-submit {
+      background: var(--rose);
+      color: #fff;
+      border: none;
+      padding: 14px 32px;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      flex: 1;
+      min-width: 200px;
+      -webkit-appearance: none;
+    }
+    .btn-submit:active { opacity: 0.85; }
+    .btn-pdf { background: var(--dark); color: rgba(250,247,242,0.85); border: none; padding: 14px 20px; font-family: 'Noto Serif JP', serif; font-size: 12px; letter-spacing: 0.1em; cursor: pointer; -webkit-appearance: none; }
+    .btn-reset {
+      background: #fff;
+      color: var(--text-mid);
+      border: 1px solid var(--border);
+      padding: 14px 24px;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      -webkit-appearance: none;
+    }
+
+    /* ── 完了メッセージ ── */
+    .complete-msg {
+      display: none;
+      margin-top: 20px;
+      padding: 16px 20px;
+      background: rgba(138,58,85,0.06);
+      border-left: 3px solid var(--rose);
+      font-size: 13px;
+      color: var(--text-mid);
+      line-height: 1.9;
+    }
+
+    /* ── 注記 ── */
+    .doc-note {
+      margin-top: 24px;
+      font-size: 11px;
+      color: var(--text-light);
+      line-height: 1.9;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── 印刷 ── */
+    @media print {
+      body { background: #fff; padding: 0; }
+      .doc-wrap { border: none; padding: 0; }
+      canvas { -webkit-print-color-adjust: exact; }
+      .action-bar, .clear-btn { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="doc-wrap">
+
+  <div class="doc-header">
+    <div>
+      <div class="doc-logo">cura</div>
+      <div class="doc-logo-sub">Private Care Service</div>
+    </div>
+    <div class="doc-meta">
+      文書番号：HR-01<br>
+      作成：高野まさみ（代表）
+    </div>
+  </div>
+
+  <div class="doc-title-block">
+    <div class="doc-title">個人情報・業務情報 取り扱い誓約書</div>
+    <div class="doc-title-en">Confidentiality &amp; Information Handling Agreement</div>
+  </div>
+
+  <div class="preamble">
+    私は、cura（以下「事業者」）のスタッフとして業務を行うにあたり、利用者および関係者の個人情報ならびに業務上知り得た情報の取り扱いについて、以下の事項を遵守することを誓約します。
+  </div>
+
+  <div class="article">
+    <div class="article-title"><span class="article-num">第1条</span>個人情報の定義</div>
+    <div class="article-body">
+      本誓約書において「個人情報」とは、利用者および関係者に関する以下の情報を指す。
+      <ol>
+        <li>氏名、住所、電話番号、生年月日その他の識別情報</li>
+        <li>健康状態、疾患名、介護・看護記録、医療情報</li>
+        <li>自宅内の状況（間取り・設備・家族構成等）</li>
+        <li>家族・関係者の連絡先および個人情報</li>
+        <li>その他、業務を通じて取得した一切の情報</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="article">
+    <div class="article-title"><span class="article-num">第2条</span>情報の取り扱いルール</div>
+    <div class="article-body">
+      <ol>
+        <li>個人情報は業務目的以外に使用しない。</li>
+        <li>業務上の連絡・記録は事業者が指定するアプリ・システムのみを使用する。</li>
+        <li>指定外のツール（個人のメッセージアプリ・メール等）での個人情報の送受信を禁止する。</li>
+        <li>業務情報を第三者（家族・知人含む）に開示・共有しない。</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="article">
+    <div class="article-title"><span class="article-num">第3条</span>端末・写真の取り扱い</div>
+    <div class="article-body">
+      <ol>
+        <li>利用者の顔、自宅内、医療的処置等が写り込む写真・動画は、指定システム内で直接アップロードし、端末内に保存しない。</li>
+        <li>業務上取得した写真・動画をSNS・個人のクラウドストレージ等に保存・投稿することを禁止する。</li>
+        <li>私用端末（BYOD）を業務利用する場合、業務アプリは業務専用として使用する。</li>
+        <li>退職時は業務関連データを端末から完全に削除し、削除確認書を提出する。</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="article">
+    <div class="article-title"><span class="article-num">第4条</span>SNS・インターネット利用</div>
+    <div class="article-body">
+      <ol>
+        <li>業務に関する情報（利用者・事業者・スタッフに関する事項）をSNS・ブログ・掲示板等に一切投稿しない。</li>
+        <li>匿名であっても特定につながる情報の投稿を禁止する。</li>
+        <li>疑わしい場合は必ず代表に確認する。</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="article">
+    <div class="article-title"><span class="article-num">第5条</span>退職後の義務</div>
+    <div class="article-body">
+      退職後においても、在職中に知り得た個人情報および業務情報について、本誓約書と同等の守秘義務を負う。期限は定めない。
+    </div>
+  </div>
+
+  <div class="article">
+    <div class="article-title"><span class="article-num">第6条</span>違反時の措置</div>
+    <div class="article-body">
+      本誓約書に違反した場合、就業規則の定めに従い以下の措置を取る。
+      <table class="penalty-table" style="margin-top:8px;">
+        <thead>
+          <tr>
+            <th style="width:22%;">違反レベル</th>
+            <th style="width:38%;">内容</th>
+            <th>対応</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>軽微</td>
+            <td>私的利用・不注意による共有</td>
+            <td>口頭注意 → 書面警告 → 減給</td>
+          </tr>
+          <tr>
+            <td>重大</td>
+            <td>顧客情報の漏洩・SNS投稿</td>
+            <td>懲戒解雇＋損害賠償請求</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="margin-top:8px;font-size:12px;color:var(--text-light);">※ 減給は1回の違反につき1日分の賃金の半額以内（労働基準法第91条）。損害賠償請求は実損害が認められる場合のみ。</p>
+    </div>
+  </div>
+
+  <!-- 署名セクション -->
+  <div class="signature-section">
+    <div class="signature-intro">
+      上記の内容を十分に理解した上で、誠実に遵守することを誓約します。以下に必要事項を入力し、署名してください。
+    </div>
+
+    <div class="form-grid">
+      <div class="form-field">
+        <label class="form-label" for="staff-name">氏名</label>
+        <input class="form-input" type="text" id="staff-name" placeholder="例：山田 花子">
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="sign-date">署名日</label>
+        <input class="form-input" type="date" id="sign-date">
+      </div>
+    </div>
+
+    <div class="sig-block">
+      <div class="sig-block-label">
+        <span>署名</span>
+        <button class="clear-btn" onclick="clearCanvas('sig-canvas')">消去</button>
+      </div>
+      <canvas id="sig-canvas"></canvas>
+      <p class="sig-hint">指またはApple Pencilで署名してください</p>
+    </div>
+
+    <div class="action-bar">
+      <button class="btn-submit" onclick="submitAgreement()">上記に同意して署名を確定する</button>
+      <button class="btn-pdf" onclick="window.print()">PDFとして保存</button>
+      <button class="btn-reset" onclick="resetAll()">最初からやり直す</button>
+    </div>
+
+    <div class="complete-msg" id="complete-msg">
+      署名が完了しました。このページのスクリーンショットを撮影するか、印刷して保管してください。
+    </div>
+
+    <div class="doc-note">
+      本書はスタッフおよび事業者（cura）がそれぞれ記録を保管する。署名確定後はスクリーンショットまたは印刷にて控えを取ること。
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // 今日の日付をデフォルトセット
+  document.getElementById('sign-date').valueAsDate = new Date();
+
+  // Canvas セットアップ
+  function setupCanvas(id) {
+    const canvas = document.getElementById(id);
+    const ctx = canvas.getContext('2d');
+
+    // 解像度調整（Retina / iPad対応）
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+      ctx.strokeStyle = '#2a1f1a';
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    let drawing = false;
+    let lastX = 0, lastY = 0;
+
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const src = e.touches ? e.touches[0] : e;
+      return {
+        x: src.clientX - rect.left,
+        y: src.clientY - rect.top
+      };
+    }
+
+    function startDraw(e) {
+      e.preventDefault();
+      drawing = true;
+      const pos = getPos(e);
+      lastX = pos.x;
+      lastY = pos.y;
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+    }
+
+    function draw(e) {
+      if (!drawing) return;
+      e.preventDefault();
+      const pos = getPos(e);
+      ctx.lineTo(pos.x, pos.y);
+      ctx.stroke();
+      lastX = pos.x;
+      lastY = pos.y;
+    }
+
+    function endDraw(e) {
+      if (!drawing) return;
+      e.preventDefault();
+      drawing = false;
+      ctx.closePath();
+    }
+
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', endDraw);
+    canvas.addEventListener('mouseleave', endDraw);
+    canvas.addEventListener('touchstart', startDraw, { passive: false });
+    canvas.addEventListener('touchmove', draw, { passive: false });
+    canvas.addEventListener('touchend', endDraw, { passive: false });
+
+    return ctx;
+  }
+
+  function clearCanvas(id) {
+    const canvas = document.getElementById(id);
+    const ctx = canvas.getContext('2d');
+    const dpr = window.devicePixelRatio || 1;
+    ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+  }
+
+  function isCanvasEmpty(id) {
+    const canvas = document.getElementById(id);
+    const ctx = canvas.getContext('2d');
+    const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+    return !data.some(v => v !== 0);
+  }
+
+  function submitAgreement() {
+    const name = document.getElementById('staff-name').value.trim();
+    const date = document.getElementById('sign-date').value;
+
+    if (!name) {
+      alert('氏名を入力してください。');
+      return;
+    }
+    if (isCanvasEmpty('sig-canvas')) {
+      alert('署名してください。');
+      return;
+    }
+
+    // ボタンを非表示にして完了メッセージ表示
+    document.querySelector('.action-bar').style.display = 'none';
+    const msg = document.getElementById('complete-msg');
+    msg.style.display = 'block';
+    msg.innerHTML = `署名が完了しました（${name} ／ ${date}）。<br>このページのスクリーンショットを撮影するか、印刷して保管してください。`;
+
+    // 入力フィールドを読み取り専用に
+    document.getElementById('staff-name').readOnly = true;
+    document.getElementById('sign-date').readOnly = true;
+  }
+
+  function resetAll() {
+    document.getElementById('staff-name').value = '';
+    document.getElementById('sign-date').valueAsDate = new Date();
+    document.getElementById('staff-name').readOnly = false;
+    document.getElementById('sign-date').readOnly = false;
+    clearCanvas('sig-canvas');
+    document.querySelector('.action-bar').style.display = 'flex';
+    document.getElementById('complete-msg').style.display = 'none';
+  }
+
+  setupCanvas('sig-canvas');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>ケア記録 — cura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark: #2a1f1a; --rose: #8a3a55; --gold: #c9a882;
+      --cream: #faf7f2; --border: #d8cec6;
+      --text: #2a1f1a; --text-mid: #5c4a40; --text-light: #9c8a7e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Noto Serif JP', serif; background: var(--cream); color: var(--text); font-size: 14px; line-height: 1.9; padding: 20px 16px 60px; -webkit-font-smoothing: antialiased; }
+    .doc-wrap { max-width: 780px; margin: 0 auto; background: #fff; border: 1px solid var(--border); padding: 32px 40px 44px; }
+    .doc-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+    .doc-logo { font-family: 'Cormorant Garamond', serif; font-size: 24px; color: var(--rose); letter-spacing: 0.15em; line-height: 1; }
+    .doc-logo-sub { font-size: 8px; letter-spacing: 0.3em; color: var(--text-light); font-family: 'Cormorant Garamond', serif; margin-top: 3px; }
+    .doc-meta { text-align: right; font-size: 11px; color: var(--text-light); line-height: 1.8; }
+    .doc-title { font-size: 16px; font-weight: 500; letter-spacing: 0.12em; text-align: center; margin-bottom: 24px; color: var(--dark); }
+    .section { margin-bottom: 22px; }
+    .section-title { font-size: 10px; font-weight: 400; letter-spacing: 0.25em; color: var(--gold); font-family: 'Cormorant Garamond', serif; text-transform: uppercase; margin-bottom: 10px; padding-bottom: 5px; border-bottom: 1px solid var(--border); }
+
+    /* フォームグリッド */
+    .form-row { display: grid; gap: 14px; margin-bottom: 14px; }
+    .col-2 { grid-template-columns: 1fr 1fr; }
+    .col-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .col-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+    @media (max-width: 560px) { .col-2, .col-3, .col-4 { grid-template-columns: 1fr 1fr; } }
+    .form-field { display: flex; flex-direction: column; gap: 3px; }
+    .form-label { font-size: 9px; letter-spacing: 0.2em; color: var(--text-light); font-family: 'Cormorant Garamond', serif; }
+    .form-input { border: none; border-bottom: 1px solid var(--border); padding: 6px 0; font-family: 'Noto Serif JP', serif; font-size: 14px; color: var(--dark); background: transparent; outline: none; width: 100%; -webkit-appearance: none; }
+    .form-input:focus { border-bottom-color: var(--rose); }
+    .form-textarea { border: 1px solid var(--border); padding: 8px 10px; font-family: 'Noto Serif JP', serif; font-size: 13px; color: var(--dark); background: transparent; outline: none; width: 100%; resize: vertical; min-height: 70px; -webkit-appearance: none; line-height: 1.8; }
+    .form-textarea:focus { border-color: var(--rose); }
+
+    /* チェックボックスグリッド */
+    .check-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px 14px; }
+    @media (max-width: 560px) { .check-grid { grid-template-columns: repeat(2, 1fr); } }
+    .check-item { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--text-mid); cursor: pointer; padding: 5px 0; }
+    .check-item input[type="checkbox"] { width: 16px; height: 16px; border: 1px solid var(--border); accent-color: var(--rose); flex-shrink: 0; cursor: pointer; }
+    .check-item.full-width { grid-column: 1 / -1; }
+
+    /* バイタル */
+    .vital-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+    @media (max-width: 560px) { .vital-row { grid-template-columns: repeat(2, 1fr); } }
+
+    /* 状態スケール */
+    .scale-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .scale-label { font-size: 12px; color: var(--text-mid); min-width: 60px; }
+    .scale-btns { display: flex; gap: 6px; }
+    .scale-btn { width: 34px; height: 34px; border: 1px solid var(--border); background: #fff; font-size: 13px; cursor: pointer; font-family: 'Noto Serif JP', serif; color: var(--text-mid); -webkit-appearance: none; }
+    .scale-btn.active { background: var(--rose); color: #fff; border-color: var(--rose); }
+
+    /* 署名 */
+    .sig-block { border: 1px solid var(--border); padding: 12px; }
+    .sig-block-label { font-size: 9px; letter-spacing: 0.25em; color: var(--gold); font-family: 'Cormorant Garamond', serif; text-transform: uppercase; margin-bottom: 7px; display: flex; justify-content: space-between; align-items: center; }
+    .clear-btn { font-size: 9px; color: var(--text-light); cursor: pointer; padding: 2px 7px; border: 1px solid var(--border); background: #fff; font-family: 'Noto Serif JP', serif; -webkit-appearance: none; }
+    canvas { display: block; width: 100%; height: 90px; border: 1px solid var(--border); background: var(--cream); cursor: crosshair; touch-action: none; }
+    .sig-hint { font-size: 9px; color: var(--text-light); margin-top: 3px; }
+
+    /* アクション */
+    .action-bar { margin-top: 24px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-primary { background: var(--rose); color: #fff; border: none; padding: 12px 24px; font-family: 'Noto Serif JP', serif; font-size: 13px; letter-spacing: 0.1em; cursor: pointer; flex: 1; min-width: 160px; -webkit-appearance: none; }
+    .btn-pdf { background: var(--dark); color: rgba(250,247,242,0.85); border: none; padding: 12px 20px; font-family: 'Noto Serif JP', serif; font-size: 12px; letter-spacing: 0.1em; cursor: pointer; -webkit-appearance: none; }
+    .btn-reset { background: #fff; color: var(--text-mid); border: 1px solid var(--border); padding: 12px 18px; font-family: 'Noto Serif JP', serif; font-size: 11px; letter-spacing: 0.08em; cursor: pointer; -webkit-appearance: none; }
+    .complete-msg { display: none; margin-top: 14px; padding: 12px 16px; background: rgba(138,58,85,0.06); border-left: 3px solid var(--rose); font-size: 12px; color: var(--text-mid); line-height: 1.9; }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .doc-wrap { border: none; padding: 20px; }
+      .action-bar, .clear-btn { display: none !important; }
+      .complete-msg { display: block !important; }
+    }
+  </style>
+</head>
+<body>
+<div class="doc-wrap">
+
+  <div class="doc-header">
+    <div>
+      <div class="doc-logo">cura</div>
+      <div class="doc-logo-sub">Care Record</div>
+    </div>
+    <div class="doc-meta" id="record-id-display">文書番号：CR-<br>記録日時：</div>
+  </div>
+
+  <div class="doc-title">ケア記録</div>
+
+  <!-- 基本情報 -->
+  <div class="section">
+    <div class="section-title">基本情報</div>
+    <div class="form-row col-2">
+      <div class="form-field">
+        <label class="form-label">ご利用者氏名</label>
+        <input class="form-input" type="text" id="client-name" placeholder="山田 花子">
+      </div>
+      <div class="form-field">
+        <label class="form-label">担当スタッフ</label>
+        <input class="form-input" type="text" id="staff-name" placeholder="高野 まさみ">
+      </div>
+    </div>
+    <div class="form-row col-4">
+      <div class="form-field">
+        <label class="form-label">訪問日</label>
+        <input class="form-input" type="date" id="visit-date">
+      </div>
+      <div class="form-field">
+        <label class="form-label">開始時刻</label>
+        <input class="form-input" type="time" id="time-start">
+      </div>
+      <div class="form-field">
+        <label class="form-label">終了時刻</label>
+        <input class="form-input" type="time" id="time-end">
+      </div>
+      <div class="form-field">
+        <label class="form-label">訪問種別</label>
+        <input class="form-input" type="text" id="visit-type" placeholder="定期／外出同行">
+      </div>
+    </div>
+  </div>
+
+  <!-- バイタル -->
+  <div class="section">
+    <div class="section-title">バイタルサイン（確認できた場合のみ）</div>
+    <div class="vital-row">
+      <div class="form-field">
+        <label class="form-label">血圧（上/下）</label>
+        <input class="form-input" type="text" id="bp" placeholder="120/80">
+      </div>
+      <div class="form-field">
+        <label class="form-label">脈拍（回/分）</label>
+        <input class="form-input" type="text" id="pulse" placeholder="72">
+      </div>
+      <div class="form-field">
+        <label class="form-label">体温（℃）</label>
+        <input class="form-input" type="text" id="temp" placeholder="36.5">
+      </div>
+      <div class="form-field">
+        <label class="form-label">SpO₂（%）</label>
+        <input class="form-input" type="text" id="spo2" placeholder="98">
+      </div>
+    </div>
+  </div>
+
+  <!-- 状態 -->
+  <div class="section">
+    <div class="section-title">全体的な状態</div>
+    <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:10px;">
+      <div class="scale-row">
+        <span class="scale-label">顔色</span>
+        <div class="scale-btns" data-group="face">
+          <button class="scale-btn" data-val="良好" onclick="toggleScale(this)">良好</button>
+          <button class="scale-btn" data-val="普通" onclick="toggleScale(this)">普通</button>
+          <button class="scale-btn" data-val="不良" onclick="toggleScale(this)">不良</button>
+        </div>
+      </div>
+      <div class="scale-row">
+        <span class="scale-label">機嫌・気分</span>
+        <div class="scale-btns" data-group="mood">
+          <button class="scale-btn" data-val="良好" onclick="toggleScale(this)">良好</button>
+          <button class="scale-btn" data-val="普通" onclick="toggleScale(this)">普通</button>
+          <button class="scale-btn" data-val="不安定" onclick="toggleScale(this)">不安定</button>
+        </div>
+      </div>
+      <div class="scale-row">
+        <span class="scale-label">食欲</span>
+        <div class="scale-btns" data-group="appetite">
+          <button class="scale-btn" data-val="あり" onclick="toggleScale(this)">あり</button>
+          <button class="scale-btn" data-val="普通" onclick="toggleScale(this)">普通</button>
+          <button class="scale-btn" data-val="なし" onclick="toggleScale(this)">なし</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 実施ケア -->
+  <div class="section">
+    <div class="section-title">実施したケア内容</div>
+    <div class="check-grid">
+      <label class="check-item"><input type="checkbox" value="身体介護（清拭・入浴）">身体介護（清拭・入浴）</label>
+      <label class="check-item"><input type="checkbox" value="整容（洗顔・口腔ケア）">整容（洗顔・口腔ケア）</label>
+      <label class="check-item"><input type="checkbox" value="排泄介助">排泄介助</label>
+      <label class="check-item"><input type="checkbox" value="食事介助・配膳">食事介助・配膳</label>
+      <label class="check-item"><input type="checkbox" value="服薬確認">服薬確認</label>
+      <label class="check-item"><input type="checkbox" value="体位変換">体位変換</label>
+      <label class="check-item"><input type="checkbox" value="移動・移乗介助">移動・移乗介助</label>
+      <label class="check-item"><input type="checkbox" value="外出同行">外出同行</label>
+      <label class="check-item"><input type="checkbox" value="通院・診察同席">通院・診察同席</label>
+      <label class="check-item"><input type="checkbox" value="買い物・用事同行">買い物・用事同行</label>
+      <label class="check-item"><input type="checkbox" value="家事援助">家事援助</label>
+      <label class="check-item"><input type="checkbox" value="話し相手・傾聴">話し相手・傾聴</label>
+      <label class="check-item"><input type="checkbox" value="ペットのお世話">ペットのお世話</label>
+      <label class="check-item"><input type="checkbox" value="家族への報告">家族への報告</label>
+      <label class="check-item"><input type="checkbox" value="その他">その他</label>
+    </div>
+  </div>
+
+  <!-- 観察・特記 -->
+  <div class="section">
+    <div class="section-title">観察・気になったこと</div>
+    <textarea class="form-textarea" id="observations" placeholder="いつもと違う点、気になる変化、気づき等を記録してください。「何か違う」と感じた点は必ず記載。"></textarea>
+  </div>
+
+  <!-- 次回に向けて -->
+  <div class="section">
+    <div class="section-title">申し送り・次回に向けて</div>
+    <textarea class="form-textarea" id="handover" placeholder="次回担当者への申し送り、家族への連絡事項、確認すべき点等。"></textarea>
+  </div>
+
+  <!-- 緊急対応 -->
+  <div class="section">
+    <div class="section-title">緊急対応・インシデント（該当する場合のみ）</div>
+    <div class="check-grid" style="margin-bottom:10px;">
+      <label class="check-item"><input type="checkbox" id="incident-none" value="なし" checked>対応なし</label>
+      <label class="check-item"><input type="checkbox" value="転倒・転落">転倒・転落</label>
+      <label class="check-item"><input type="checkbox" value="体調急変">体調急変</label>
+      <label class="check-item"><input type="checkbox" value="救急要請">救急要請</label>
+      <label class="check-item"><input type="checkbox" value="看護師に相談">看護師に相談</label>
+      <label class="check-item"><input type="checkbox" value="家族に連絡">家族に連絡</label>
+    </div>
+    <textarea class="form-textarea" id="incident-detail" placeholder="緊急対応があった場合は詳細を記載してください。" style="min-height:50px;"></textarea>
+  </div>
+
+  <!-- 署名 -->
+  <div class="section">
+    <div class="section-title">担当者署名</div>
+    <div class="sig-block">
+      <div class="sig-block-label">
+        <span>担当スタッフ署名</span>
+        <button class="clear-btn" onclick="clearCanvas('sig-staff')">消去</button>
+      </div>
+      <canvas id="sig-staff"></canvas>
+      <p class="sig-hint">指またはApple Pencilで署名</p>
+    </div>
+  </div>
+
+  <div class="action-bar">
+    <button class="btn-primary" onclick="submitRecord()">記録を確定する</button>
+    <button class="btn-pdf" onclick="window.print()">PDFとして保存</button>
+    <button class="btn-reset" onclick="resetAll()">リセット</button>
+  </div>
+  <div class="complete-msg" id="complete-msg"></div>
+
+</div>
+<script>
+  // 初期値
+  document.getElementById('visit-date').valueAsDate = new Date();
+  const now = new Date();
+  document.getElementById('time-start').value = now.toTimeString().slice(0,5);
+
+  // 記録ID生成
+  function genId() {
+    const d = new Date();
+    return 'CR-' + d.getFullYear().toString().slice(2) + String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0') + '-' + String(d.getHours()).padStart(2,'0') + String(d.getMinutes()).padStart(2,'0');
+  }
+  document.getElementById('record-id-display').innerHTML = '文書番号：' + genId() + '<br>記録日時：' + new Date().toLocaleString('ja-JP');
+
+  // スケールボタン
+  function toggleScale(btn) {
+    const group = btn.closest('.scale-btns');
+    group.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+
+  // Canvas
+  function setupCanvas(id) {
+    const canvas = document.getElementById(id);
+    const ctx = canvas.getContext('2d');
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr; canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+      ctx.strokeStyle = '#2a1f1a'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    }
+    resize(); window.addEventListener('resize', resize);
+    let drawing = false;
+    function getPos(e) { const rect = canvas.getBoundingClientRect(); const src = e.touches ? e.touches[0] : e; return { x: src.clientX - rect.left, y: src.clientY - rect.top }; }
+    function start(e) { e.preventDefault(); drawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); }
+    function move(e) { if (!drawing) return; e.preventDefault(); const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); }
+    function end(e) { if (!drawing) return; e.preventDefault(); drawing = false; ctx.closePath(); }
+    canvas.addEventListener('mousedown', start); canvas.addEventListener('mousemove', move); canvas.addEventListener('mouseup', end); canvas.addEventListener('mouseleave', end);
+    canvas.addEventListener('touchstart', start, {passive:false}); canvas.addEventListener('touchmove', move, {passive:false}); canvas.addEventListener('touchend', end, {passive:false});
+  }
+
+  function clearCanvas(id) {
+    const c = document.getElementById(id); const ctx = c.getContext('2d'); const dpr = window.devicePixelRatio||1;
+    ctx.clearRect(0, 0, c.width/dpr, c.height/dpr);
+  }
+  function isCanvasEmpty(id) { const c = document.getElementById(id); return !c.getContext('2d').getImageData(0,0,c.width,c.height).data.some(v=>v!==0); }
+
+  function submitRecord() {
+    const client = document.getElementById('client-name').value.trim();
+    const staff = document.getElementById('staff-name').value.trim();
+    if (!client) { alert('ご利用者氏名を入力してください。'); return; }
+    if (!staff) { alert('担当スタッフ名を入力してください。'); return; }
+    if (isCanvasEmpty('sig-staff')) { alert('担当者の署名が必要です。'); return; }
+    document.querySelector('.action-bar').style.display = 'none';
+    const msg = document.getElementById('complete-msg');
+    msg.style.display = 'block';
+    msg.innerHTML = `記録が確定しました（${client} ／ ${document.getElementById('visit-date').value}）。<br>「PDFとして保存」ボタンを押して保管してください。`;
+    document.querySelectorAll('.form-input, .form-textarea').forEach(el => el.readOnly = true);
+    document.querySelectorAll('input[type=checkbox]').forEach(el => el.disabled = true);
+    document.querySelectorAll('.scale-btn').forEach(el => el.disabled = true);
+    // 確定後もPDFボタンだけ残す
+    const pdfBtn = document.createElement('button');
+    pdfBtn.className = 'btn-pdf';
+    pdfBtn.textContent = 'PDFとして保存';
+    pdfBtn.onclick = () => window.print();
+    msg.after(pdfBtn);
+  }
+
+  function resetAll() {
+    document.getElementById('visit-date').valueAsDate = new Date();
+    document.getElementById('time-start').value = new Date().toTimeString().slice(0,5);
+    ['client-name','staff-name','time-end','visit-type','bp','pulse','temp','spo2','observations','handover','incident-detail'].forEach(id => { const el = document.getElementById(id); if(el){el.value='';el.readOnly=false;} });
+    document.querySelectorAll('input[type=checkbox]').forEach(el => { el.checked = false; el.disabled = false; });
+    document.getElementById('incident-none').checked = true;
+    document.querySelectorAll('.scale-btn').forEach(el => { el.classList.remove('active'); el.disabled = false; });
+    clearCanvas('sig-staff');
+    document.querySelector('.action-bar').style.display = 'flex';
+    document.getElementById('complete-msg').style.display = 'none';
+    const extra = document.querySelector('.btn-pdf:not(.action-bar .btn-pdf)');
+    if (extra) extra.remove();
+  }
+
+  setupCanvas('sig-staff');
+</script>
+</body>
+</html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>サービス利用開始同意書 — cura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark: #2a1f1a; --rose: #8a3a55; --gold: #c9a882;
+      --cream: #faf7f2; --border: #d8cec6;
+      --text: #2a1f1a; --text-mid: #5c4a40; --text-light: #9c8a7e;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Noto Serif JP', serif;
+      background: var(--cream);
+      color: var(--text);
+      font-size: 14px;
+      line-height: 2.0;
+      padding: 24px 16px 60px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .doc-wrap { max-width: 780px; margin: 0 auto; background: #fff; border: 1px solid var(--border); padding: 40px 44px 48px; }
+    .doc-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 32px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+    .doc-logo { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--rose); letter-spacing: 0.15em; line-height: 1; }
+    .doc-logo-sub { font-size: 8px; letter-spacing: 0.3em; color: var(--text-light); font-family: 'Cormorant Garamond', serif; margin-top: 4px; }
+    .doc-meta { text-align: right; font-size: 11px; color: var(--text-light); line-height: 1.8; }
+    .doc-title-block { text-align: center; margin-bottom: 26px; }
+    .doc-title { font-size: 17px; font-weight: 500; letter-spacing: 0.12em; color: var(--dark); margin-bottom: 4px; }
+    .doc-title-en { font-family: 'Cormorant Garamond', serif; font-size: 9px; letter-spacing: 0.35em; color: var(--text-light); text-transform: uppercase; }
+    .preamble { font-size: 12.5px; color: var(--text-mid); line-height: 2.1; margin-bottom: 28px; padding: 14px 18px; background: rgba(138,58,85,0.04); border-left: 3px solid var(--rose); }
+    .section { margin-bottom: 24px; }
+    .section-title { font-size: 12px; font-weight: 500; letter-spacing: 0.2em; color: var(--gold); font-family: 'Cormorant Garamond', serif; text-transform: uppercase; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+    .item-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+    .item-table td { padding: 8px 10px; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.8; color: var(--text-mid); }
+    .item-table td:first-child { width: 38%; font-weight: 400; color: var(--dark); white-space: nowrap; }
+    .item-table tr:last-child td { border-bottom: none; }
+    .item-table tr:nth-child(even) td { background: rgba(242,236,227,0.3); }
+    .consent-list { list-style: none; padding: 0; }
+    .consent-list li { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 12.5px; color: var(--text-mid); line-height: 1.8; }
+    .consent-list li:last-child { border-bottom: none; }
+    .consent-list li::before { content: ''; width: 14px; height: 14px; border: 1px solid var(--border); background: #fff; flex-shrink: 0; margin-top: 4px; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+    /* 署名 */
+    .signature-section { margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--border); }
+    .sig-intro { font-size: 12.5px; color: var(--text-mid); line-height: 2.0; margin-bottom: 20px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+    @media (max-width: 560px) { .form-row { grid-template-columns: 1fr; } }
+    .form-field { display: flex; flex-direction: column; gap: 4px; }
+    .form-label { font-size: 9.5px; letter-spacing: 0.2em; color: var(--text-light); font-family: 'Cormorant Garamond', serif; }
+    .form-input { border: none; border-bottom: 1px solid var(--border); padding: 7px 0; font-family: 'Noto Serif JP', serif; font-size: 14px; color: var(--dark); background: transparent; outline: none; width: 100%; -webkit-appearance: none; }
+    .form-input:focus { border-bottom-color: var(--rose); }
+    .sig-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 560px) { .sig-grid { grid-template-columns: 1fr; } }
+    .sig-block { border: 1px solid var(--border); padding: 14px; }
+    .sig-block-label { font-size: 9.5px; letter-spacing: 0.25em; color: var(--gold); font-family: 'Cormorant Garamond', serif; text-transform: uppercase; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .clear-btn { font-size: 9.5px; letter-spacing: 0.08em; color: var(--text-light); cursor: pointer; padding: 2px 8px; border: 1px solid var(--border); background: #fff; font-family: 'Noto Serif JP', serif; -webkit-appearance: none; }
+    canvas { display: block; width: 100%; height: 110px; border: 1px solid var(--border); background: var(--cream); cursor: crosshair; touch-action: none; }
+    .sig-hint { font-size: 9.5px; color: var(--text-light); margin-top: 4px; }
+    .action-bar { margin-top: 28px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-submit { background: var(--rose); color: #fff; border: none; padding: 13px 28px; font-family: 'Noto Serif JP', serif; font-size: 13px; letter-spacing: 0.12em; cursor: pointer; flex: 1; min-width: 180px; -webkit-appearance: none; }
+    .btn-pdf { background: var(--dark); color: rgba(250,247,242,0.85); border: none; padding: 13px 20px; font-family: 'Noto Serif JP', serif; font-size: 12px; letter-spacing: 0.1em; cursor: pointer; -webkit-appearance: none; }
+    .btn-reset { background: #fff; color: var(--text-mid); border: 1px solid var(--border); padding: 13px 20px; font-family: 'Noto Serif JP', serif; font-size: 11.5px; letter-spacing: 0.08em; cursor: pointer; -webkit-appearance: none; }
+    .complete-msg { display: none; margin-top: 18px; padding: 14px 18px; background: rgba(138,58,85,0.06); border-left: 3px solid var(--rose); font-size: 12.5px; color: var(--text-mid); line-height: 1.9; }
+    .doc-note { margin-top: 20px; font-size: 10.5px; color: var(--text-light); line-height: 1.9; padding-top: 10px; border-top: 1px solid var(--border); }
+    @media print { body { background: #fff; padding: 0; } .doc-wrap { border: none; padding: 0; } .action-bar, .clear-btn { display: none !important; } }
+  </style>
+</head>
+<body>
+<div class="doc-wrap">
+
+  <div class="doc-header">
+    <div>
+      <div class="doc-logo">cura</div>
+      <div class="doc-logo-sub">Private Care Service</div>
+    </div>
+    <div class="doc-meta">文書番号：CL-01<br>作成：高野まさみ（代表）</div>
+  </div>
+
+  <div class="doc-title-block">
+    <div class="doc-title">サービス利用開始同意書</div>
+    <div class="doc-title-en">Service Agreement &amp; Informed Consent</div>
+  </div>
+
+  <div class="preamble">
+    cura（代表：高野まさみ）のプライベートケアサービスをご利用いただくにあたり、以下のサービス内容・料金・規約をご確認の上、同意いただけますようお願い申し上げます。
+  </div>
+
+  <!-- 利用者情報 -->
+  <div class="section">
+    <div class="section-title">利用者情報</div>
+    <table class="item-table">
+      <tr><td>ご利用者氏名</td><td id="disp-client">　</td></tr>
+      <tr><td>生年月日</td><td id="disp-dob">　</td></tr>
+      <tr><td>ご住所</td><td id="disp-addr">　</td></tr>
+      <tr><td>ご連絡先</td><td id="disp-tel">　</td></tr>
+      <tr><td>緊急連絡先（ご家族）</td><td id="disp-emg">　</td></tr>
+      <tr><td>サービス開始日</td><td id="disp-start">　</td></tr>
+    </table>
+  </div>
+
+  <!-- サービス内容 -->
+  <div class="section">
+    <div class="section-title">提供サービス内容</div>
+    <table class="item-table">
+      <tr><td>基本サービス</td><td>オーダーメイドケア（自宅生活支援・外出・旅行同行）</td></tr>
+      <tr><td>緊急対応</td><td>24時間オンコール体制（月3回まで・月額¥17,000）</td></tr>
+      <tr><td>看護師連携</td><td>健康管理・医療的アドバイス・同行訪問</td></tr>
+      <tr><td>最低利用時間</td><td>3時間〜</td></tr>
+      <tr><td>対応エリア</td><td>文京区全域・千代田区・新宿区・豊島区の一部。エリア外は+30%・最低4時間。</td></tr>
+    </table>
+  </div>
+
+  <!-- 料金 -->
+  <div class="section">
+    <div class="section-title">料金体系</div>
+    <table class="item-table">
+      <tr><td>入会金</td><td>¥60,000（アセスメント・ケアプラン作成含む）</td></tr>
+      <tr><td>プライベートケア / 1h</td><td>¥12,000〜（税込）</td></tr>
+      <tr><td>看護師同行プラン / 1h</td><td>¥18,000〜（税込）</td></tr>
+      <tr><td>夜間オンコール / 月額</td><td>¥17,000（月3回まで）</td></tr>
+      <tr><td>早朝（〜8時）・夜間（18〜21時）</td><td>+20〜30%・タクシー実費別途</td></tr>
+      <tr><td>移動費</td><td>別途実費</td></tr>
+    </table>
+  </div>
+
+  <!-- キャンセルポリシー -->
+  <div class="section">
+    <div class="section-title">キャンセルポリシー</div>
+    <table class="item-table">
+      <tr><td>前日まで</td><td>無料</td></tr>
+      <tr><td>当日3時間以上前</td><td>料金の30%</td></tr>
+      <tr><td>当日3時間以内</td><td>料金の100%</td></tr>
+      <tr><td>無連絡キャンセル</td><td>料金の100%を即時請求。次回以降の予約は前払い必須。</td></tr>
+    </table>
+  </div>
+
+  <!-- 同意事項 -->
+  <div class="section">
+    <div class="section-title">同意事項</div>
+    <ul class="consent-list">
+      <li>上記サービス内容・料金・キャンセルポリシーに同意します。</li>
+      <li>cura のスタッフが業務上必要な範囲で個人情報を取り扱うことに同意します。</li>
+      <li>ケア中に撮影した写真・記録が業務目的のみに使用されることを確認しました。</li>
+      <li>緊急時にスタッフが医療機関・緊急連絡先へ連絡する場合があることを理解しました。</li>
+      <li>サービス内容はオーダーメイドであり、状況に応じてまさみと都度調整することに同意します。</li>
+    </ul>
+  </div>
+
+  <!-- 入力フォーム -->
+  <div class="signature-section">
+    <div class="sig-intro">以下に利用者情報を入力し、ご署名ください。</div>
+
+    <div class="form-row">
+      <div class="form-field">
+        <label class="form-label" for="client-name">ご利用者氏名</label>
+        <input class="form-input" type="text" id="client-name" placeholder="山田 花子">
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="client-dob">生年月日</label>
+        <input class="form-input" type="date" id="client-dob">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field">
+        <label class="form-label" for="client-addr">ご住所</label>
+        <input class="form-input" type="text" id="client-addr" placeholder="文京区千石4-43-○">
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="client-tel">ご連絡先</label>
+        <input class="form-input" type="tel" id="client-tel" placeholder="090-0000-0000">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-field">
+        <label class="form-label" for="client-emg">緊急連絡先（ご家族）</label>
+        <input class="form-input" type="text" id="client-emg" placeholder="山田 太郎（長男）090-0000-0001">
+      </div>
+      <div class="form-field">
+        <label class="form-label" for="start-date">サービス開始日</label>
+        <input class="form-input" type="date" id="start-date">
+      </div>
+    </div>
+
+    <div class="sig-grid">
+      <div class="sig-block">
+        <div class="sig-block-label">
+          <span>ご利用者（またはご家族）署名</span>
+          <button class="clear-btn" onclick="clearCanvas('sig-client')">消去</button>
+        </div>
+        <canvas id="sig-client"></canvas>
+        <p class="sig-hint">指またはApple Pencilで署名</p>
+      </div>
+      <div class="sig-block">
+        <div class="sig-block-label">
+          <span>cura 代表署名</span>
+          <button class="clear-btn" onclick="clearCanvas('sig-rep')">消去</button>
+        </div>
+        <canvas id="sig-rep"></canvas>
+        <p class="sig-hint">指またはApple Pencilで署名</p>
+      </div>
+    </div>
+
+    <div class="action-bar">
+      <button class="btn-submit" onclick="submitAgreement()">同意して署名を確定する</button>
+      <button class="btn-pdf" onclick="window.print()">PDFとして保存</button>
+      <button class="btn-reset" onclick="resetAll()">最初からやり直す</button>
+    </div>
+    <div class="complete-msg" id="complete-msg"></div>
+    <div class="doc-note">本書は利用者（またはご家族）と cura がそれぞれ記録を保管する。署名確定後はスクリーンショットまたは印刷にて控えを取ること。</div>
+  </div>
+
+</div>
+<script>
+  document.getElementById('start-date').valueAsDate = new Date();
+
+  function setupCanvas(id) {
+    const canvas = document.getElementById(id);
+    const ctx = canvas.getContext('2d');
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.scale(dpr, dpr);
+      ctx.strokeStyle = '#2a1f1a'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    }
+    resize();
+    window.addEventListener('resize', resize);
+    let drawing = false;
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const src = e.touches ? e.touches[0] : e;
+      return { x: src.clientX - rect.left, y: src.clientY - rect.top };
+    }
+    function start(e) { e.preventDefault(); drawing = true; const p = getPos(e); ctx.beginPath(); ctx.moveTo(p.x, p.y); }
+    function move(e) { if (!drawing) return; e.preventDefault(); const p = getPos(e); ctx.lineTo(p.x, p.y); ctx.stroke(); }
+    function end(e) { if (!drawing) return; e.preventDefault(); drawing = false; ctx.closePath(); }
+    canvas.addEventListener('mousedown', start); canvas.addEventListener('mousemove', move); canvas.addEventListener('mouseup', end); canvas.addEventListener('mouseleave', end);
+    canvas.addEventListener('touchstart', start, {passive:false}); canvas.addEventListener('touchmove', move, {passive:false}); canvas.addEventListener('touchend', end, {passive:false});
+  }
+
+  function clearCanvas(id) {
+    const c = document.getElementById(id); const ctx = c.getContext('2d'); const dpr = window.devicePixelRatio||1;
+    ctx.clearRect(0, 0, c.width/dpr, c.height/dpr);
+  }
+
+  function isCanvasEmpty(id) {
+    const c = document.getElementById(id);
+    return !c.getContext('2d').getImageData(0,0,c.width,c.height).data.some(v=>v!==0);
+  }
+
+  function submitAgreement() {
+    const name = document.getElementById('client-name').value.trim();
+    const date = document.getElementById('start-date').value;
+    if (!name) { alert('ご利用者氏名を入力してください。'); return; }
+    if (isCanvasEmpty('sig-client')) { alert('ご利用者（またはご家族）の署名が必要です。'); return; }
+    if (isCanvasEmpty('sig-rep')) { alert('cura 代表の署名が必要です。'); return; }
+    document.querySelector('.action-bar').style.display = 'none';
+    const msg = document.getElementById('complete-msg');
+    msg.style.display = 'block';
+    msg.innerHTML = `同意書が完成しました（${name} ／ ${date}）。<br>スクリーンショットを撮影して保管してください。`;
+    ['client-name','client-dob','client-addr','client-tel','client-emg','start-date'].forEach(id => { const el = document.getElementById(id); if(el) el.readOnly = true; });
+  }
+
+  function resetAll() {
+    ['client-name','client-addr','client-tel','client-emg'].forEach(id => { const el = document.getElementById(id); if(el){el.value='';el.readOnly=false;} });
+    document.getElementById('start-date').valueAsDate = new Date();
+    document.getElementById('start-date').readOnly = false;
+    clearCanvas('sig-client'); clearCanvas('sig-rep');
+    document.querySelector('.action-bar').style.display = 'flex';
+    document.getElementById('complete-msg').style.display = 'none';
+  }
+
+  setupCanvas('sig-client');
+  setupCanvas('sig-rep');
+</script>
+</body>
+</html>

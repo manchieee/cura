@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>退職時データ削除確認書 — cura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --dark:#2a1f1a; --rose:#8a3a55; --gold:#c9a882; --cream:#faf7f2; --border:#d8cec6; --text:#2a1f1a; --text-mid:#5c4a40; --text-light:#9c8a7e; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'Noto Serif JP',serif; background:var(--cream); color:var(--text); font-size:14px; line-height:2.0; padding:24px 16px 60px; -webkit-font-smoothing:antialiased; }
+    .doc-wrap { max-width:780px; margin:0 auto; background:#fff; border:1px solid var(--border); padding:40px 44px 48px; }
+    .doc-header { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:32px; padding-bottom:14px; border-bottom:1px solid var(--border); }
+    .doc-logo { font-family:'Cormorant Garamond',serif; font-size:26px; color:var(--rose); letter-spacing:0.15em; line-height:1; }
+    .doc-logo-sub { font-size:8px; letter-spacing:0.3em; color:var(--text-light); font-family:'Cormorant Garamond',serif; margin-top:4px; }
+    .doc-meta { text-align:right; font-size:11px; color:var(--text-light); line-height:1.8; }
+    .doc-title-block { text-align:center; margin-bottom:26px; }
+    .doc-title { font-size:17px; font-weight:500; letter-spacing:0.12em; color:var(--dark); margin-bottom:4px; }
+    .doc-title-en { font-family:'Cormorant Garamond',serif; font-size:9px; letter-spacing:0.35em; color:var(--text-light); text-transform:uppercase; }
+    .preamble { font-size:12.5px; color:var(--text-mid); line-height:2.1; margin-bottom:28px; padding:14px 18px; background:rgba(138,58,85,0.04); border-left:3px solid var(--rose); }
+    .section { margin-bottom:22px; }
+    .section-title { font-size:10px; font-weight:400; letter-spacing:0.25em; color:var(--gold); font-family:'Cormorant Garamond',serif; text-transform:uppercase; margin-bottom:10px; padding-bottom:5px; border-bottom:1px solid var(--border); }
+    .form-row { display:grid; gap:14px; margin-bottom:14px; }
+    .col-2 { grid-template-columns:1fr 1fr; }
+    @media(max-width:560px) { .col-2 { grid-template-columns:1fr; } }
+    .form-field { display:flex; flex-direction:column; gap:3px; }
+    .form-label { font-size:9.5px; letter-spacing:0.2em; color:var(--text-light); font-family:'Cormorant Garamond',serif; }
+    .form-input { border:none; border-bottom:1px solid var(--border); padding:7px 0; font-family:'Noto Serif JP',serif; font-size:14px; color:var(--dark); background:transparent; outline:none; width:100%; -webkit-appearance:none; }
+    .form-input:focus { border-bottom-color:var(--rose); }
+
+    /* チェックリスト */
+    .checklist { list-style:none; padding:0; }
+    .checklist li { display:flex; align-items:flex-start; gap:12px; padding:10px 0; border-bottom:1px solid var(--border); font-size:13px; color:var(--text-mid); line-height:1.8; }
+    .checklist li:last-child { border-bottom:none; }
+    .checklist input[type="checkbox"] { width:18px; height:18px; border:1px solid var(--border); accent-color:var(--rose); flex-shrink:0; margin-top:3px; cursor:pointer; }
+    .checklist .device-label { font-weight:400; color:var(--dark); font-size:13.5px; }
+    .device-block { border:1px solid var(--border); padding:14px 16px; margin-bottom:12px; }
+    .device-block-title { font-size:10px; letter-spacing:0.2em; color:var(--gold); font-family:'Cormorant Garamond',serif; margin-bottom:10px; }
+
+    /* 署名 */
+    .sig-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    @media(max-width:560px) { .sig-grid { grid-template-columns:1fr; } }
+    .sig-block { border:1px solid var(--border); padding:14px; }
+    .sig-block-label { font-size:9.5px; letter-spacing:0.25em; color:var(--gold); font-family:'Cormorant Garamond',serif; text-transform:uppercase; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center; }
+    .clear-btn { font-size:9.5px; color:var(--text-light); cursor:pointer; padding:2px 8px; border:1px solid var(--border); background:#fff; font-family:'Noto Serif JP',serif; -webkit-appearance:none; }
+    canvas { display:block; width:100%; height:100px; border:1px solid var(--border); background:var(--cream); cursor:crosshair; touch-action:none; }
+    .sig-hint { font-size:9.5px; color:var(--text-light); margin-top:4px; }
+    .action-bar { margin-top:28px; display:flex; gap:10px; flex-wrap:wrap; }
+    .btn-submit { background:var(--rose); color:#fff; border:none; padding:13px 24px; font-family:'Noto Serif JP',serif; font-size:13px; letter-spacing:0.1em; cursor:pointer; flex:1; min-width:180px; -webkit-appearance:none; }
+    .btn-pdf { background:var(--dark); color:rgba(250,247,242,0.85); border:none; padding:13px 20px; font-family:'Noto Serif JP',serif; font-size:12px; letter-spacing:0.1em; cursor:pointer; -webkit-appearance:none; }
+    .btn-reset { background:#fff; color:var(--text-mid); border:1px solid var(--border); padding:13px 18px; font-family:'Noto Serif JP',serif; font-size:11px; letter-spacing:0.08em; cursor:pointer; -webkit-appearance:none; }
+    .complete-msg { display:none; margin-top:16px; padding:13px 16px; background:rgba(138,58,85,0.06); border-left:3px solid var(--rose); font-size:12.5px; color:var(--text-mid); line-height:1.9; }
+    .doc-note { margin-top:20px; font-size:10.5px; color:var(--text-light); line-height:1.9; padding-top:10px; border-top:1px solid var(--border); }
+    @media print { body { background:#fff; padding:0; } .doc-wrap { border:none; padding:20px; } .action-bar, .clear-btn { display:none !important; } }
+  </style>
+</head>
+<body>
+<div class="doc-wrap">
+
+  <div class="doc-header">
+    <div>
+      <div class="doc-logo">cura</div>
+      <div class="doc-logo-sub">Private Care Service</div>
+    </div>
+    <div class="doc-meta">文書番号：HR-03<br>作成：高野まさみ（代表）</div>
+  </div>
+
+  <div class="doc-title-block">
+    <div class="doc-title">退職時データ削除確認書</div>
+    <div class="doc-title-en">Data Deletion Confirmation upon Resignation</div>
+  </div>
+
+  <div class="preamble">
+    退職にあたり、業務上取得した個人情報・業務情報をすべての端末・アカウントから削除したことを確認します。削除が完了した項目にチェックを入れ、署名してください。
+  </div>
+
+  <!-- 退職者情報 -->
+  <div class="section">
+    <div class="section-title">退職者情報</div>
+    <div class="form-row col-2">
+      <div class="form-field">
+        <label class="form-label">氏名</label>
+        <input class="form-input" type="text" id="staff-name" placeholder="山田 花子">
+      </div>
+      <div class="form-field">
+        <label class="form-label">退職日</label>
+        <input class="form-input" type="date" id="resign-date">
+      </div>
+    </div>
+  </div>
+
+  <!-- 削除チェックリスト -->
+  <div class="section">
+    <div class="section-title">削除確認チェックリスト</div>
+
+    <div class="device-block">
+      <div class="device-block-title">業務アプリ・アカウント</div>
+      <ul class="checklist">
+        <li><input type="checkbox"><span>LINE WORKS（または指定業務アプリ）のアカウントからログアウト・データ削除済み</span></li>
+        <li><input type="checkbox"><span>cura 共有フォルダ・Google Drive へのアクセス権が削除されたことを確認</span></li>
+        <li><input type="checkbox"><span>業務で使用したメールアカウントからサインアウト済み</span></li>
+        <li><input type="checkbox"><span>予約・記録システムのアカウントが無効化されたことを確認</span></li>
+      </ul>
+    </div>
+
+    <div class="device-block">
+      <div class="device-block-title">端末内のデータ</div>
+      <ul class="checklist">
+        <li><input type="checkbox"><span>私用スマートフォン内の業務関連写真・動画をすべて削除済み</span></li>
+        <li><input type="checkbox"><span>私用スマートフォンの「最近削除した項目」からも削除済み</span></li>
+        <li><input type="checkbox"><span>業務上取得した利用者の連絡先・住所を端末から削除済み</span></li>
+        <li><input type="checkbox"><span>端末の個人クラウド（iCloud・Google フォト等）に業務データが残っていないことを確認</span></li>
+      </ul>
+    </div>
+
+    <div class="device-block">
+      <div class="device-block-title">書類・メモ等</div>
+      <ul class="checklist">
+        <li><input type="checkbox"><span>業務上知り得た個人情報を記載した手書きメモ・メモアプリのデータを廃棄・削除済み</span></li>
+        <li><input type="checkbox"><span>利用者情報が含まれる印刷物を適切に廃棄済み（シュレッダー等）</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 誓約 -->
+  <div class="section">
+    <div class="section-title">退職後の守秘義務</div>
+    <div style="font-size:12.5px; color:var(--text-mid); line-height:2.0; padding:12px 16px; background:rgba(138,58,85,0.04); border-left:3px solid var(--rose);">
+      退職後においても、在職中に知り得た利用者の個人情報・業務情報について守秘義務を負うことを理解し、遵守することを確認します。違反した場合は、損害賠償請求の対象となることを承知しています。
+    </div>
+  </div>
+
+  <!-- 署名 -->
+  <div class="section">
+    <div class="section-title">署名</div>
+    <div class="sig-grid">
+      <div class="sig-block">
+        <div class="sig-block-label">
+          <span>退職者署名</span>
+          <button class="clear-btn" onclick="clearCanvas('sig-staff')">消去</button>
+        </div>
+        <canvas id="sig-staff"></canvas>
+        <p class="sig-hint">指またはApple Pencilで署名</p>
+      </div>
+      <div class="sig-block">
+        <div class="sig-block-label">
+          <span>cura 代表署名</span>
+          <button class="clear-btn" onclick="clearCanvas('sig-rep')">消去</button>
+        </div>
+        <canvas id="sig-rep"></canvas>
+        <p class="sig-hint">指またはApple Pencilで署名</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="action-bar">
+    <button class="btn-submit" onclick="submitForm()">確認・署名を確定する</button>
+    <button class="btn-pdf" onclick="window.print()">PDFとして保存</button>
+    <button class="btn-reset" onclick="resetAll()">リセット</button>
+  </div>
+  <div class="complete-msg" id="complete-msg"></div>
+  <div class="doc-note">本書は退職者と cura がそれぞれ保管する。「PDFとして保存」で控えを取ること。</div>
+
+</div>
+<script>
+  document.getElementById('resign-date').valueAsDate = new Date();
+
+  function setupCanvas(id) {
+    const canvas = document.getElementById(id);
+    const ctx = canvas.getContext('2d');
+    function resize() {
+      const rect = canvas.getBoundingClientRect(); const dpr = window.devicePixelRatio||1;
+      canvas.width = rect.width*dpr; canvas.height = rect.height*dpr; ctx.scale(dpr,dpr);
+      ctx.strokeStyle='#2a1f1a'; ctx.lineWidth=2; ctx.lineCap='round'; ctx.lineJoin='round';
+    }
+    resize(); window.addEventListener('resize',resize);
+    let drawing=false;
+    function getPos(e){const rect=canvas.getBoundingClientRect();const src=e.touches?e.touches[0]:e;return{x:src.clientX-rect.left,y:src.clientY-rect.top};}
+    function start(e){e.preventDefault();drawing=true;const p=getPos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);}
+    function move(e){if(!drawing)return;e.preventDefault();const p=getPos(e);ctx.lineTo(p.x,p.y);ctx.stroke();}
+    function end(e){if(!drawing)return;e.preventDefault();drawing=false;ctx.closePath();}
+    canvas.addEventListener('mousedown',start);canvas.addEventListener('mousemove',move);canvas.addEventListener('mouseup',end);canvas.addEventListener('mouseleave',end);
+    canvas.addEventListener('touchstart',start,{passive:false});canvas.addEventListener('touchmove',move,{passive:false});canvas.addEventListener('touchend',end,{passive:false});
+  }
+  function clearCanvas(id){const c=document.getElementById(id);const ctx=c.getContext('2d');const dpr=window.devicePixelRatio||1;ctx.clearRect(0,0,c.width/dpr,c.height/dpr);}
+  function isCanvasEmpty(id){const c=document.getElementById(id);return!c.getContext('2d').getImageData(0,0,c.width,c.height).data.some(v=>v!==0);}
+
+  function submitForm() {
+    const name = document.getElementById('staff-name').value.trim();
+    if (!name) { alert('退職者氏名を入力してください。'); return; }
+    const boxes = document.querySelectorAll('input[type="checkbox"]');
+    const unchecked = [...boxes].filter(b => !b.checked);
+    if (unchecked.length > 0) { alert('すべての項目にチェックを入れてください。'); return; }
+    if (isCanvasEmpty('sig-staff')) { alert('退職者の署名が必要です。'); return; }
+    if (isCanvasEmpty('sig-rep')) { alert('cura 代表の署名が必要です。'); return; }
+    document.querySelector('.action-bar').style.display='none';
+    const msg = document.getElementById('complete-msg');
+    msg.style.display='block';
+    msg.innerHTML=`確認書が完成しました（${name} ／ ${document.getElementById('resign-date').value}）。<br>「PDFとして保存」で控えを保管してください。`;
+    document.querySelectorAll('.form-input').forEach(el=>el.readOnly=true);
+    boxes.forEach(el=>el.disabled=true);
+    const pdfBtn=document.createElement('button');pdfBtn.className='btn-pdf';pdfBtn.textContent='PDFとして保存';pdfBtn.onclick=()=>window.print();msg.after(pdfBtn);
+  }
+
+  function resetAll() {
+    document.getElementById('staff-name').value=''; document.getElementById('staff-name').readOnly=false;
+    document.getElementById('resign-date').valueAsDate=new Date(); document.getElementById('resign-date').readOnly=false;
+    document.querySelectorAll('input[type="checkbox"]').forEach(el=>{el.checked=false;el.disabled=false;});
+    clearCanvas('sig-staff'); clearCanvas('sig-rep');
+    document.querySelector('.action-bar').style.display='flex';
+    document.getElementById('complete-msg').style.display='none';
+    const extra=document.querySelector('.btn-pdf:not(.action-bar .btn-pdf)');if(extra)extra.remove();
+  }
+
+  setupCanvas('sig-staff');
+  setupCanvas('sig-rep');
+</script>
+</body>
+</html>
