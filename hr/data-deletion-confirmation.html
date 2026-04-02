@@ -52,7 +52,7 @@
     .btn-reset { background:#fff; color:var(--text-mid); border:1px solid var(--border); padding:13px 18px; font-family:'Noto Serif JP',serif; font-size:11px; letter-spacing:0.08em; cursor:pointer; -webkit-appearance:none; }
     .complete-msg { display:none; margin-top:16px; padding:13px 16px; background:rgba(138,58,85,0.06); border-left:3px solid var(--rose); font-size:12.5px; color:var(--text-mid); line-height:1.9; }
     .doc-note { margin-top:20px; font-size:10.5px; color:var(--text-light); line-height:1.9; padding-top:10px; border-top:1px solid var(--border); }
-    @media print { body { background:#fff; padding:0; } .doc-wrap { border:none; padding:20px; } .action-bar, .clear-btn { display:none !important; } }
+    @media print { body { background:#fff; padding:0; } .doc-wrap { border:none; padding:20px; } .btn-submit, .btn-reset, .btn-pdf, .clear-btn { display:none !important; } }
   </style>
 </head>
 <body>
@@ -194,13 +194,13 @@
     if (unchecked.length > 0) { alert('すべての項目にチェックを入れてください。'); return; }
     if (isCanvasEmpty('sig-staff')) { alert('退職者の署名が必要です。'); return; }
     if (isCanvasEmpty('sig-rep')) { alert('cura 代表の署名が必要です。'); return; }
-    document.querySelector('.action-bar').style.display='none';
+    document.querySelector('.btn-submit').style.display='none';
+    document.querySelector('.btn-reset').style.display='none';
     const msg = document.getElementById('complete-msg');
     msg.style.display='block';
     msg.innerHTML=`確認書が完成しました（${name} ／ ${document.getElementById('resign-date').value}）。<br>「PDFとして保存」で控えを保管してください。`;
     document.querySelectorAll('.form-input').forEach(el=>el.readOnly=true);
     boxes.forEach(el=>el.disabled=true);
-    const pdfBtn=document.createElement('button');pdfBtn.className='btn-pdf';pdfBtn.textContent='PDFとして保存';pdfBtn.onclick=()=>window.print();msg.after(pdfBtn);
   }
 
   function resetAll() {
@@ -208,9 +208,9 @@
     document.getElementById('resign-date').valueAsDate=new Date(); document.getElementById('resign-date').readOnly=false;
     document.querySelectorAll('input[type="checkbox"]').forEach(el=>{el.checked=false;el.disabled=false;});
     clearCanvas('sig-staff'); clearCanvas('sig-rep');
-    document.querySelector('.action-bar').style.display='flex';
+    document.querySelector('.btn-submit').style.display='';
+    document.querySelector('.btn-reset').style.display='';
     document.getElementById('complete-msg').style.display='none';
-    const extra=document.querySelector('.btn-pdf:not(.action-bar .btn-pdf)');if(extra)extra.remove();
   }
 
   setupCanvas('sig-staff');

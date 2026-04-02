@@ -315,7 +315,7 @@
       body { background: #fff; padding: 0; }
       .doc-wrap { border: none; padding: 0; }
       canvas { -webkit-print-color-adjust: exact; }
-      .action-bar, .clear-btn { display: none !important; }
+      .btn-submit, .btn-reset, .btn-pdf, .clear-btn { display: none !important; }
     }
   </style>
 </head>
@@ -572,13 +572,11 @@
       return;
     }
 
-    // ボタンを非表示にして完了メッセージ表示
-    document.querySelector('.action-bar').style.display = 'none';
+    document.querySelector('.btn-submit').style.display = 'none';
+    document.querySelector('.btn-reset').style.display = 'none';
     const msg = document.getElementById('complete-msg');
     msg.style.display = 'block';
-    msg.innerHTML = `署名が完了しました（${name} ／ ${date}）。<br>このページのスクリーンショットを撮影するか、印刷して保管してください。`;
-
-    // 入力フィールドを読み取り専用に
+    msg.innerHTML = `署名が完了しました（${name} ／ ${date}）。<br>「PDFとして保存」で控えを保管してください。`;
     document.getElementById('staff-name').readOnly = true;
     document.getElementById('sign-date').readOnly = true;
   }
@@ -589,7 +587,8 @@
     document.getElementById('staff-name').readOnly = false;
     document.getElementById('sign-date').readOnly = false;
     clearCanvas('sig-canvas');
-    document.querySelector('.action-bar').style.display = 'flex';
+    document.querySelector('.btn-submit').style.display = '';
+    document.querySelector('.btn-reset').style.display = '';
     document.getElementById('complete-msg').style.display = 'none';
   }
 

@@ -66,7 +66,16 @@
     .btn-reset { background: #fff; color: var(--text-mid); border: 1px solid var(--border); padding: 13px 20px; font-family: 'Noto Serif JP', serif; font-size: 11.5px; letter-spacing: 0.08em; cursor: pointer; -webkit-appearance: none; }
     .complete-msg { display: none; margin-top: 18px; padding: 14px 18px; background: rgba(138,58,85,0.06); border-left: 3px solid var(--rose); font-size: 12.5px; color: var(--text-mid); line-height: 1.9; }
     .doc-note { margin-top: 20px; font-size: 10.5px; color: var(--text-light); line-height: 1.9; padding-top: 10px; border-top: 1px solid var(--border); }
-    @media print { body { background: #fff; padding: 0; } .doc-wrap { border: none; padding: 0; } .action-bar, .clear-btn { display: none !important; } }
+    @media print { body { background: #fff; padding: 0; } .doc-wrap { border: none; padding: 0; } .btn-submit, .btn-reset, .btn-pdf, .clear-btn { display: none !important; } }
+    .zip-row { display: flex; align-items: center; gap: 6px; }
+    .zip-mark { font-size: 13px; color: var(--text-light); flex-shrink: 0; }
+    .zip-seg { width: 60px !important; text-align: center; }
+    .zip-seg:last-of-type { width: 72px !important; }
+    .zip-sep, .tel-sep { color: var(--text-light); flex-shrink: 0; font-size: 13px; }
+    .zip-btn { background: var(--dark); color: rgba(250,247,242,0.85); border: none; padding: 6px 12px; font-family: 'Noto Serif JP', serif; font-size: 11px; letter-spacing: 0.08em; cursor: pointer; flex-shrink: 0; -webkit-appearance: none; }
+    .zip-note { font-size: 10px; color: var(--text-light); margin-top: 3px; }
+    .tel-row { display: flex; align-items: center; gap: 6px; }
+    .tel-seg { width: 70px !important; text-align: center; }
   </style>
 </head>
 <body>
@@ -164,20 +173,51 @@
         <input class="form-input" type="date" id="client-dob">
       </div>
     </div>
-    <div class="form-row">
+    <div class="form-row" style="grid-template-columns:1fr;">
+      <div class="form-field">
+        <label class="form-label">郵便番号</label>
+        <div class="zip-row">
+          <span class="zip-mark">〒</span>
+          <input class="form-input zip-seg" type="tel" id="zip1" maxlength="3" placeholder="113" inputmode="numeric">
+          <span class="zip-sep">—</span>
+          <input class="form-input zip-seg" type="tel" id="zip2" maxlength="4" placeholder="0021" inputmode="numeric">
+          <button class="zip-btn" type="button" onclick="searchZip()">住所を検索</button>
+        </div>
+        <p class="zip-note" id="zip-note"></p>
+      </div>
+    </div>
+    <div class="form-row" style="grid-template-columns:1fr;">
       <div class="form-field">
         <label class="form-label" for="client-addr">ご住所</label>
         <input class="form-input" type="text" id="client-addr" placeholder="文京区千石4-43-○">
       </div>
+    </div>
+    <div class="form-row">
       <div class="form-field">
-        <label class="form-label" for="client-tel">ご連絡先</label>
-        <input class="form-input" type="tel" id="client-tel" placeholder="090-0000-0000">
+        <label class="form-label">ご連絡先</label>
+        <div class="tel-row">
+          <input class="form-input tel-seg" type="tel" id="tel1" maxlength="4" placeholder="090" inputmode="numeric">
+          <span class="tel-sep">—</span>
+          <input class="form-input tel-seg" type="tel" id="tel2" maxlength="4" placeholder="0000" inputmode="numeric">
+          <span class="tel-sep">—</span>
+          <input class="form-input tel-seg" type="tel" id="tel3" maxlength="4" placeholder="0000" inputmode="numeric">
+        </div>
+      </div>
+      <div class="form-field">
+        <label class="form-label">緊急連絡先（ご家族）氏名</label>
+        <input class="form-input" type="text" id="client-emg-name" placeholder="山田 太郎（長男）">
       </div>
     </div>
     <div class="form-row">
       <div class="form-field">
-        <label class="form-label" for="client-emg">緊急連絡先（ご家族）</label>
-        <input class="form-input" type="text" id="client-emg" placeholder="山田 太郎（長男）090-0000-0001">
+        <label class="form-label">緊急連絡先（電話番号）</label>
+        <div class="tel-row">
+          <input class="form-input tel-seg" type="tel" id="emg1" maxlength="4" placeholder="090" inputmode="numeric">
+          <span class="tel-sep">—</span>
+          <input class="form-input tel-seg" type="tel" id="emg2" maxlength="4" placeholder="0000" inputmode="numeric">
+          <span class="tel-sep">—</span>
+          <input class="form-input tel-seg" type="tel" id="emg3" maxlength="4" placeholder="0001" inputmode="numeric">
+        </div>
       </div>
       <div class="form-field">
         <label class="form-label" for="start-date">サービス開始日</label>
@@ -216,6 +256,50 @@
 </div>
 <script>
   document.getElementById('start-date').valueAsDate = new Date();
+
+  // 郵便番号 → 住所検索（zipcloud API）
+  function searchZip() {
+    const z1 = document.getElementById('zip1').value.trim();
+    const z2 = document.getElementById('zip2').value.trim();
+    const note = document.getElementById('zip-note');
+    if (z1.length !== 3 || z2.length !== 4) { note.textContent = '郵便番号を正しく入力してください（例：113-0021）'; return; }
+    note.textContent = '検索中…';
+    const script = document.createElement('script');
+    window._zipCallback = function(data) {
+      script.remove();
+      if (data.status === 200 && data.results) {
+        const r = data.results[0];
+        document.getElementById('client-addr').value = r.address1 + r.address2 + r.address3;
+        note.textContent = '住所を反映しました。番地以降を続けて入力してください。';
+        document.getElementById('client-addr').focus();
+      } else {
+        note.textContent = '該当する住所が見つかりませんでした。';
+      }
+    };
+    script.src = 'https://zipcloud.ibsnet.co.jp/api/search?zipcode=' + z1 + z2 + '&callback=_zipCallback';
+    document.body.appendChild(script);
+  }
+
+  // 桁数オートアドバンス
+  function autoAdvance(id, maxLen, nextId) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', function() {
+      this.value = this.value.replace(/\D/g, '');
+      if (this.value.length >= maxLen && nextId) {
+        const next = document.getElementById(nextId);
+        if (next) next.focus();
+      }
+    });
+  }
+  autoAdvance('zip1', 3, 'zip2');
+  autoAdvance('zip2', 4, 'client-addr');
+  autoAdvance('tel1', 4, 'tel2');
+  autoAdvance('tel2', 4, 'tel3');
+  autoAdvance('tel3', 4, null);
+  autoAdvance('emg1', 4, 'emg2');
+  autoAdvance('emg2', 4, 'emg3');
+  autoAdvance('emg3', 4, null);
 
   function setupCanvas(id) {
     const canvas = document.getElementById(id);
@@ -259,11 +343,12 @@
     if (!name) { alert('ご利用者氏名を入力してください。'); return; }
     if (isCanvasEmpty('sig-client')) { alert('ご利用者（またはご家族）の署名が必要です。'); return; }
     if (isCanvasEmpty('sig-rep')) { alert('cura 代表の署名が必要です。'); return; }
-    document.querySelector('.action-bar').style.display = 'none';
+    document.querySelector('.btn-submit').style.display = 'none';
+    document.querySelector('.btn-reset').style.display = 'none';
     const msg = document.getElementById('complete-msg');
     msg.style.display = 'block';
-    msg.innerHTML = `同意書が完成しました（${name} ／ ${date}）。<br>スクリーンショットを撮影して保管してください。`;
-    ['client-name','client-dob','client-addr','client-tel','client-emg','start-date'].forEach(id => { const el = document.getElementById(id); if(el) el.readOnly = true; });
+    msg.innerHTML = `同意書が完成しました（${name} ／ ${date}）。<br>「PDFとして保存」で控えを保管してください。`;
+    document.querySelectorAll('.form-input, .zip-seg, .tel-seg').forEach(el => el.readOnly = true);
   }
 
   function resetAll() {
@@ -271,7 +356,8 @@
     document.getElementById('start-date').valueAsDate = new Date();
     document.getElementById('start-date').readOnly = false;
     clearCanvas('sig-client'); clearCanvas('sig-rep');
-    document.querySelector('.action-bar').style.display = 'flex';
+    document.querySelector('.btn-submit').style.display = '';
+    document.querySelector('.btn-reset').style.display = '';
     document.getElementById('complete-msg').style.display = 'none';
   }
 

@@ -71,7 +71,7 @@
     @media print {
       body { background: #fff; padding: 0; }
       .doc-wrap { border: none; padding: 20px; }
-      .action-bar, .clear-btn { display: none !important; }
+      .btn-submit, .btn-reset, .btn-pdf, .clear-btn { display: none !important; }
       .complete-msg { display: block !important; }
     }
   </style>
@@ -298,19 +298,14 @@
     if (!client) { alert('ご利用者氏名を入力してください。'); return; }
     if (!staff) { alert('担当スタッフ名を入力してください。'); return; }
     if (isCanvasEmpty('sig-staff')) { alert('担当者の署名が必要です。'); return; }
-    document.querySelector('.action-bar').style.display = 'none';
+    document.querySelector('.btn-submit').style.display = 'none';
+    document.querySelector('.btn-reset').style.display = 'none';
     const msg = document.getElementById('complete-msg');
     msg.style.display = 'block';
     msg.innerHTML = `記録が確定しました（${client} ／ ${document.getElementById('visit-date').value}）。<br>「PDFとして保存」ボタンを押して保管してください。`;
     document.querySelectorAll('.form-input, .form-textarea').forEach(el => el.readOnly = true);
     document.querySelectorAll('input[type=checkbox]').forEach(el => el.disabled = true);
     document.querySelectorAll('.scale-btn').forEach(el => el.disabled = true);
-    // 確定後もPDFボタンだけ残す
-    const pdfBtn = document.createElement('button');
-    pdfBtn.className = 'btn-pdf';
-    pdfBtn.textContent = 'PDFとして保存';
-    pdfBtn.onclick = () => window.print();
-    msg.after(pdfBtn);
   }
 
   function resetAll() {

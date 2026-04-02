@@ -53,7 +53,7 @@
     .btn-reset { background:#fff; color:var(--text-mid); border:1px solid var(--border); padding:13px 18px; font-family:'Noto Serif JP',serif; font-size:11px; letter-spacing:0.08em; cursor:pointer; -webkit-appearance:none; }
     .complete-msg { display:none; margin-top:16px; padding:13px 16px; background:rgba(138,58,85,0.06); border-left:3px solid var(--rose); font-size:12.5px; color:var(--text-mid); line-height:1.9; }
     .doc-note { margin-top:20px; font-size:10.5px; color:var(--text-light); line-height:1.9; padding-top:10px; border-top:1px solid var(--border); }
-    @media print { body { background:#fff; padding:0; } .doc-wrap { border:none; padding:20px; } .action-bar, .clear-btn { display:none !important; } }
+    @media print { body { background:#fff; padding:0; } .doc-wrap { border:none; padding:20px; } .btn-submit, .btn-reset, .btn-pdf, .clear-btn { display:none !important; } }
   </style>
 </head>
 <body>
@@ -89,6 +89,19 @@
         <input class="form-input" type="date" id="contract-start">
       </div>
     </div>
+    <div class="form-row" style="grid-template-columns:1fr;">
+      <div class="form-field">
+        <label class="form-label">郵便番号</label>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-size:13px;color:var(--text-light);flex-shrink:0;">〒</span>
+          <input class="form-input" type="tel" id="zip1" maxlength="3" placeholder="113" inputmode="numeric" style="width:60px;text-align:center;">
+          <span style="color:var(--text-light);flex-shrink:0;">—</span>
+          <input class="form-input" type="tel" id="zip2" maxlength="4" placeholder="0021" inputmode="numeric" style="width:72px;text-align:center;">
+          <button type="button" onclick="searchZip()" style="background:var(--dark);color:rgba(250,247,242,0.85);border:none;padding:6px 12px;font-family:'Noto Serif JP',serif;font-size:11px;letter-spacing:0.08em;cursor:pointer;flex-shrink:0;-webkit-appearance:none;">住所を検索</button>
+        </div>
+        <p id="zip-note" style="font-size:10px;color:var(--text-light);margin-top:3px;"></p>
+      </div>
+    </div>
     <div class="form-row col-2">
       <div class="form-field">
         <label class="form-label">住所</label>
@@ -96,7 +109,13 @@
       </div>
       <div class="form-field">
         <label class="form-label">連絡先</label>
-        <input class="form-input" type="tel" id="staff-tel" placeholder="090-0000-0000">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <input class="form-input" type="tel" id="tel1" maxlength="4" placeholder="090" inputmode="numeric" style="width:70px;text-align:center;">
+          <span style="color:var(--text-light);flex-shrink:0;">—</span>
+          <input class="form-input" type="tel" id="tel2" maxlength="4" placeholder="0000" inputmode="numeric" style="width:70px;text-align:center;">
+          <span style="color:var(--text-light);flex-shrink:0;">—</span>
+          <input class="form-input" type="tel" id="tel3" maxlength="4" placeholder="0000" inputmode="numeric" style="width:70px;text-align:center;">
+        </div>
       </div>
     </div>
   </div>
@@ -205,6 +224,45 @@
 <script>
   document.getElementById('contract-start').valueAsDate = new Date();
 
+  function searchZip() {
+    const z1 = document.getElementById('zip1').value.trim();
+    const z2 = document.getElementById('zip2').value.trim();
+    const note = document.getElementById('zip-note');
+    if (z1.length !== 3 || z2.length !== 4) { note.textContent = '郵便番号を正しく入力してください（例：113-0021）'; return; }
+    note.textContent = '検索中…';
+    const script = document.createElement('script');
+    window._zipCallback = function(data) {
+      script.remove();
+      if (data.status === 200 && data.results) {
+        const r = data.results[0];
+        document.getElementById('staff-addr').value = r.address1 + r.address2 + r.address3;
+        note.textContent = '住所を反映しました。番地以降を続けて入力してください。';
+        document.getElementById('staff-addr').focus();
+      } else {
+        note.textContent = '該当する住所が見つかりませんでした。';
+      }
+    };
+    script.src = 'https://zipcloud.ibsnet.co.jp/api/search?zipcode=' + z1 + z2 + '&callback=_zipCallback';
+    document.body.appendChild(script);
+  }
+
+  function autoAdvance(id, maxLen, nextId) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('input', function() {
+      this.value = this.value.replace(/\D/g, '');
+      if (this.value.length >= maxLen && nextId) {
+        const next = document.getElementById(nextId);
+        if (next) next.focus();
+      }
+    });
+  }
+  autoAdvance('zip1', 3, 'zip2');
+  autoAdvance('zip2', 4, 'staff-addr');
+  autoAdvance('tel1', 4, 'tel2');
+  autoAdvance('tel2', 4, 'tel3');
+  autoAdvance('tel3', 4, null);
+
   function setupCanvas(id) {
     const canvas = document.getElementById(id); const ctx = canvas.getContext('2d');
     function resize() { const rect=canvas.getBoundingClientRect(); const dpr=window.devicePixelRatio||1; canvas.width=rect.width*dpr; canvas.height=rect.height*dpr; ctx.scale(dpr,dpr); ctx.strokeStyle='#2a1f1a'; ctx.lineWidth=2; ctx.lineCap='round'; ctx.lineJoin='round'; }
@@ -225,12 +283,12 @@
     if (!name) { alert('スタッフ氏名を入力してください。'); return; }
     if (isCanvasEmpty('sig-staff')) { alert('スタッフの署名が必要です。'); return; }
     if (isCanvasEmpty('sig-rep')) { alert('cura 代表の署名が必要です。'); return; }
-    document.querySelector('.action-bar').style.display='none';
+    document.querySelector('.btn-submit').style.display='none';
+    document.querySelector('.btn-reset').style.display='none';
     const msg=document.getElementById('complete-msg');
     msg.style.display='block';
     msg.innerHTML=`契約書が完成しました（${name} ／ ${document.getElementById('contract-start').value}）。<br>「PDFとして保存」で控えを保管してください。`;
     document.querySelectorAll('.form-input, input, select').forEach(el=>{el.readOnly=true;el.disabled=true;});
-    const pdfBtn=document.createElement('button');pdfBtn.className='btn-pdf';pdfBtn.textContent='PDFとして保存';pdfBtn.onclick=()=>window.print();msg.after(pdfBtn);
   }
 
   function resetAll() {
@@ -239,9 +297,9 @@
     ['job-title','work-place','probation'].forEach(id=>{const el=document.getElementById(id);if(el)el.readOnly=false;});
     document.getElementById('emp-type').disabled=false;
     clearCanvas('sig-staff');clearCanvas('sig-rep');
-    document.querySelector('.action-bar').style.display='flex';
+    document.querySelector('.btn-submit').style.display='';
+    document.querySelector('.btn-reset').style.display='';
     document.getElementById('complete-msg').style.display='none';
-    const extra=document.querySelector('.btn-pdf:not(.action-bar .btn-pdf)');if(extra)extra.remove();
   }
 
   setupCanvas('sig-staff');
