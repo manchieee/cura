@@ -15,7 +15,7 @@
     .doc-logo { font-family:'Cormorant Garamond',serif; font-size:26px; color:var(--rose); letter-spacing:0.15em; line-height:1; }
     .doc-logo-sub { font-size:8px; letter-spacing:0.3em; color:var(--text-light); font-family:'Cormorant Garamond',serif; margin-top:4px; }
     .doc-meta { text-align:right; font-size:11px; color:var(--text-light); line-height:1.8; }
-    .doc-title-block { text-align:center; margin-bottom:26px; }
+    .doc-title-block { text-align:left; margin-bottom:26px; }
     .doc-title { font-size:17px; font-weight:500; letter-spacing:0.12em; color:var(--dark); margin-bottom:4px; }
     .doc-title-en { font-family:'Cormorant Garamond',serif; font-size:9px; letter-spacing:0.35em; color:var(--text-light); text-transform:uppercase; }
     .preamble { font-size:12.5px; color:var(--text-mid); line-height:2.1; margin-bottom:28px; padding:14px 18px; background:rgba(138,58,85,0.04); border-left:3px solid var(--rose); }
@@ -94,9 +94,9 @@
         <label class="form-label">郵便番号</label>
         <div style="display:flex;align-items:center;gap:6px;">
           <span style="font-size:13px;color:var(--text-light);flex-shrink:0;">〒</span>
-          <input class="form-input" type="tel" id="zip1" maxlength="3" placeholder="113" inputmode="numeric" style="width:60px;text-align:center;">
+          <input class="form-input" type="tel" id="zip1" maxlength="3" placeholder="113" inputmode="numeric" style="width:60px;text-align:left;">
           <span style="color:var(--text-light);flex-shrink:0;">—</span>
-          <input class="form-input" type="tel" id="zip2" maxlength="4" placeholder="0021" inputmode="numeric" style="width:72px;text-align:center;">
+          <input class="form-input" type="tel" id="zip2" maxlength="4" placeholder="0021" inputmode="numeric" style="width:72px;text-align:left;">
           <button type="button" onclick="searchZip()" style="background:var(--dark);color:rgba(250,247,242,0.85);border:none;padding:6px 12px;font-family:'Noto Serif JP',serif;font-size:11px;letter-spacing:0.08em;cursor:pointer;flex-shrink:0;-webkit-appearance:none;">住所を検索</button>
         </div>
         <p id="zip-note" style="font-size:10px;color:var(--text-light);margin-top:3px;"></p>
@@ -105,16 +105,16 @@
     <div class="form-row col-2">
       <div class="form-field">
         <label class="form-label">住所</label>
-        <input class="form-input" type="text" id="staff-addr" placeholder="文京区○○1-2-3">
+        <input class="form-input" type="text" id="staff-addr" placeholder="文京区○○1-2-3" inputmode="ascii" autocomplete="address-line1">
       </div>
       <div class="form-field">
         <label class="form-label">連絡先</label>
         <div style="display:flex;align-items:center;gap:6px;">
-          <input class="form-input" type="tel" id="tel1" maxlength="4" placeholder="090" inputmode="numeric" style="width:70px;text-align:center;">
+          <input class="form-input" type="tel" id="tel1" maxlength="4" placeholder="090" inputmode="numeric" style="width:70px;text-align:left;">
           <span style="color:var(--text-light);flex-shrink:0;">—</span>
-          <input class="form-input" type="tel" id="tel2" maxlength="4" placeholder="0000" inputmode="numeric" style="width:70px;text-align:center;">
+          <input class="form-input" type="tel" id="tel2" maxlength="4" placeholder="0000" inputmode="numeric" style="width:70px;text-align:left;">
           <span style="color:var(--text-light);flex-shrink:0;">—</span>
-          <input class="form-input" type="tel" id="tel3" maxlength="4" placeholder="0000" inputmode="numeric" style="width:70px;text-align:center;">
+          <input class="form-input" type="tel" id="tel3" maxlength="4" placeholder="0000" inputmode="numeric" style="width:70px;text-align:left;">
         </div>
       </div>
     </div>
@@ -261,7 +261,12 @@
   autoAdvance('zip2', 4, 'staff-addr');
   autoAdvance('tel1', 4, 'tel2');
   autoAdvance('tel2', 4, 'tel3');
-  autoAdvance('tel3', 4, null);
+  autoAdvance('tel3', 4, 'work-hours');
+
+  // 住所番地の全角→半角変換
+  document.getElementById('staff-addr').addEventListener('input', function() {
+    this.value = this.value.replace(/[０-９Ａ-Ｚａ-ｚ－]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0)).replace(/ー/g, '-');
+  });
 
   function setupCanvas(id) {
     const canvas = document.getElementById(id); const ctx = canvas.getContext('2d');

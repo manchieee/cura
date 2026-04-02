@@ -69,13 +69,13 @@
     @media print { body { background: #fff; padding: 0; } .doc-wrap { border: none; padding: 0; } .btn-submit, .btn-reset, .btn-pdf, .clear-btn { display: none !important; } }
     .zip-row { display: flex; align-items: center; gap: 6px; }
     .zip-mark { font-size: 13px; color: var(--text-light); flex-shrink: 0; }
-    .zip-seg { width: 60px !important; text-align: center; }
+    .zip-seg { width: 60px !important; text-align: left; }
     .zip-seg:last-of-type { width: 72px !important; }
     .zip-sep, .tel-sep { color: var(--text-light); flex-shrink: 0; font-size: 13px; }
     .zip-btn { background: var(--dark); color: rgba(250,247,242,0.85); border: none; padding: 6px 12px; font-family: 'Noto Serif JP', serif; font-size: 11px; letter-spacing: 0.08em; cursor: pointer; flex-shrink: 0; -webkit-appearance: none; }
     .zip-note { font-size: 10px; color: var(--text-light); margin-top: 3px; }
     .tel-row { display: flex; align-items: center; gap: 6px; }
-    .tel-seg { width: 70px !important; text-align: center; }
+    .tel-seg { width: 70px !important; text-align: left; }
   </style>
 </head>
 <body>
@@ -189,7 +189,7 @@
     <div class="form-row" style="grid-template-columns:1fr;">
       <div class="form-field">
         <label class="form-label" for="client-addr">ご住所</label>
-        <input class="form-input" type="text" id="client-addr" placeholder="文京区千石4-43-○">
+        <input class="form-input" type="text" id="client-addr" placeholder="文京区千石4-43-○" inputmode="ascii" autocomplete="address-line1">
       </div>
     </div>
     <div class="form-row">
@@ -296,10 +296,15 @@
   autoAdvance('zip2', 4, 'client-addr');
   autoAdvance('tel1', 4, 'tel2');
   autoAdvance('tel2', 4, 'tel3');
-  autoAdvance('tel3', 4, null);
+  autoAdvance('tel3', 4, 'client-emg-name');
   autoAdvance('emg1', 4, 'emg2');
   autoAdvance('emg2', 4, 'emg3');
-  autoAdvance('emg3', 4, null);
+  autoAdvance('emg3', 4, 'start-date');
+
+  // 住所番地の全角→半角変換
+  document.getElementById('client-addr').addEventListener('input', function() {
+    this.value = this.value.replace(/[０-９Ａ-Ｚａ-ｚ－]/g, s => String.fromCharCode(s.charCodeAt(0) - 0xFEE0)).replace(/ー/g, '-');
+  });
 
   function setupCanvas(id) {
     const canvas = document.getElementById(id);

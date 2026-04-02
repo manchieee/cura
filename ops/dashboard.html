@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>cura ダッシュボード</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --dark: #2a1f1a; --rose: #8a3a55; --rose-light: rgba(138,58,85,0.08);
+      --gold: #c9a882; --gold-faint: rgba(201,168,130,0.15);
+      --cream: #faf7f2; --cream-mid: #f2ece3; --border: #e0d5cc;
+      --text: #2a1f1a; --text-mid: #5c4a40; --text-light: #9c8a7e;
+      --green: #4a7c6f; --green-faint: rgba(74,124,111,0.08);
+      --amber: #9a7040; --amber-faint: rgba(154,112,64,0.1);
+      --sidebar: 220px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body { font-family: 'Noto Serif JP', serif; background: var(--cream-mid); color: var(--text); font-size: 13px; line-height: 1.8; -webkit-font-smoothing: antialiased; display: flex; }
+
+    /* ── サイドバー ── */
+    .sidebar {
+      width: var(--sidebar); flex-shrink: 0;
+      background: var(--dark);
+      height: 100vh; position: sticky; top: 0;
+      display: flex; flex-direction: column;
+      overflow-y: auto;
+    }
+    .sidebar-logo {
+      padding: 28px 20px 20px;
+      border-bottom: 1px solid rgba(201,168,130,0.12);
+    }
+    .logo-text { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--gold); letter-spacing: 0.15em; line-height: 1; }
+    .logo-sub { font-size: 8px; letter-spacing: 0.3em; color: rgba(201,168,130,0.45); font-family: 'Cormorant Garamond', serif; margin-top: 4px; }
+
+    .nav-section { padding: 16px 0 4px; }
+    .nav-label { font-size: 8px; letter-spacing: 0.3em; color: rgba(201,168,130,0.4); font-family: 'Cormorant Garamond', serif; padding: 0 20px; margin-bottom: 4px; text-transform: uppercase; }
+    .nav-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 20px; cursor: pointer;
+      font-size: 12px; color: rgba(250,247,242,0.55);
+      letter-spacing: 0.04em; transition: all 0.15s;
+      border-left: 2px solid transparent;
+    }
+    .nav-item:hover { color: rgba(250,247,242,0.9); background: rgba(255,255,255,0.04); }
+    .nav-item.active { color: var(--gold); border-left-color: var(--gold); background: rgba(201,168,130,0.06); }
+    .nav-icon { width: 16px; text-align: center; font-size: 14px; flex-shrink: 0; }
+
+    .sidebar-footer { margin-top: auto; padding: 16px 20px; border-top: 1px solid rgba(201,168,130,0.1); font-size: 10px; color: rgba(201,168,130,0.3); letter-spacing: 0.08em; }
+
+    /* ── メインエリア ── */
+    .main { flex: 1; height: 100vh; overflow-y: auto; }
+
+    .top-bar {
+      background: #fff; border-bottom: 1px solid var(--border);
+      padding: 0 28px; height: 52px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 50;
+    }
+    .page-title { font-family: 'Cormorant Garamond', serif; font-size: 16px; font-weight: 400; color: var(--dark); letter-spacing: 0.05em; }
+    .top-bar-right { display: flex; align-items: center; gap: 14px; }
+    .today-badge { font-size: 10px; color: var(--text-light); letter-spacing: 0.08em; }
+    .btn-new { background: var(--rose); color: #fff; border: none; padding: 7px 16px; font-family: 'Noto Serif JP', serif; font-size: 11px; letter-spacing: 0.1em; cursor: pointer; -webkit-appearance: none; }
+
+    .content { padding: 24px 28px 48px; }
+
+    /* ── ページ切替 ── */
+    .page-view { display: none; }
+    .page-view.active { display: block; }
+
+    /* ── サマリーカード ── */
+    .summary-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+    .summary-card { background: #fff; border: 1px solid var(--border); padding: 16px 18px; }
+    .summary-label { font-size: 9px; letter-spacing: 0.25em; color: var(--text-light); font-family: 'Cormorant Garamond', serif; text-transform: uppercase; margin-bottom: 8px; }
+    .summary-val { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: var(--dark); line-height: 1; margin-bottom: 4px; }
+    .summary-sub { font-size: 10px; color: var(--text-light); }
+    .summary-card.rose .summary-val { color: var(--rose); }
+    .summary-card.gold .summary-val { color: var(--gold); }
+    .summary-card.green .summary-val { color: var(--green); }
+
+    /* ── セクションヘッダ ── */
+    .section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: 14px; font-weight: 400; color: var(--dark); letter-spacing: 0.05em; }
+    .section-link { font-size: 10px; color: var(--text-light); letter-spacing: 0.08em; cursor: pointer; }
+    .section-link:hover { color: var(--rose); }
+
+    /* ── グリッド ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    .three-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px; }
+    .card { background: #fff; border: 1px solid var(--border); padding: 18px; }
+
+    /* ── 予約リスト ── */
+    .booking-list { list-style: none; }
+    .booking-item { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .booking-item:last-child { border-bottom: none; }
+    .booking-date { font-family: 'Cormorant Garamond', serif; font-size: 13px; color: var(--gold); min-width: 72px; }
+    .booking-time { font-size: 11px; color: var(--text-light); min-width: 80px; }
+    .booking-client { font-size: 12px; color: var(--dark); flex: 1; }
+    .booking-type { font-size: 10px; color: var(--text-light); padding: 2px 8px; border: 1px solid var(--border); white-space: nowrap; }
+    .booking-status { font-size: 10px; padding: 2px 8px; white-space: nowrap; }
+    .status-confirmed { background: var(--green-faint); color: var(--green); border: 1px solid rgba(74,124,111,0.2); }
+    .status-pending { background: var(--amber-faint); color: var(--amber); border: 1px solid rgba(154,112,64,0.2); }
+    .status-oncall { background: var(--rose-light); color: var(--rose); border: 1px solid rgba(138,58,85,0.2); }
+
+    /* ── クライアントリスト ── */
+    .client-list { list-style: none; }
+    .client-item { display: flex; align-items: center; gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
+    .client-item:last-child { border-bottom: none; }
+    .client-item:hover { background: var(--cream-mid); margin: 0 -18px; padding: 9px 18px; }
+    .client-avatar { width: 32px; height: 32px; background: var(--dark); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 13px; color: var(--gold); flex-shrink: 0; }
+    .client-name { font-size: 12px; color: var(--dark); }
+    .client-meta { font-size: 10px; color: var(--text-light); }
+    .client-badge { margin-left: auto; font-size: 9px; padding: 2px 7px; border: 1px solid var(--border); color: var(--text-light); white-space: nowrap; }
+
+    /* ── 書類リンク ── */
+    .doc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .doc-link { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border: 1px solid var(--border); background: #fff; cursor: pointer; text-decoration: none; transition: border-color 0.15s; }
+    .doc-link:hover { border-color: var(--rose); }
+    .doc-icon { font-size: 18px; flex-shrink: 0; }
+    .doc-name { font-size: 11px; color: var(--dark); line-height: 1.5; }
+    .doc-num { font-size: 9px; color: var(--text-light); font-family: 'Cormorant Garamond', serif; letter-spacing: 0.1em; }
+
+    /* ── スタッフ ── */
+    .staff-card { display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid var(--border); background: #fff; }
+    .staff-avatar { width: 40px; height: 40px; background: var(--dark); display: flex; align-items: center; justify-content: center; font-family: 'Cormorant Garamond', serif; font-size: 15px; color: var(--gold); flex-shrink: 0; }
+    .staff-name { font-size: 13px; color: var(--dark); margin-bottom: 2px; }
+    .staff-role { font-size: 10px; color: var(--text-light); }
+    .staff-status { margin-left: auto; font-size: 9px; padding: 3px 8px; white-space: nowrap; }
+
+    /* ── モーダル ── */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(42,31,26,0.5); z-index: 200; align-items: center; justify-content: center; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: #fff; border: 1px solid var(--border); padding: 28px; width: 100%; max-width: 480px; max-height: 90vh; overflow-y: auto; }
+    .modal-title { font-family: 'Cormorant Garamond', serif; font-size: 17px; color: var(--dark); margin-bottom: 20px; letter-spacing: 0.05em; }
+    .modal-field { margin-bottom: 14px; }
+    .modal-label { font-size: 9.5px; letter-spacing: 0.2em; color: var(--text-light); font-family: 'Cormorant Garamond', serif; margin-bottom: 4px; display: block; }
+    .modal-input { width: 100%; border: none; border-bottom: 1px solid var(--border); padding: 7px 0; font-family: 'Noto Serif JP', serif; font-size: 13px; color: var(--dark); background: transparent; outline: none; -webkit-appearance: none; }
+    .modal-input:focus { border-bottom-color: var(--rose); }
+    .modal-select { width: 100%; border: none; border-bottom: 1px solid var(--border); padding: 7px 0; font-family: 'Noto Serif JP', serif; font-size: 13px; color: var(--dark); background: transparent; outline: none; -webkit-appearance: none; }
+    .modal-textarea { width: 100%; border: 1px solid var(--border); padding: 8px 10px; font-family: 'Noto Serif JP', serif; font-size: 12.5px; color: var(--dark); background: transparent; outline: none; resize: vertical; min-height: 80px; -webkit-appearance: none; }
+    .modal-textarea:focus { border-color: var(--rose); }
+    .modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .modal-actions { display: flex; gap: 10px; margin-top: 22px; }
+    .btn-modal-save { background: var(--rose); color: #fff; border: none; padding: 11px 24px; font-family: 'Noto Serif JP', serif; font-size: 12px; letter-spacing: 0.1em; cursor: pointer; flex: 1; -webkit-appearance: none; }
+    .btn-modal-cancel { background: #fff; color: var(--text-mid); border: 1px solid var(--border); padding: 11px 18px; font-family: 'Noto Serif JP', serif; font-size: 11px; cursor: pointer; -webkit-appearance: none; }
+
+    /* ── 予約詳細 ── */
+    .booking-detail { padding: 12px 0; }
+    .bd-row { display: flex; gap: 8px; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 12px; }
+    .bd-row:last-child { border-bottom: none; }
+    .bd-label { width: 100px; color: var(--text-light); flex-shrink: 0; }
+    .bd-val { color: var(--dark); }
+    .bd-note { margin-top: 12px; padding: 10px 12px; background: var(--cream-mid); font-size: 11.5px; color: var(--text-mid); line-height: 1.8; }
+
+    /* ── 空状態 ── */
+    .empty-state { padding: 32px 0; text-align: center; color: var(--text-light); font-size: 12px; }
+
+    @media (max-width: 900px) {
+      .sidebar { width: 180px; }
+      .summary-grid { grid-template-columns: repeat(2, 1fr); }
+      .two-col, .three-col, .doc-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      .sidebar { display: none; }
+      .summary-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── サイドバー ── -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-text">cura</div>
+    <div class="logo-sub">Operations</div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Overview</div>
+    <div class="nav-item active" onclick="showPage('home', this)">
+      <span class="nav-icon">◈</span>ダッシュボード
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Operations</div>
+    <div class="nav-item" onclick="showPage('bookings', this)">
+      <span class="nav-icon">◷</span>予約管理
+    </div>
+    <div class="nav-item" onclick="showPage('clients', this)">
+      <span class="nav-icon">◉</span>利用者管理
+    </div>
+    <div class="nav-item" onclick="showPage('care-records', this)">
+      <span class="nav-icon">◎</span>ケア記録
+    </div>
+    <div class="nav-item" onclick="showPage('oncall', this)">
+      <span class="nav-icon">◈</span>オンコール
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Staff</div>
+    <div class="nav-item" onclick="showPage('staff', this)">
+      <span class="nav-icon">◉</span>スタッフ
+    </div>
+    <div class="nav-item" onclick="showPage('finance', this)">
+      <span class="nav-icon">◈</span>売上・請求
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Documents</div>
+    <div class="nav-item" onclick="showPage('docs', this)">
+      <span class="nav-icon">◎</span>書類一覧
+    </div>
+  </div>
+
+  <div class="sidebar-footer">cura © 2026</div>
+</aside>
+
+<!-- ── メイン ── -->
+<main class="main">
+  <div class="top-bar">
+    <div class="page-title" id="page-title">ダッシュボード</div>
+    <div class="top-bar-right">
+      <span class="today-badge" id="today-display"></span>
+      <button class="btn-new" id="btn-new" onclick="openNewModal()">＋ 新規登録</button>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- ── ホーム ── -->
+    <div class="page-view active" id="page-home">
+      <div class="summary-grid">
+        <div class="summary-card rose">
+          <div class="summary-label">今月の予約</div>
+          <div class="summary-val" id="stat-bookings">0</div>
+          <div class="summary-sub">件</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">登録利用者</div>
+          <div class="summary-val" id="stat-clients">0</div>
+          <div class="summary-sub">名</div>
+        </div>
+        <div class="summary-card gold">
+          <div class="summary-label">今月売上（概算）</div>
+          <div class="summary-val" id="stat-revenue">¥0</div>
+          <div class="summary-sub">税込</div>
+        </div>
+        <div class="summary-card green">
+          <div class="summary-label">スタッフ</div>
+          <div class="summary-val" id="stat-staff">0</div>
+          <div class="summary-sub">名</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div>
+          <div class="section-header">
+            <span class="section-title">直近の予約</span>
+            <span class="section-link" onclick="showPage('bookings', document.querySelector('[onclick*=bookings]'))">すべて見る</span>
+          </div>
+          <div class="card">
+            <ul class="booking-list" id="home-booking-list">
+              <li class="empty-state">予約はありません</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="section-header">
+            <span class="section-title">利用者</span>
+            <span class="section-link" onclick="showPage('clients', document.querySelector('[onclick*=clients]'))">すべて見る</span>
+          </div>
+          <div class="card">
+            <ul class="client-list" id="home-client-list">
+              <li class="empty-state">利用者が登録されていません</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-header">
+        <span class="section-title">クイックアクセス — 書類</span>
+      </div>
+      <div class="doc-grid">
+        <a class="doc-link" href="../hr/service-agreement.html" target="_blank">
+          <span class="doc-icon">📋</span>
+          <div><div class="doc-name">利用開始同意書</div><div class="doc-num">CL-01</div></div>
+        </a>
+        <a class="doc-link" href="../hr/confidentiality-agreement.html" target="_blank">
+          <span class="doc-icon">🔏</span>
+          <div><div class="doc-name">個人情報誓約書</div><div class="doc-num">HR-01</div></div>
+        </a>
+        <a class="doc-link" href="../hr/employment-contract.html" target="_blank">
+          <span class="doc-icon">📝</span>
+          <div><div class="doc-name">雇用契約書</div><div class="doc-num">HR-02</div></div>
+        </a>
+        <a class="doc-link" href="../hr/care-record.html" target="_blank">
+          <span class="doc-icon">🗒️</span>
+          <div><div class="doc-name">ケア記録</div><div class="doc-num">記録</div></div>
+        </a>
+        <a class="doc-link" href="../hr/data-deletion-confirmation.html" target="_blank">
+          <span class="doc-icon">🗑️</span>
+          <div><div class="doc-name">データ削除確認書</div><div class="doc-num">HR-03</div></div>
+        </a>
+        <a class="doc-link" href="https://script.google.com/macros/s/AKfycbwLr3c4CQ700Zzhn4UnZz0hn3ILQEFUuIogCb-BVJ8IE8mtPR-qsjZUJroBKg-GiOjQ/exec" target="_blank">
+          <span class="doc-icon">📊</span>
+          <div><div class="doc-name">アセスメントフォーム</div><div class="doc-num">Google Forms</div></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── 予約管理 ── -->
+    <div class="page-view" id="page-bookings">
+      <div class="section-header" style="margin-bottom:16px;">
+        <span class="section-title">予約一覧</span>
+      </div>
+      <div class="card">
+        <ul class="booking-list" id="booking-list">
+          <li class="empty-state">予約はありません。「＋ 新規登録」から追加してください。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── 利用者管理 ── -->
+    <div class="page-view" id="page-clients">
+      <div class="section-header" style="margin-bottom:16px;">
+        <span class="section-title">利用者一覧</span>
+      </div>
+      <div class="card">
+        <ul class="client-list" id="client-list">
+          <li class="empty-state">利用者が登録されていません。「＋ 新規登録」から追加してください。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── ケア記録 ── -->
+    <div class="page-view" id="page-care-records">
+      <div class="section-header" style="margin-bottom:16px;">
+        <span class="section-title">ケア記録</span>
+        <a href="../hr/care-record.html" target="_blank" class="btn-new" style="text-decoration:none;font-size:11px;padding:7px 16px;">新規記録を作成</a>
+      </div>
+      <div class="card">
+        <ul class="booking-list" id="care-record-list">
+          <li class="empty-state">ケア記録はありません。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ── オンコール ── -->
+    <div class="page-view" id="page-oncall">
+      <div class="section-header" style="margin-bottom:16px;">
+        <span class="section-title">夜間オンコール管理</span>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <div class="summary-label" style="margin-bottom:12px;">今月のオンコール会員</div>
+          <ul class="client-list" id="oncall-client-list">
+            <li class="empty-state">オンコール会員はいません</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="summary-label" style="margin-bottom:12px;">当番スケジュール</div>
+          <ul class="booking-list" id="oncall-schedule-list">
+            <li class="empty-state">スケジュールはありません</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── スタッフ ── -->
+    <div class="page-view" id="page-staff">
+      <div class="section-header" style="margin-bottom:16px;">
+        <span class="section-title">スタッフ一覧</span>
+      </div>
+      <div class="three-col" id="staff-list-grid">
+        <div class="empty-state" style="grid-column:1/-1;">スタッフが登録されていません。「＋ 新規登録」から追加してください。</div>
+      </div>
+    </div>
+
+    <!-- ── 売上・請求 ── -->
+    <div class="page-view" id="page-finance">
+      <div class="summary-grid">
+        <div class="summary-card rose">
+          <div class="summary-label">今月売上（概算）</div>
+          <div class="summary-val" id="fin-revenue">¥0</div>
+          <div class="summary-sub">税込</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">完了済み予約</div>
+          <div class="summary-val" id="fin-done">0</div>
+          <div class="summary-sub">件</div>
+        </div>
+        <div class="summary-card gold">
+          <div class="summary-label">未収（確認中）</div>
+          <div class="summary-val" id="fin-pending">0</div>
+          <div class="summary-sub">件</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">今月オンコール収入</div>
+          <div class="summary-val" id="fin-oncall">¥0</div>
+          <div class="summary-sub">税込</div>
+        </div>
+      </div>
+      <div class="section-header" style="margin-bottom:12px;">
+        <span class="section-title">請求書作成</span>
+      </div>
+      <div class="doc-grid" style="grid-template-columns:repeat(2,1fr);">
+        <a class="doc-link" href="../cura-company/CLAUDE.md" target="_blank" style="pointer-events:none;opacity:0.4;">
+          <span class="doc-icon">🧾</span>
+          <div><div class="doc-name">請求書を発行する</div><div class="doc-num">invoiceスキルを使用</div></div>
+        </a>
+        <a class="doc-link" href="https://calendar.google.com" target="_blank">
+          <span class="doc-icon">📅</span>
+          <div><div class="doc-name">Googleカレンダーを開く</div><div class="doc-num">予約確認</div></div>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── 書類一覧 ── -->
+    <div class="page-view" id="page-docs">
+      <div class="section-header" style="margin-bottom:16px;">
+        <span class="section-title">書類一覧</span>
+      </div>
+      <div class="section-header" style="margin-bottom:8px;">
+        <span style="font-size:10px;letter-spacing:0.2em;color:var(--gold);font-family:'Cormorant Garamond',serif;text-transform:uppercase;">利用者書類</span>
+      </div>
+      <div class="doc-grid" style="margin-bottom:20px;">
+        <a class="doc-link" href="../hr/service-agreement.html" target="_blank">
+          <span class="doc-icon">📋</span>
+          <div><div class="doc-name">サービス利用開始同意書</div><div class="doc-num">CL-01</div></div>
+        </a>
+        <a class="doc-link" href="https://script.google.com/macros/s/AKfycbwLr3c4CQ700Zzhn4UnZz0hn3ILQEFUuIogCb-BVJ8IE8mtPR-qsjZUJroBKg-GiOjQ/exec" target="_blank">
+          <span class="doc-icon">📊</span>
+          <div><div class="doc-name">アセスメントフォーム</div><div class="doc-num">Google Forms</div></div>
+        </a>
+      </div>
+      <div class="section-header" style="margin-bottom:8px;">
+        <span style="font-size:10px;letter-spacing:0.2em;color:var(--gold);font-family:'Cormorant Garamond',serif;text-transform:uppercase;">スタッフ書類</span>
+      </div>
+      <div class="doc-grid" style="margin-bottom:20px;">
+        <a class="doc-link" href="../hr/confidentiality-agreement.html" target="_blank">
+          <span class="doc-icon">🔏</span>
+          <div><div class="doc-name">個人情報・業務情報 取り扱い誓約書</div><div class="doc-num">HR-01</div></div>
+        </a>
+        <a class="doc-link" href="../hr/employment-contract.html" target="_blank">
+          <span class="doc-icon">📝</span>
+          <div><div class="doc-name">雇用契約書</div><div class="doc-num">HR-02</div></div>
+        </a>
+        <a class="doc-link" href="../hr/data-deletion-confirmation.html" target="_blank">
+          <span class="doc-icon">🗑️</span>
+          <div><div class="doc-name">退職時データ削除確認書</div><div class="doc-num">HR-03</div></div>
+        </a>
+      </div>
+      <div class="section-header" style="margin-bottom:8px;">
+        <span style="font-size:10px;letter-spacing:0.2em;color:var(--gold);font-family:'Cormorant Garamond',serif;text-transform:uppercase;">記録</span>
+      </div>
+      <div class="doc-grid">
+        <a class="doc-link" href="../hr/care-record.html" target="_blank">
+          <span class="doc-icon">🗒️</span>
+          <div><div class="doc-name">ケア記録（新規作成）</div><div class="doc-num">Care Record</div></div>
+        </a>
+        <a class="doc-link" href="../marketing/pages/cura_staff.html" target="_blank">
+          <span class="doc-icon">👥</span>
+          <div><div class="doc-name">スタッフ内部資料</div><div class="doc-num">Staff Doc</div></div>
+        </a>
+        <a class="doc-link" href="../business/business-plan.html" target="_blank">
+          <span class="doc-icon">📈</span>
+          <div><div class="doc-name">事業計画書</div><div class="doc-num">Business Plan</div></div>
+        </a>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</main>
+
+<!-- ── 予約モーダル ── -->
+<div class="modal-overlay" id="modal-booking">
+  <div class="modal">
+    <div class="modal-title" id="modal-booking-title">新規予約</div>
+    <input type="hidden" id="booking-edit-id">
+    <div class="modal-row">
+      <div class="modal-field">
+        <label class="modal-label">日付</label>
+        <input class="modal-input" type="date" id="b-date">
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">開始時刻</label>
+        <input class="modal-input" type="time" id="b-time">
+      </div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-field">
+        <label class="modal-label">終了時刻</label>
+        <input class="modal-input" type="time" id="b-time-end">
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">利用者</label>
+        <select class="modal-select" id="b-client"></select>
+      </div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-field">
+        <label class="modal-label">種別</label>
+        <select class="modal-select" id="b-type">
+          <option>定期ケア</option>
+          <option>外出同行</option>
+          <option>通院同行</option>
+          <option>旅行同行</option>
+          <option>看護師同行</option>
+          <option>オンコール</option>
+          <option>アセスメント</option>
+          <option>その他</option>
+        </select>
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">担当</label>
+        <select class="modal-select" id="b-staff"></select>
+      </div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-field">
+        <label class="modal-label">料金（概算）</label>
+        <input class="modal-input" type="text" id="b-fee" placeholder="¥36,000">
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">ステータス</label>
+        <select class="modal-select" id="b-status">
+          <option value="confirmed">確定</option>
+          <option value="pending">調整中</option>
+          <option value="done">完了</option>
+          <option value="cancelled">キャンセル</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-field">
+      <label class="modal-label">メモ</label>
+      <textarea class="modal-textarea" id="b-note" placeholder="特記事項・申し送り等"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-modal-save" onclick="saveBooking()">保存</button>
+      <button class="btn-modal-cancel" onclick="closeModal('modal-booking')">キャンセル</button>
+      <button class="btn-modal-cancel" id="btn-delete-booking" style="display:none;color:var(--rose);border-color:var(--rose);" onclick="deleteBooking()">削除</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── 利用者モーダル ── -->
+<div class="modal-overlay" id="modal-client">
+  <div class="modal">
+    <div class="modal-title" id="modal-client-title">利用者登録</div>
+    <input type="hidden" id="client-edit-id">
+    <div class="modal-row">
+      <div class="modal-field">
+        <label class="modal-label">氏名</label>
+        <input class="modal-input" type="text" id="c-name" placeholder="山田 花子">
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">生年月日</label>
+        <input class="modal-input" type="date" id="c-dob">
+      </div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-field">
+        <label class="modal-label">電話番号</label>
+        <input class="modal-input" type="tel" id="c-tel" placeholder="03-0000-0000">
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">緊急連絡先</label>
+        <input class="modal-input" type="tel" id="c-emg" placeholder="090-0000-0000（長男）">
+      </div>
+    </div>
+    <div class="modal-field">
+      <label class="modal-label">住所</label>
+      <input class="modal-input" type="text" id="c-addr" placeholder="文京区千石4-43-○">
+    </div>
+    <div class="modal-row">
+      <div class="modal-field">
+        <label class="modal-label">プラン</label>
+        <select class="modal-select" id="c-plan">
+          <option>スポット</option>
+          <option>デイ会員（月¥10,000）</option>
+          <option>オンコール単体（月¥17,000）</option>
+          <option>フル会員（月¥22,000）</option>
+        </select>
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">複雑度</label>
+        <select class="modal-select" id="c-level">
+          <option>L1 標準</option>
+          <option>L2 中程度</option>
+          <option>L3 高度</option>
+          <option>L4 特別</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-field">
+      <label class="modal-label">備考・状態メモ</label>
+      <textarea class="modal-textarea" id="c-note" placeholder="健康状態・注意点・家族情報など"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-modal-save" onclick="saveClient()">保存</button>
+      <button class="btn-modal-cancel" onclick="closeModal('modal-client')">キャンセル</button>
+      <button class="btn-modal-cancel" id="btn-delete-client" style="display:none;color:var(--rose);border-color:var(--rose);" onclick="deleteClient()">削除</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── スタッフモーダル ── -->
+<div class="modal-overlay" id="modal-staff">
+  <div class="modal">
+    <div class="modal-title" id="modal-staff-title">スタッフ登録</div>
+    <input type="hidden" id="staff-edit-id">
+    <div class="modal-row">
+      <div class="modal-field">
+        <label class="modal-label">氏名</label>
+        <input class="modal-input" type="text" id="s-name" placeholder="高野 まさみ">
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">役職</label>
+        <select class="modal-select" id="s-role">
+          <option>代表・介護福祉士</option>
+          <option>介護福祉士</option>
+          <option>看護師（連携）</option>
+          <option>研修スタッフ</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-row">
+      <div class="modal-field">
+        <label class="modal-label">電話番号</label>
+        <input class="modal-input" type="tel" id="s-tel" placeholder="070-0000-0000">
+      </div>
+      <div class="modal-field">
+        <label class="modal-label">時給</label>
+        <input class="modal-input" type="text" id="s-rate" placeholder="¥2,200">
+      </div>
+    </div>
+    <div class="modal-field">
+      <label class="modal-label">ステータス</label>
+      <select class="modal-select" id="s-status">
+        <option value="active">稼働中</option>
+        <option value="training">研修中</option>
+        <option value="inactive">休止</option>
+      </select>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-modal-save" onclick="saveStaff()">保存</button>
+      <button class="btn-modal-cancel" onclick="closeModal('modal-staff')">キャンセル</button>
+      <button class="btn-modal-cancel" id="btn-delete-staff" style="display:none;color:var(--rose);border-color:var(--rose);" onclick="deleteStaff()">削除</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── データ管理（localStorage） ──
+  const DB = {
+    get: k => JSON.parse(localStorage.getItem('cura_' + k) || '[]'),
+    set: (k, v) => localStorage.setItem('cura_' + k, JSON.stringify(v)),
+  };
+
+  let currentPage = 'home';
+
+  // ── 今日の日付 ──
+  const today = new Date();
+  document.getElementById('today-display').textContent =
+    today.toLocaleDateString('ja-JP', {year:'numeric', month:'long', day:'numeric', weekday:'short'});
+  document.getElementById('b-date').valueAsDate = today;
+
+  // ── ページ切替 ──
+  const pageTitles = {
+    home:'ダッシュボード', bookings:'予約管理', clients:'利用者管理',
+    'care-records':'ケア記録', oncall:'オンコール管理', staff:'スタッフ',
+    finance:'売上・請求', docs:'書類一覧'
+  };
+  const newLabels = {
+    home:'＋ 新規登録', bookings:'＋ 予約を追加', clients:'＋ 利用者を追加',
+    'care-records':'＋ 記録作成', oncall:'＋ 追加', staff:'＋ スタッフを追加',
+    finance:'', docs:''
+  };
+
+  function showPage(page, el) {
+    document.querySelectorAll('.page-view').forEach(v => v.classList.remove('active'));
+    document.getElementById('page-' + page).classList.add('active');
+    document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    if (el) el.classList.add('active');
+    document.getElementById('page-title').textContent = pageTitles[page] || page;
+    const lbl = newLabels[page];
+    const btn = document.getElementById('btn-new');
+    btn.style.display = lbl ? '' : 'none';
+    btn.textContent = lbl || '';
+    currentPage = page;
+    renderAll();
+  }
+
+  function openNewModal() {
+    if (currentPage === 'bookings' || currentPage === 'home') openBookingModal();
+    else if (currentPage === 'clients') openClientModal();
+    else if (currentPage === 'staff') openStaffModal();
+    else if (currentPage === 'care-records') window.open('../hr/care-record.html', '_blank');
+    else if (currentPage === 'oncall') openClientModal();
+    else openBookingModal();
+  }
+
+  // ── モーダル ──
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+  document.querySelectorAll('.modal-overlay').forEach(o => {
+    o.addEventListener('click', e => { if (e.target === o) o.classList.remove('open'); });
+  });
+
+  function openBookingModal(id) {
+    const modal = document.getElementById('modal-booking');
+    const clients = DB.get('clients');
+    const staffList = DB.get('staff');
+    const cs = document.getElementById('b-client');
+    const ss = document.getElementById('b-staff');
+    cs.innerHTML = clients.length ? clients.map(c=>`<option value="${c.id}">${c.name}</option>`).join('') : '<option value="">（利用者未登録）</option>';
+    ss.innerHTML = staffList.length ? staffList.map(s=>`<option value="${s.id}">${s.name}</option>`).join('') : '<option value="masami">まさみ</option>';
+    if (id) {
+      const bk = DB.get('bookings').find(b=>b.id===id);
+      if (bk) {
+        document.getElementById('modal-booking-title').textContent = '予約を編集';
+        document.getElementById('booking-edit-id').value = id;
+        document.getElementById('b-date').value = bk.date;
+        document.getElementById('b-time').value = bk.time;
+        document.getElementById('b-time-end').value = bk.timeEnd || '';
+        cs.value = bk.clientId;
+        ss.value = bk.staffId;
+        document.getElementById('b-type').value = bk.type;
+        document.getElementById('b-fee').value = bk.fee || '';
+        document.getElementById('b-status').value = bk.status;
+        document.getElementById('b-note').value = bk.note || '';
+        document.getElementById('btn-delete-booking').style.display = '';
+        modal.classList.add('open'); return;
+      }
+    }
+    document.getElementById('modal-booking-title').textContent = '新規予約';
+    document.getElementById('booking-edit-id').value = '';
+    document.getElementById('b-date').valueAsDate = today;
+    document.getElementById('b-time').value = '10:00';
+    document.getElementById('b-time-end').value = '13:00';
+    document.getElementById('b-type').value = '定期ケア';
+    document.getElementById('b-fee').value = '';
+    document.getElementById('b-status').value = 'confirmed';
+    document.getElementById('b-note').value = '';
+    document.getElementById('btn-delete-booking').style.display = 'none';
+    modal.classList.add('open');
+  }
+
+  function saveBooking() {
+    const editId = document.getElementById('booking-edit-id').value;
+    const clients = DB.get('clients');
+    const clientId = document.getElementById('b-client').value;
+    const clientName = clients.find(c=>c.id===clientId)?.name || document.getElementById('b-client').options[document.getElementById('b-client').selectedIndex]?.text || '';
+    const bk = {
+      id: editId || Date.now().toString(),
+      date: document.getElementById('b-date').value,
+      time: document.getElementById('b-time').value,
+      timeEnd: document.getElementById('b-time-end').value,
+      clientId, clientName,
+      staffId: document.getElementById('b-staff').value,
+      staffName: document.getElementById('b-staff').options[document.getElementById('b-staff').selectedIndex]?.text || '',
+      type: document.getElementById('b-type').value,
+      fee: document.getElementById('b-fee').value,
+      status: document.getElementById('b-status').value,
+      note: document.getElementById('b-note').value,
+    };
+    let list = DB.get('bookings');
+    if (editId) list = list.map(b => b.id === editId ? bk : b);
+    else list.push(bk);
+    DB.set('bookings', list);
+    closeModal('modal-booking');
+    renderAll();
+  }
+
+  function deleteBooking() {
+    const id = document.getElementById('booking-edit-id').value;
+    if (!id || !confirm('この予約を削除しますか？')) return;
+    DB.set('bookings', DB.get('bookings').filter(b => b.id !== id));
+    closeModal('modal-booking');
+    renderAll();
+  }
+
+  function openClientModal(id) {
+    const modal = document.getElementById('modal-client');
+    if (id) {
+      const cl = DB.get('clients').find(c=>c.id===id);
+      if (cl) {
+        document.getElementById('modal-client-title').textContent = '利用者を編集';
+        document.getElementById('client-edit-id').value = id;
+        document.getElementById('c-name').value = cl.name;
+        document.getElementById('c-dob').value = cl.dob || '';
+        document.getElementById('c-tel').value = cl.tel || '';
+        document.getElementById('c-emg').value = cl.emg || '';
+        document.getElementById('c-addr').value = cl.addr || '';
+        document.getElementById('c-plan').value = cl.plan || 'スポット';
+        document.getElementById('c-level').value = cl.level || 'L1 標準';
+        document.getElementById('c-note').value = cl.note || '';
+        document.getElementById('btn-delete-client').style.display = '';
+        modal.classList.add('open'); return;
+      }
+    }
+    document.getElementById('modal-client-title').textContent = '利用者登録';
+    document.getElementById('client-edit-id').value = '';
+    ['c-name','c-dob','c-tel','c-emg','c-addr','c-note'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('c-plan').value = 'スポット';
+    document.getElementById('c-level').value = 'L1 標準';
+    document.getElementById('btn-delete-client').style.display = 'none';
+    modal.classList.add('open');
+  }
+
+  function saveClient() {
+    const editId = document.getElementById('client-edit-id').value;
+    const cl = {
+      id: editId || Date.now().toString(),
+      name: document.getElementById('c-name').value.trim(),
+      dob: document.getElementById('c-dob').value,
+      tel: document.getElementById('c-tel').value,
+      emg: document.getElementById('c-emg').value,
+      addr: document.getElementById('c-addr').value,
+      plan: document.getElementById('c-plan').value,
+      level: document.getElementById('c-level').value,
+      note: document.getElementById('c-note').value,
+    };
+    if (!cl.name) { alert('氏名を入力してください。'); return; }
+    let list = DB.get('clients');
+    if (editId) list = list.map(c => c.id === editId ? cl : c);
+    else list.push(cl);
+    DB.set('clients', list);
+    closeModal('modal-client');
+    renderAll();
+  }
+
+  function deleteClient() {
+    const id = document.getElementById('client-edit-id').value;
+    if (!id || !confirm('この利用者を削除しますか？')) return;
+    DB.set('clients', DB.get('clients').filter(c => c.id !== id));
+    closeModal('modal-client');
+    renderAll();
+  }
+
+  function openStaffModal(id) {
+    const modal = document.getElementById('modal-staff');
+    if (id) {
+      const st = DB.get('staff').find(s=>s.id===id);
+      if (st) {
+        document.getElementById('modal-staff-title').textContent = 'スタッフを編集';
+        document.getElementById('staff-edit-id').value = id;
+        document.getElementById('s-name').value = st.name;
+        document.getElementById('s-role').value = st.role;
+        document.getElementById('s-tel').value = st.tel || '';
+        document.getElementById('s-rate').value = st.rate || '';
+        document.getElementById('s-status').value = st.status || 'active';
+        document.getElementById('btn-delete-staff').style.display = '';
+        modal.classList.add('open'); return;
+      }
+    }
+    document.getElementById('modal-staff-title').textContent = 'スタッフ登録';
+    document.getElementById('staff-edit-id').value = '';
+    ['s-name','s-tel','s-rate'].forEach(id=>document.getElementById(id).value='');
+    document.getElementById('s-role').value = '介護福祉士';
+    document.getElementById('s-status').value = 'active';
+    document.getElementById('btn-delete-staff').style.display = 'none';
+    modal.classList.add('open');
+  }
+
+  function saveStaff() {
+    const editId = document.getElementById('staff-edit-id').value;
+    const st = {
+      id: editId || Date.now().toString(),
+      name: document.getElementById('s-name').value.trim(),
+      role: document.getElementById('s-role').value,
+      tel: document.getElementById('s-tel').value,
+      rate: document.getElementById('s-rate').value,
+      status: document.getElementById('s-status').value,
+    };
+    if (!st.name) { alert('氏名を入力してください。'); return; }
+    let list = DB.get('staff');
+    if (editId) list = list.map(s => s.id === editId ? st : s);
+    else list.push(st);
+    DB.set('staff', list);
+    closeModal('modal-staff');
+    renderAll();
+  }
+
+  function deleteStaff() {
+    const id = document.getElementById('staff-edit-id').value;
+    if (!id || !confirm('このスタッフを削除しますか？')) return;
+    DB.set('staff', DB.get('staff').filter(s => s.id !== id));
+    closeModal('modal-staff');
+    renderAll();
+  }
+
+  // ── レンダリング ──
+  function statusBadge(s) {
+    if (s==='confirmed') return '<span class="booking-status status-confirmed">確定</span>';
+    if (s==='pending') return '<span class="booking-status status-pending">調整中</span>';
+    if (s==='oncall') return '<span class="booking-status status-oncall">オンコール</span>';
+    if (s==='done') return '<span class="booking-status" style="background:var(--cream-mid);color:var(--text-light);border:1px solid var(--border);">完了</span>';
+    return '<span class="booking-status" style="color:var(--text-light);">'+s+'</span>';
+  }
+
+  function renderBookings(listEl, limit) {
+    const bookings = DB.get('bookings')
+      .sort((a,b) => (a.date+a.time).localeCompare(b.date+b.time));
+    const items = limit ? bookings.slice(0, limit) : bookings;
+    if (!items.length) { listEl.innerHTML = '<li class="empty-state">予約はありません</li>'; return; }
+    listEl.innerHTML = items.map(b => `
+      <li class="booking-item" onclick="openBookingModal('${b.id}')" style="cursor:pointer;">
+        <span class="booking-date">${b.date ? b.date.replace(/\d{4}-/,'').replace('-','/') : ''}</span>
+        <span class="booking-time">${b.time || ''}${b.timeEnd ? '〜'+b.timeEnd : ''}</span>
+        <span class="booking-client">${b.clientName || '—'}</span>
+        <span class="booking-type">${b.type || ''}</span>
+        ${statusBadge(b.status)}
+      </li>`).join('');
+  }
+
+  function renderClients(listEl, limit) {
+    const clients = DB.get('clients');
+    const items = limit ? clients.slice(0, limit) : clients;
+    if (!items.length) { listEl.innerHTML = '<li class="empty-state">利用者が登録されていません</li>'; return; }
+    listEl.innerHTML = items.map(c => `
+      <li class="client-item" onclick="openClientModal('${c.id}')">
+        <div class="client-avatar">${c.name.charAt(0)}</div>
+        <div>
+          <div class="client-name">${c.name}</div>
+          <div class="client-meta">${c.level || 'L1'} ／ ${c.plan || 'スポット'}</div>
+        </div>
+        <span class="client-badge">${c.level || 'L1'}</span>
+      </li>`).join('');
+  }
+
+  function renderStaff() {
+    const list = DB.get('staff');
+    const el = document.getElementById('staff-list-grid');
+    if (!list.length) { el.innerHTML = '<div class="empty-state" style="grid-column:1/-1;">スタッフが登録されていません。</div>'; return; }
+    el.innerHTML = list.map(s => `
+      <div class="staff-card" onclick="openStaffModal('${s.id}')" style="cursor:pointer;">
+        <div class="staff-avatar">${s.name.charAt(0)}</div>
+        <div>
+          <div class="staff-name">${s.name}</div>
+          <div class="staff-role">${s.role}</div>
+          ${s.rate ? `<div class="staff-role" style="margin-top:2px;">${s.rate}/h</div>` : ''}
+        </div>
+        <span class="staff-status ${s.status==='active'?'status-confirmed':s.status==='training'?'status-pending':''}">${s.status==='active'?'稼働中':s.status==='training'?'研修中':'休止'}</span>
+      </div>`).join('');
+  }
+
+  function calcRevenue() {
+    const now = new Date();
+    const ym = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
+    const bookings = DB.get('bookings').filter(b => b.date && b.date.startsWith(ym));
+    let total = 0;
+    bookings.forEach(b => { const n = parseInt((b.fee||'').replace(/[^\d]/g,'')); if(n) total += n; });
+    const oncallClients = DB.get('clients').filter(c => c.plan && c.plan.includes('オンコール'));
+    const oncallRevenue = oncallClients.length * 17000;
+    return { total, oncallRevenue, count: bookings.length, done: bookings.filter(b=>b.status==='done').length, pending: bookings.filter(b=>b.status==='pending').length };
+  }
+
+  function renderAll() {
+    const clients = DB.get('clients');
+    const staff = DB.get('staff');
+    const rev = calcRevenue();
+
+    document.getElementById('stat-bookings').textContent = DB.get('bookings').filter(b=>{const now=new Date();const ym=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;return b.date&&b.date.startsWith(ym);}).length;
+    document.getElementById('stat-clients').textContent = clients.length;
+    document.getElementById('stat-revenue').textContent = '¥' + (rev.total + rev.oncallRevenue).toLocaleString();
+    document.getElementById('stat-staff').textContent = staff.length;
+
+    renderBookings(document.getElementById('home-booking-list'), 5);
+    renderClients(document.getElementById('home-client-list'), 5);
+    renderBookings(document.getElementById('booking-list'));
+    renderClients(document.getElementById('client-list'));
+    renderStaff();
+
+    document.getElementById('fin-revenue').textContent = '¥' + (rev.total + rev.oncallRevenue).toLocaleString();
+    document.getElementById('fin-done').textContent = rev.done;
+    document.getElementById('fin-pending').textContent = rev.pending;
+    document.getElementById('fin-oncall').textContent = '¥' + rev.oncallRevenue.toLocaleString();
+
+    // オンコール会員
+    const oncallEl = document.getElementById('oncall-client-list');
+    const oncallClients = clients.filter(c => c.plan && (c.plan.includes('オンコール') || c.plan.includes('フル')));
+    if (!oncallClients.length) { oncallEl.innerHTML = '<li class="empty-state">オンコール会員はいません</li>'; }
+    else { oncallEl.innerHTML = oncallClients.map(c=>`<li class="client-item" onclick="openClientModal('${c.id}')"><div class="client-avatar">${c.name.charAt(0)}</div><div><div class="client-name">${c.name}</div><div class="client-meta">${c.plan}</div></div></li>`).join(''); }
+  }
+
+  renderAll();
+</script>
+</body>
+</html>
