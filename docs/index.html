@@ -184,9 +184,16 @@
             letter-spacing: 0.12em;
             color: var(--white);
             margin-bottom: 8px;
-            opacity: 0;
-            animation: fadeUp 1.2s ease forwards 0.2s;
         }
+        .hero-logo span {
+            display: inline-block;
+            opacity: 0;
+            animation: letterFloat 3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        .hero-logo span:nth-child(1) { animation-delay: 0.4s; }
+        .hero-logo span:nth-child(2) { animation-delay: 0.75s; }
+        .hero-logo span:nth-child(3) { animation-delay: 1.1s; }
+        .hero-logo span:nth-child(4) { animation-delay: 1.45s; }
 
         .hero-sub {
             font-size: 1.1rem;
@@ -857,6 +864,10 @@
             from { opacity: 0; transform: translateY(24px); }
             to   { opacity: 1; transform: translateY(0); }
         }
+        @keyframes letterFloat {
+            from { opacity: 0; transform: translateY(32px); filter: blur(8px); }
+            to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+        }
 
         @keyframes pulse {
             0%, 100% { opacity: 0.4; }
@@ -964,7 +975,7 @@
     <!-- HERO -->
     <section class="hero" id="hero">
         <div class="hero-inner">
-            <div class="hero-logo">cura</div>
+            <div class="hero-logo"><span>c</span><span>u</span><span>r</span><span>a</span></div>
             <div class="hero-sub">ケアという名の、自由へ</div>
             <div class="hero-latin">cura — ラテン語で「心を込めたケア」を意味します</div>
             <div class="hero-divider"></div>
