@@ -3,7 +3,7 @@
   "configurations": [
     {
       "name": "Homepage (static)",
-      "runtimeExecutable": "node",
+      "runtimeExecutable": "/usr/local/bin/node",
       "runtimeArgs": [".claude/serve.js"],
       "port": 3000
     },

@@ -18,7 +18,8 @@ const mime = {
 };
 
 http.createServer((req, res) => {
-  const filePath = path.join(root, req.url === '/' ? 'index.html' : req.url);
+  const urlPath = req.url.split('?')[0];
+  const filePath = path.join(root, urlPath === '/' ? 'index.html' : urlPath);
   fs.readFile(filePath, (err, data) => {
     if (err) { res.writeHead(404); res.end('Not found'); return; }
     const ext = path.extname(filePath);

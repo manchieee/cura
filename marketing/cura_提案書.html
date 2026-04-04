@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cura — サービスご提案書</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Noto+Serif+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* =====================
+       RESET & BASE
+    ===================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --rose-deep:   #9e4e68;
+      --rose-mid:    #b5647a;
+      --rose-light:  #d4a0b0;
+      --rose-pale:   #f0dada;
+      --rose-stripe: #fdf6f6;
+      --gold:        #c9a882;
+      --gold-light:  #e8d5ba;
+      --navy:        #2a1f1a;
+      --white:       #ffffff;
+      --text-main:   #2a1f1a;
+      --text-sub:    #5a4a44;
+      --border:      #e8d0d4;
+    }
+
+    html {
+      font-size: 10pt;
+    }
+
+    body {
+      font-family: 'Noto Serif JP', 'Georgia', serif;
+      color: var(--text-main);
+      background: #f8f4f1;
+      line-height: 1.85;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* =====================
+       COVER PAGE
+    ===================== */
+    .cover {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background: linear-gradient(145deg, #b05070 0%, #c87890 50%, #d89aaa 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60mm 20mm 40mm;
+      position: relative;
+      page-break-after: always;
+    }
+
+    .cover::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background:
+        radial-gradient(ellipse at 20% 20%, rgba(255,255,255,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse at 80% 80%, rgba(201,168,130,0.12) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .cover-inner {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      width: 100%;
+    }
+
+    .cover-logo {
+      font-family: 'Abril Fatface', serif;
+      font-size: 72pt;
+      color: var(--white);
+      letter-spacing: 0.12em;
+      line-height: 1;
+      margin-bottom: 6mm;
+      text-shadow: 0 2px 24px rgba(42,31,26,0.18);
+    }
+
+    .cover-tagline {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 300;
+      font-size: 11pt;
+      color: rgba(255,255,255,0.82);
+      letter-spacing: 0.3em;
+      margin-bottom: 18mm;
+    }
+
+    .cover-divider {
+      width: 48mm;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+      margin: 0 auto 18mm;
+    }
+
+    .cover-title {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 500;
+      font-size: 16pt;
+      color: var(--white);
+      letter-spacing: 0.15em;
+      margin-bottom: 6mm;
+      line-height: 1.6;
+    }
+
+    .cover-subtitle {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 300;
+      font-size: 11pt;
+      color: rgba(255,255,255,0.78);
+      letter-spacing: 0.25em;
+      margin-bottom: 24mm;
+    }
+
+    .cover-date {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 300;
+      font-size: 10pt;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: 0.2em;
+    }
+
+    .cover-footer {
+      position: absolute;
+      bottom: 16mm;
+      left: 0; right: 0;
+      text-align: center;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 8.5pt;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.15em;
+    }
+
+    /* =====================
+       MAIN CONTENT WRAPPER
+    ===================== */
+    .page {
+      width: 210mm;
+      margin: 0 auto;
+      background: var(--white);
+      padding: 18mm 22mm 18mm 22mm;
+      position: relative;
+    }
+
+    /* =====================
+       PAGE FOOTER (every page)
+    ===================== */
+    .page-footer {
+      border-top: 1px solid var(--border);
+      margin-top: 14mm;
+      padding-top: 5mm;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 7.5pt;
+      color: var(--text-sub);
+      letter-spacing: 0.08em;
+    }
+
+    .page-footer .footer-logo {
+      font-family: 'Abril Fatface', serif;
+      font-size: 10pt;
+      color: var(--rose-deep);
+      letter-spacing: 0.1em;
+    }
+
+    /* =====================
+       EXECUTIVE SUMMARY BOX
+    ===================== */
+    .summary-box {
+      background: linear-gradient(135deg, var(--rose-pale) 0%, #fdf8f0 100%);
+      border: 1px solid var(--gold-light);
+      border-left: 4px solid var(--gold);
+      border-radius: 2mm;
+      padding: 10mm 14mm;
+      margin-bottom: 14mm;
+    }
+
+    .summary-box p {
+      font-size: 10.5pt;
+      line-height: 2;
+      color: var(--text-main);
+    }
+
+    /* =====================
+       SECTION HEADINGS
+    ===================== */
+    h2 {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 600;
+      font-size: 15pt;
+      color: var(--rose-deep);
+      border-left: 4px solid var(--gold);
+      padding-left: 5mm;
+      margin-top: 14mm;
+      margin-bottom: 7mm;
+      letter-spacing: 0.08em;
+      line-height: 1.4;
+      break-before: page;
+    }
+
+    h2:first-of-type {
+      margin-top: 0;
+      break-before: avoid;
+    }
+
+    h3 {
+      font-family: 'Noto Serif JP', serif;
+      font-weight: 600;
+      font-size: 11.5pt;
+      color: var(--navy);
+      margin-top: 9mm;
+      margin-bottom: 4mm;
+      letter-spacing: 0.06em;
+      padding-bottom: 2mm;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* =====================
+       BODY TEXT
+    ===================== */
+    p {
+      font-size: 10pt;
+      line-height: 1.95;
+      margin-bottom: 5mm;
+      color: var(--text-main);
+    }
+
+    /* Emphasis: "cura" brand */
+    .brand {
+      font-family: 'Abril Fatface', serif;
+      color: var(--rose-deep);
+      font-size: 1.05em;
+      letter-spacing: 0.06em;
+    }
+
+    strong {
+      font-weight: 700;
+      color: var(--navy);
+    }
+
+    /* =====================
+       HIGHLIGHT / STAT CALLOUT
+    ===================== */
+    .stat-row {
+      display: flex;
+      gap: 5mm;
+      flex-wrap: wrap;
+      margin-bottom: 7mm;
+    }
+
+    .stat-card {
+      flex: 1;
+      min-width: 42mm;
+      background: var(--rose-pale);
+      border: 1px solid var(--rose-light);
+      border-radius: 2mm;
+      padding: 5mm 6mm;
+      text-align: center;
+    }
+
+    .stat-card .stat-num {
+      font-family: 'Abril Fatface', serif;
+      font-size: 17pt;
+      color: var(--rose-deep);
+      display: block;
+      line-height: 1.2;
+    }
+
+    .stat-card .stat-label {
+      font-size: 8pt;
+      color: var(--text-sub);
+      line-height: 1.6;
+    }
+
+    /* Bullet list */
+    ul {
+      padding-left: 6mm;
+      margin-bottom: 5mm;
+    }
+
+    ul li {
+      font-size: 10pt;
+      line-height: 1.85;
+      margin-bottom: 2mm;
+      color: var(--text-main);
+    }
+
+    ul li::marker {
+      color: var(--rose-mid);
+    }
+
+    /* =====================
+       TABLES
+    ===================== */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 7mm;
+      font-size: 9.5pt;
+    }
+
+    table thead tr th {
+      background: linear-gradient(90deg, var(--rose-deep), var(--rose-mid));
+      color: var(--white);
+      padding: 4mm 5mm;
+      text-align: left;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      font-size: 9pt;
+    }
+
+    table tbody tr:nth-child(even) {
+      background: var(--rose-stripe);
+    }
+
+    table tbody tr:nth-child(odd) {
+      background: var(--white);
+    }
+
+    table tbody tr td {
+      padding: 3.5mm 5mm;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.75;
+    }
+
+    table tbody tr td:first-child {
+      font-weight: 500;
+      color: var(--navy);
+    }
+
+    /* Highlight row */
+    table tbody tr.highlight td {
+      background: linear-gradient(90deg, rgba(138,58,85,0.07), rgba(201,168,130,0.08));
+      font-weight: 700;
+      color: var(--rose-deep);
+      border-top: 1.5px solid var(--rose-mid);
+      border-bottom: 1.5px solid var(--rose-mid);
+    }
+
+    /* =====================
+       STEP FLOW
+    ===================== */
+    .step-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 3.5mm;
+      margin-bottom: 7mm;
+    }
+
+    .step-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 5mm;
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 10mm;
+      height: 10mm;
+      background: linear-gradient(135deg, var(--rose-deep), var(--rose-mid));
+      color: var(--white);
+      border-radius: 50%;
+      font-family: 'Abril Fatface', serif;
+      font-size: 10pt;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1mm;
+    }
+
+    .step-content {
+      flex: 1;
+    }
+
+    .step-content strong {
+      font-size: 10.5pt;
+      display: block;
+      margin-bottom: 1mm;
+    }
+
+    .step-content p {
+      margin: 0;
+      font-size: 9.5pt;
+      color: var(--text-sub);
+    }
+
+    /* =====================
+       FAQ
+    ===================== */
+    .faq-item {
+      margin-bottom: 7mm;
+      border: 1px solid var(--border);
+      border-radius: 2mm;
+      overflow: hidden;
+    }
+
+    .faq-q {
+      background: var(--rose-pale);
+      padding: 4mm 6mm;
+      font-weight: 600;
+      font-size: 10pt;
+      color: var(--rose-deep);
+      border-left: 3px solid var(--rose-mid);
+    }
+
+    .faq-a {
+      padding: 4mm 6mm;
+      font-size: 9.5pt;
+      line-height: 1.85;
+      background: var(--white);
+    }
+
+    /* =====================
+       CLOSING CTA
+    ===================== */
+    .cta-box {
+      background: linear-gradient(135deg, var(--rose-deep) 0%, var(--rose-mid) 100%);
+      border-radius: 3mm;
+      padding: 10mm 14mm;
+      text-align: center;
+      margin-top: 10mm;
+      margin-bottom: 10mm;
+    }
+
+    .cta-box .cta-logo {
+      font-family: 'Abril Fatface', serif;
+      font-size: 28pt;
+      color: var(--white);
+      letter-spacing: 0.12em;
+      display: block;
+      margin-bottom: 3mm;
+    }
+
+    .cta-box .cta-name {
+      font-size: 9.5pt;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.15em;
+      margin-bottom: 5mm;
+    }
+
+    .cta-box .cta-tel {
+      font-family: 'Abril Fatface', serif;
+      font-size: 18pt;
+      color: var(--gold-light);
+      letter-spacing: 0.1em;
+      display: block;
+      margin-bottom: 3mm;
+    }
+
+    .cta-box .cta-area {
+      font-size: 9pt;
+      color: rgba(255,255,255,0.72);
+      letter-spacing: 0.1em;
+      line-height: 1.8;
+    }
+
+    .cta-box .cta-tagline {
+      margin-top: 7mm;
+      font-size: 11pt;
+      color: rgba(255,255,255,0.9);
+      font-style: italic;
+      letter-spacing: 0.1em;
+    }
+
+    /* =====================
+       COMPARISON HIGHLIGHT BOX
+    ===================== */
+    .highlight-box {
+      background: #fdf8f0;
+      border: 1px solid var(--gold-light);
+      border-left: 4px solid var(--gold);
+      border-radius: 2mm;
+      padding: 6mm 10mm;
+      margin: 5mm 0 7mm;
+    }
+
+    .highlight-box p {
+      margin: 0;
+      font-size: 10pt;
+      line-height: 1.9;
+    }
+
+    .highlight-box .price-example {
+      margin-top: 4mm;
+      padding-top: 4mm;
+      border-top: 1px solid var(--gold-light);
+      font-size: 9.5pt;
+    }
+
+    /* =====================
+       PRINT STYLES
+    ===================== */
+    @media print {
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      html, body {
+        background: white;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        color-adjust: exact;
+      }
+
+      body {
+        background: white;
+      }
+
+      .cover {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        page-break-after: always;
+        break-after: page;
+      }
+
+      .page {
+        box-shadow: none;
+      }
+
+      h2 {
+        break-before: page;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      h2.no-break {
+        break-before: avoid;
+      }
+
+      table {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      table thead tr th {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      table tbody tr:nth-child(even) {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .summary-box,
+      .stat-card,
+      .faq-q,
+      .cta-box,
+      .highlight-box {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .faq-item {
+        break-inside: avoid;
+      }
+
+      .step-item {
+        break-inside: avoid;
+      }
+    }
+
+    @media screen {
+      .cover {
+        box-shadow: 0 8px 40px rgba(42,31,26,0.18);
+        margin-bottom: 8mm;
+      }
+
+      .page {
+        box-shadow: 0 2px 16px rgba(42,31,26,0.08);
+        margin-bottom: 8mm;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================
+       COVER PAGE
+  ============================= -->
+  <div class="cover">
+    <div class="cover-inner">
+      <div class="cover-logo">cura</div>
+      <div class="cover-tagline">最期まで、自宅で。</div>
+      <div class="cover-divider"></div>
+      <div class="cover-title">あなたの大切な方の「いつもの暮らし」を、<br>最後まで。</div>
+      <div class="cover-subtitle">サービスご提案書</div>
+      <div class="cover-date">2026年4月</div>
+    </div>
+    <div class="cover-footer">
+      TEL 070-5450-8818 &nbsp;|&nbsp; 文京区・千代田区・新宿区・豊島区の一部（番町・神楽坂・目白）
+    </div>
+  </div>
+
+  <!-- ============================
+       MAIN CONTENT
+  ============================= -->
+  <div class="page">
+
+    <!-- EXEC SUMMARY -->
+    <h2 class="no-break">エグゼクティブサマリー</h2>
+    <div class="summary-box">
+      <p><span class="brand">cura</span>は、文京区を中心に活動するプレミアム在宅ケアサービスです。介護福祉士と救急外科バックグラウンドを持つ看護師による少人数体制で、「いつもと違う」に即座に気づき動けるプロフェッショナルのみがケアを担当します。施設入居とは異なり、ご自宅の文化・習慣・ペースを守りながら、一人ひとりのケアプランを設計します。24時間オンコール体制と徹底した品質管理により、ご本人もご家族も「任せられる」という確信を持っていただくことを目指しています。</p>
+    </div>
+
+    <!-- SECTION 1 -->
+    <h2>1. 現在の課題</h2>
+
+    <h3>在宅ケアには、埋まっていない空白がある</h3>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <span class="stat-num">855万</span>
+        <span class="stat-label">65歳以上単独世帯数<br>（2024年・国民生活基礎調査）<br>2001年比2.7倍</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">54.6%</span>
+        <span class="stat-label">「最期は自宅で」を希望する<br>高齢者の割合<br>（内閣府調査）</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-num">76,020</span>
+        <span class="stat-label">孤独死（2024年）<br>うち65歳以上58,044人<br>東京都7,699人（全国最多）</span>
+      </div>
+    </div>
+
+    <p>65歳以上の単独世帯は2024年時点で<strong>855万3千世帯</strong>（国民生活基礎調査）、2001年比で2.7倍に拡大しています。「最期は自宅で」と希望する高齢者は<strong>43.8〜54.6%</strong>（内閣府調査）にのぼる一方、実際に在宅での看取りを実現できているケースは限られています。</p>
+
+    <p>孤独死は2024年、全年齢で76,020人。そのうち65歳以上が<strong>58,044人（76.4%）</strong>を占め、東京都だけで<strong>7,699人（全国最多）</strong>に達しています。「誰かに気づいてもらえる」仕組みの必要性は、もはや一部の問題ではありません。</p>
+
+    <h3>よくある状況</h3>
+    <ul>
+      <li>遠方に住む家族が、親の日常の変化に気づけない</li>
+      <li>既存のヘルパー派遣では「誰が来るかわからない」「報告が少ない」</li>
+      <li>夜間や体調急変時の対応窓口がなく、救急車を呼ぶしかない</li>
+      <li>施設入居を勧めたが、本人が強く拒んでいる</li>
+      <li>外出や旅行に付き添える専門職が見つからない</li>
+    </ul>
+
+    <h3>遠距離介護という現実</h3>
+    <p>介護全体の約2割が遠距離介護であり（NKCナーシングコア調査・n=1,003人）、遠距離介護経験者の<strong>9割以上</strong>が「不安や悩みを抱えている」と回答しています。最も必要とされるサービスの1位は<strong>「転倒・急な体調不良など有事の際の訪問対応」（43.5%）</strong>、2位が<strong>「定期通院・入退院時の病院付き添い」（30.4%）</strong>。いずれも<span class="brand">cura</span>が正面から応えられる領域です。</p>
+
+    <h3>現行の在宅サービスが抱える構造的問題</h3>
+    <p>介護人材不足を背景に、現在市場に流通しているサービスの多くは「経験・資格不問・副業可」のマッチング型です。安定的な担当者の固定、緊急時の判断力、医療的な視点——これらを一貫して提供できる体制は、文京区においてほぼ空白地帯のままです。</p>
+
+    <!-- SECTION 2 -->
+    <h2>2. curaが解決できること</h2>
+
+    <h3>「何か違う」を見逃さない体制</h3>
+    <p><span class="brand">cura</span>のスタッフ採用基準は資格の有無ではなく、「いつもと違う」「何か違う」に気づいて即動ける人柄と判断力です。少人数体制だからこそ、基準を妥協しません。</p>
+
+    <h3>サービス内容</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:38%">サービス</th>
+          <th>内容</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>オーダーメイド・ケア</td><td>自宅生活支援・身の回りのお世話・日常動作のサポート</td></tr>
+        <tr><td>外出・旅行同行</td><td>通院、買い物、観劇、旅行、遠方への付き添い</td></tr>
+        <tr><td>病院同行</td><td>診察室への同席・入退院の対応・医師への橋渡し</td></tr>
+        <tr><td>看護師バックアップ</td><td>健康管理・服薬確認・医療的アドバイス（電話相談含む）</td></tr>
+        <tr><td>夜間オンコール</td><td>夜間の一次対応・判断・連絡体制（月額）</td></tr>
+        <tr><td>レスパイトケア</td><td>遠方ご家族の帰省中・休暇中の代替サポート</td></tr>
+        <tr><td>ペットのお世話</td><td>日常のペットケアも対応</td></tr>
+      </tbody>
+    </table>
+
+    <h3>2名体制が生む「二重のセーフティネット」</h3>
+    <ul>
+      <li><strong>介護福祉士（代表・まさみ）</strong>：家族介護23年・介護職歴6年。現場の経験と当事者感覚を持つケアディレクター</li>
+      <li><strong>看護師（救急外科バックグラウンド）</strong>：医療的判断が必要な場面で電話相談・アドバイスが可能。体調変化の早期察知にも対応</li>
+    </ul>
+    <p>「何かあったとき誰に連絡するか」が明確であること。これが在宅ケアの安心の根幹です。</p>
+
+    <!-- SECTION 3 -->
+    <h2>3. 他の選択肢との比較</h2>
+
+    <h3>施設入居 vs cura</h3>
+    <p>東京都内の有料老人ホームの平均月額は<strong>29.7万円</strong>、高級老人ホームに至っては入居一時金の中央値が<strong>2,136万円</strong>、月額<strong>31万円</strong>に達します（業界調査）。これに対して<span class="brand">cura</span>は「必要なときに・必要な分だけ」から始められ、段階的にサポートを厚くする設計が可能です。</p>
+
+    <div class="highlight-box">
+      <p><strong>例：週1回・3時間ケア（会員）＋夜間オンコール（月額）の場合</strong></p>
+      <div class="price-example">
+        ケア費用：¥12,000 × 3h × 4回 ＝ ¥144,000／月<br>
+        オンコール：¥17,000／月<br>
+        <strong>合計目安：約¥161,000／月</strong>（移動費別途）<br><br>
+        有料老人ホームとの差は月10万円以上。施設への移行を数年延らせることができれば、経済的・精神的なコストの差は明確です。
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th style="width:28%">比較項目</th>
+          <th style="width:36%">有料老人ホーム（一般的）</th>
+          <th><span class="brand" style="color:#ffffff">cura</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>月額費用目安</td>
+          <td>東京都平均29.7万円<br>高級は31万円以上（入居一時金別途）</td>
+          <td>利用量に応じて柔軟に設計</td>
+        </tr>
+        <tr>
+          <td>担当者の固定</td>
+          <td>シフト制・固定なし</td>
+          <td>原則まさみが担当</td>
+        </tr>
+        <tr>
+          <td>生活リズム</td>
+          <td>施設のルールに準拠</td>
+          <td>ご本人のペースを最優先</td>
+        </tr>
+        <tr>
+          <td>ペット</td>
+          <td>原則不可</td>
+          <td>対応可</td>
+        </tr>
+        <tr>
+          <td>外出・旅行</td>
+          <td>制限あり・要申請</td>
+          <td>設計次第で自由に</td>
+        </tr>
+        <tr>
+          <td>医療連携</td>
+          <td>施設医・提携病院に限定</td>
+          <td>かかりつけ医との連携を継続</td>
+        </tr>
+        <tr>
+          <td>「帰宅」という感覚</td>
+          <td>施設が「住む場所」になる</td>
+          <td>ずっと自宅が生活の場</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>「施設に入れる」という選択は、ケアの問題を解決するのではなく、本人の暮らしを施設の仕組みに合わせることです。<span class="brand">cura</span>は逆の発想で設計されています。</p>
+
+    <!-- SECTION 4 -->
+    <h2>4. 料金プランと投資対効果</h2>
+
+    <h3>価格の考え方</h3>
+    <p><span class="brand">cura</span>の料金設定は、「安さ」ではなく「誰が来るか・何ができるか」に対する対価です。</p>
+    <p>市場に流通する一般的な自費ヘルパーの相場は<strong>2,500〜5,000円/時</strong>、看護師同行型サービスでは<strong>6,600〜11,000円/時</strong>（競合他社調査）です。<span class="brand">cura</span>（会員・介護福祉士）の12,000円/時は競合比1.3〜2倍の水準ですが、その差は担当者の固定・W体制・24時間オンコール・徹底した選定基準に裏打ちされています。</p>
+    <p>担当するのは資格と経験を持ち、緊急時に正しい判断ができる人材だけです。これは、ご本人の安全とご家族の精神的負担軽減への直接的な投資です。</p>
+
+    <h3>競合他社との料金比較</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:38%">サービス</th>
+          <th style="width:28%">時間単価</th>
+          <th>備考</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>一般ヘルパー（自費）</td>
+          <td>2,500〜5,000円/時</td>
+          <td>担当者固定なし・資格不問が多い</td>
+        </tr>
+        <tr>
+          <td>わたしの看護師さん</td>
+          <td>6,600〜11,000円/時</td>
+          <td>入会金33,000円＋月会費5,500円</td>
+        </tr>
+        <tr>
+          <td>プライベートナース</td>
+          <td>6,600円/時</td>
+          <td>医療行為なし・最低4時間〜</td>
+        </tr>
+        <tr class="highlight">
+          <td>cura（会員・介護福祉士）</td>
+          <td>¥12,000〜/時</td>
+          <td>担当者固定・W体制・オンコール込みプランあり</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>料金一覧</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:55%">項目</th>
+          <th>料金</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>入会金（アセスメント・ケアプラン作成含む）</td>
+          <td><strong>¥60,000</strong>（税込）</td>
+        </tr>
+        <tr>
+          <td>プライベートケア（会員）/ 1h</td>
+          <td><strong>¥12,000〜</strong>（税込）</td>
+        </tr>
+        <tr>
+          <td>プライベートケア（非会員）/ 1h</td>
+          <td><strong>¥15,000〜</strong>（税込）</td>
+        </tr>
+        <tr>
+          <td>看護師同行プラン / 1h</td>
+          <td><strong>¥18,000〜</strong>（税込）</td>
+        </tr>
+        <tr>
+          <td>夜間オンコール / 月額</td>
+          <td><strong>¥17,000</strong>（月3回まで）</td>
+        </tr>
+        <tr>
+          <td>最低利用時間</td>
+          <td>3時間〜</td>
+        </tr>
+        <tr>
+          <td>移動費</td>
+          <td>別途実費</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>月額会員プラン</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width:28%">プラン</th>
+          <th style="width:22%">月額</th>
+          <th>内容</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>デイ会員</td>
+          <td><strong>¥10,000</strong></td>
+          <td>月2枠固定確保・月1回状態確認連絡・LINE相談（営業時間内）</td>
+        </tr>
+        <tr>
+          <td>オンコール単体</td>
+          <td><strong>¥17,000</strong></td>
+          <td>夜間オンコール（月3回まで）</td>
+        </tr>
+        <tr>
+          <td>フル会員</td>
+          <td><strong>¥18,000</strong></td>
+          <td>デイ会員＋夜間オンコール</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- SECTION 5 -->
+    <h2>5. 導入の流れ</h2>
+
+    <div class="step-flow">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <strong>ご相談・お問い合わせ</strong>
+          <p>LINE・メール・電話でご連絡ください。まずは現在の状況をお聞かせください。</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <strong>初回アセスメント（訪問）</strong>
+          <p>まさみが直接お会いして、現在の状況・ご希望・生活環境を確認します。入会金（¥60,000）はこのタイミングで。</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <strong>ケアプランのご提案</strong>
+          <p>お伺いした内容をもとに、オーダーメイドのケアプランを作成してご提案します。</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <strong>初回ケア開始</strong>
+          <p>開始後も定期的なフィードバックと調整を行います。「また違う人が来た」という状況は起きません。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 6 -->
+    <h2>6. よくある質問</h2>
+
+    <div class="faq-item">
+      <div class="faq-q">Q1. 親が施設を拒否しています。在宅ケアで本当に大丈夫でしょうか？</div>
+      <div class="faq-a">「施設に入りたくない」という意思は、自分の生活を守りたいという明確なサインです。<span class="brand">cura</span>はその意思を尊重した上で、安全を確保するための設計をします。まずはアセスメントで現状を確認し、どこまで在宅で対応できるかをご説明します。無理に在宅継続を勧めることはありません。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Q2. 遠方に住んでいて、頻繁に様子を見に行けません。何かあったときの連絡はどうなりますか？</div>
+      <div class="faq-a">夜間オンコール会員の場合、緊急時はまさみが一次対応し、必要に応じてご家族・かかりつけ医・救急へ繋ぎます。月1回の状態確認連絡（デイ会員以上）もあり、定期的にご本人の状況をお伝えします。</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Q3. 介護保険は使えますか？</div>
+      <div class="faq-a"><span class="brand">cura</span>は介護保険外（自費）のプレミアムサービスです。既存のヘルパー・訪問看護と併用することも可能です。</div>
+    </div>
+
+    <!-- SECTION 7 / CTA -->
+    <h2>7. 次のステップ</h2>
+
+    <p>まずは、現在の状況を聞かせてください。</p>
+
+    <div class="cta-box">
+      <span class="cta-logo">cura</span>
+      <div class="cta-name">代表・ケアディレクター　まさみ</div>
+      <span class="cta-tel">070-5450-8818</span>
+      <div class="cta-area">
+        文京区・千代田区・新宿区・豊島区の一部（番町・神楽坂・目白）<br>
+        全国にいるご家族からのご相談も承ります
+      </div>
+      <div class="cta-tagline">「最期まで、自宅で。」</div>
+    </div>
+
+    <!-- PAGE FOOTER -->
+    <div class="page-footer">
+      <span class="footer-logo">cura</span>
+      <span>TEL 070-5450-8818 &nbsp;|&nbsp; 文京区・千代田区・新宿区・豊島区（番町・神楽坂・目白）</span>
+      <span>2026年4月</span>
+    </div>
+
+  </div><!-- /page -->
+
+</body>
+</html>
