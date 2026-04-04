@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スタッフページ — cura</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root { --dark:#2a1f1a; --rose:#8a3a55; --gold:#c9a882; --cream:#faf7f2; --border:#d8cec6; --text:#2a1f1a; --text-mid:#5c4a40; --text-light:#9c8a7e; }
+    * { box-sizing:border-box; margin:0; padding:0; }
+    body { font-family:'Noto Serif JP',serif; background:var(--cream); color:var(--text); font-size:14px; line-height:1.9; padding:20px 16px 80px; -webkit-font-smoothing:antialiased; }
+    .wrap { max-width:780px; margin:0 auto; }
+    .page-header { display:flex; align-items:flex-end; justify-content:space-between; margin-bottom:28px; padding-bottom:14px; border-bottom:1px solid var(--border); }
+    .logo { font-family:'Cormorant Garamond',serif; font-size:22px; color:var(--rose); letter-spacing:0.15em; }
+    .logo-sub { font-size:8px; letter-spacing:0.3em; color:var(--text-light); font-family:'Cormorant Garamond',serif; margin-top:2px; }
+    .back-btn { font-size:11px; color:var(--text-light); text-decoration:none; letter-spacing:0.1em; border:1px solid var(--border); padding:5px 12px; }
+    .staff-hero { background:#fff; border:1px solid var(--border); padding:24px 28px; margin-bottom:20px; display:flex; align-items:center; gap:20px; }
+    .staff-avatar { width:64px; height:64px; border-radius:50%; background:linear-gradient(135deg,#8a3a55,#b87888); display:flex; align-items:center; justify-content:center; font-family:'Cormorant Garamond',serif; font-size:24px; color:#fff; flex-shrink:0; }
+    .staff-name { font-size:20px; font-weight:500; letter-spacing:0.05em; }
+    .staff-meta { font-size:11px; color:var(--text-light); margin-top:4px; letter-spacing:0.1em; }
+    .badge { display:inline-block; font-size:10px; padding:2px 8px; border:1px solid var(--rose); color:var(--rose); letter-spacing:0.1em; margin-left:8px; vertical-align:middle; }
+    .section { background:#fff; border:1px solid var(--border); margin-bottom:16px; }
+    .section-head { display:flex; align-items:center; justify-content:space-between; padding:14px 20px; border-bottom:1px solid var(--border); cursor:pointer; }
+    .section-head-title { font-size:10px; letter-spacing:0.25em; color:var(--gold); font-family:'Cormorant Garamond',serif; text-transform:uppercase; }
+    .section-toggle { font-size:16px; color:var(--text-light); transition:transform 0.2s; }
+    .section-body { padding:16px 20px; }
+    .info-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px 20px; }
+    @media(max-width:500px) { .info-grid { grid-template-columns:1fr; } }
+    .info-item { font-size:12.5px; }
+    .info-label { font-size:9.5px; letter-spacing:0.2em; color:var(--text-light); font-family:'Cormorant Garamond',serif; margin-bottom:2px; }
+    .info-val { color:var(--text-mid); }
+    .doc-list { list-style:none; }
+    .doc-list li { display:flex; align-items:center; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border); font-size:12.5px; color:var(--text-mid); }
+    .doc-list li:last-child { border-bottom:none; }
+    .doc-tag { font-size:9.5px; padding:2px 8px; background:rgba(138,58,85,0.08); color:var(--rose); letter-spacing:0.1em; }
+    .timeline { list-style:none; }
+    .timeline li { display:flex; gap:14px; padding:10px 0; border-bottom:1px solid var(--border); font-size:12.5px; }
+    .timeline li:last-child { border-bottom:none; }
+    .tl-date { font-size:10px; color:var(--text-light); white-space:nowrap; min-width:80px; padding-top:2px; }
+    .tl-content { color:var(--text-mid); flex:1; }
+    .add-bar { display:flex; gap:8px; margin-top:14px; }
+    .add-input { flex:1; border:none; border-bottom:1px solid var(--border); padding:7px 0; font-family:'Noto Serif JP',serif; font-size:13px; color:var(--dark); background:transparent; outline:none; }
+    .add-input:focus { border-bottom-color:var(--rose); }
+    .add-btn { background:var(--rose); color:#fff; border:none; padding:8px 16px; font-family:'Noto Serif JP',serif; font-size:12px; letter-spacing:0.08em; cursor:pointer; flex-shrink:0; }
+    .shift-grid { display:grid; grid-template-columns:repeat(7,1fr); gap:4px; margin-bottom:12px; }
+    .shift-cell { aspect-ratio:1; display:flex; flex-direction:column; align-items:center; justify-content:center; font-size:10px; border:1px solid var(--border); cursor:pointer; }
+    .shift-cell.has-shift { background:rgba(138,58,85,0.1); border-color:var(--rose); color:var(--rose); }
+    .shift-cell .day { font-size:8px; color:var(--text-light); }
+    .empty-state { text-align:center; color:var(--text-light); font-size:12px; padding:20px 0; letter-spacing:0.1em; }
+    .stat-row { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:16px; }
+    .stat-box { flex:1; min-width:100px; border:1px solid var(--border); padding:12px 14px; text-align:center; }
+    .stat-num { font-family:'Cormorant Garamond',serif; font-size:28px; color:var(--rose); line-height:1; }
+    .stat-label { font-size:9px; color:var(--text-light); letter-spacing:0.15em; margin-top:4px; }
+    .btn-secondary { background:#fff; color:var(--text-mid); border:1px solid var(--border); padding:9px 16px; font-family:'Noto Serif JP',serif; font-size:12px; letter-spacing:0.08em; cursor:pointer; }
+    .not-found { text-align:center; padding:60px 20px; color:var(--text-light); }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="page-header">
+    <div>
+      <div class="logo">cura</div>
+      <div class="logo-sub">Staff Profile</div>
+    </div>
+    <a href="staff-list.html" class="back-btn">← スタッフ一覧</a>
+  </div>
+
+  <div id="main-content">
+    <div class="not-found">読み込み中...</div>
+  </div>
+
+</div>
+<script>
+  const params = new URLSearchParams(location.search);
+  const staffId = params.get('id');
+  const allStaff = JSON.parse(localStorage.getItem('cura_staff') || '[]');
+  const staff = allStaff.find(s => s.id === staffId);
+
+  function getExtra(staffId) {
+    return JSON.parse(localStorage.getItem('cura_extra_' + staffId) || '{"notes":[],"shifts":[],"docs":[]}');
+  }
+  function saveExtra(staffId, data) {
+    localStorage.setItem('cura_extra_' + staffId, JSON.stringify(data));
+  }
+
+  function render(staff) {
+    const extra = getExtra(staff.id);
+    const initials = staff.name.slice(0,1);
+    const totalShifts = extra.shifts.length;
+    const totalHours = extra.shifts.reduce((a,s) => a + (s.hours||0), 0);
+    const joinDate = staff.contractStart ? staff.contractStart.replace(/-/g,'／') : '—';
+
+    document.getElementById('main-content').innerHTML = `
+      <div class="staff-hero">
+        <div class="staff-avatar">${initials}</div>
+        <div>
+          <div class="staff-name">${staff.name}<span class="badge">${staff.contractType}</span></div>
+          <div class="staff-meta">入社：${joinDate}　${staff.jobTitle || '介護福祉士'}　${staff.phone || ''}</div>
+        </div>
+      </div>
+
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-num">${totalShifts}</div><div class="stat-label">稼働回数</div></div>
+        <div class="stat-box"><div class="stat-num">${totalHours}</div><div class="stat-label">累計時間</div></div>
+        <div class="stat-box"><div class="stat-num">${extra.docs.length + 1}</div><div class="stat-label">書類数</div></div>
+      </div>
+
+      <!-- 基本情報 -->
+      <div class="section">
+        <div class="section-head" onclick="toggleSection('info')">
+          <span class="section-head-title">Basic Info — 基本情報</span>
+          <span class="section-toggle" id="toggle-info">▾</span>
+        </div>
+        <div class="section-body" id="section-info">
+          <div class="info-grid">
+            <div class="info-item"><div class="info-label">氏名</div><div class="info-val">${staff.name}</div></div>
+            <div class="info-item"><div class="info-label">雇用形態</div><div class="info-val">${staff.contractType}</div></div>
+            <div class="info-item"><div class="info-label">住所</div><div class="info-val">${staff.address || '—'}</div></div>
+            <div class="info-item"><div class="info-label">連絡先</div><div class="info-val">${staff.phone || '—'}</div></div>
+            <div class="info-item"><div class="info-label">契約開始日</div><div class="info-val">${staff.contractStart || '—'}</div></div>
+            <div class="info-item"><div class="info-label">時給 / 業務報酬</div><div class="info-val">${staff.hourlyRate || '—'}</div></div>
+            <div class="info-item"><div class="info-label">勤務場所</div><div class="info-val">${staff.workPlace || '—'}</div></div>
+            <div class="info-item"><div class="info-label">通信費補助</div><div class="info-val">${staff.commAllowance || '—'}</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 書類 -->
+      <div class="section">
+        <div class="section-head" onclick="toggleSection('docs')">
+          <span class="section-head-title">Documents — 書類</span>
+          <span class="section-toggle" id="toggle-docs">▾</span>
+        </div>
+        <div class="section-body" id="section-docs">
+          <ul class="doc-list" id="doc-list">
+            <li><span>雇用契約書（HR-02）</span><span class="doc-tag">確定済み ${staff.contractStart || ''}</span></li>
+            ${extra.docs.map(d => `<li><span>${d.name}</span><span class="doc-tag">${d.date}</span></li>`).join('')}
+          </ul>
+          <div class="add-bar" style="margin-top:12px;">
+            <input class="add-input" id="doc-name-input" placeholder="書類名を入力（例：秘密保持誓約書）">
+            <button class="add-btn" onclick="addDoc()">追加</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- シフト・稼働記録 -->
+      <div class="section">
+        <div class="section-head" onclick="toggleSection('shifts')">
+          <span class="section-head-title">Schedule — シフト・稼働</span>
+          <span class="section-toggle" id="toggle-shifts">▾</span>
+        </div>
+        <div class="section-body" id="section-shifts">
+          ${extra.shifts.length === 0 ? '<div class="empty-state">稼働記録がまだありません</div>' : ''}
+          <ul class="timeline" id="shift-list">
+            ${extra.shifts.map(s => `<li><span class="tl-date">${s.date}</span><span class="tl-content">${s.hours}h　${s.note||''}</span></li>`).join('')}
+          </ul>
+          <div class="add-bar">
+            <input class="add-input" id="shift-date-input" type="date" style="max-width:140px;">
+            <input class="add-input" id="shift-hours-input" placeholder="時間数" type="number" min="1" max="24" style="max-width:80px;">
+            <input class="add-input" id="shift-note-input" placeholder="メモ（利用者名など）">
+            <button class="add-btn" onclick="addShift()">追加</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- メモ・連絡事項 -->
+      <div class="section">
+        <div class="section-head" onclick="toggleSection('notes')">
+          <span class="section-head-title">Notes — メモ・連絡事項</span>
+          <span class="section-toggle" id="toggle-notes">▾</span>
+        </div>
+        <div class="section-body" id="section-notes">
+          ${extra.notes.length === 0 ? '<div class="empty-state">メモがまだありません</div>' : ''}
+          <ul class="timeline" id="note-list">
+            ${extra.notes.map(n => `<li><span class="tl-date">${n.date}</span><span class="tl-content">${n.text}</span></li>`).join('')}
+          </ul>
+          <div class="add-bar">
+            <input class="add-input" id="note-input" placeholder="メモを入力">
+            <button class="add-btn" onclick="addNote()">追加</button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('shift-date-input').valueAsDate = new Date();
+  }
+
+  function toggleSection(id) {
+    const body = document.getElementById('section-' + id);
+    const toggle = document.getElementById('toggle-' + id);
+    const hidden = body.style.display === 'none';
+    body.style.display = hidden ? '' : 'none';
+    toggle.textContent = hidden ? '▾' : '▸';
+  }
+
+  function today() {
+    return new Date().toISOString().slice(0,10);
+  }
+
+  function addNote() {
+    const text = document.getElementById('note-input').value.trim();
+    if (!text) return;
+    const extra = getExtra(staff.id);
+    extra.notes.unshift({ date: today(), text });
+    saveExtra(staff.id, extra);
+    render(staff);
+  }
+
+  function addDoc() {
+    const name = document.getElementById('doc-name-input').value.trim();
+    if (!name) return;
+    const extra = getExtra(staff.id);
+    extra.docs.unshift({ name, date: today() });
+    saveExtra(staff.id, extra);
+    render(staff);
+  }
+
+  function addShift() {
+    const date = document.getElementById('shift-date-input').value;
+    const hours = parseFloat(document.getElementById('shift-hours-input').value);
+    const note = document.getElementById('shift-note-input').value.trim();
+    if (!date || !hours) return;
+    const extra = getExtra(staff.id);
+    extra.shifts.unshift({ date, hours, note });
+    saveExtra(staff.id, extra);
+    render(staff);
+  }
+
+  if (staff) {
+    render(staff);
+  } else if (staffId) {
+    document.getElementById('main-content').innerHTML = '<div class="not-found">スタッフが見つかりません。<br><a href="staff-list.html" style="color:var(--rose);">スタッフ一覧に戻る</a></div>';
+  } else {
+    document.getElementById('main-content').innerHTML = '<div class="not-found">URLにスタッフIDが必要です。</div>';
+  }
+</script>
+</body>
+</html>

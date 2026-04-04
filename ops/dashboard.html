@@ -157,6 +157,24 @@
     /* ── 空状態 ── */
     .empty-state { padding: 32px 0; text-align: center; color: var(--text-light); font-size: 12px; }
 
+    /* ── ボトムナビ（モバイル） ── */
+    .bottom-nav {
+      display: none;
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: var(--dark); border-top: 1px solid rgba(201,168,130,0.15);
+      z-index: 100; padding-bottom: env(safe-area-inset-bottom);
+    }
+    .bottom-nav-inner { display: flex; justify-content: space-around; }
+    .bn-item {
+      flex: 1; display: flex; flex-direction: column; align-items: center;
+      padding: 10px 4px 8px; cursor: pointer;
+      color: rgba(250,247,242,0.4); font-size: 9px; letter-spacing: 0.06em;
+      transition: color 0.15s; gap: 3px; border: none; background: none;
+      font-family: 'Noto Serif JP', serif; -webkit-appearance: none;
+    }
+    .bn-item .bn-icon { font-size: 18px; line-height: 1; }
+    .bn-item.active { color: var(--gold); }
+
     @media (max-width: 900px) {
       .sidebar { width: 180px; }
       .summary-grid { grid-template-columns: repeat(2, 1fr); }
@@ -164,7 +182,9 @@
     }
     @media (max-width: 700px) {
       .sidebar { display: none; }
+      .bottom-nav { display: block; }
       .summary-grid { grid-template-columns: repeat(2, 1fr); }
+      .content { padding-bottom: 80px; }
     }
   </style>
 </head>
@@ -375,6 +395,7 @@
     <div class="page-view" id="page-staff">
       <div class="section-header" style="margin-bottom:16px;">
         <span class="section-title">スタッフ一覧</span>
+        <a href="../hr/staff-list.html" target="_blank" style="font-size:11px;color:var(--gold);letter-spacing:0.1em;text-decoration:none;border:1px solid rgba(201,168,130,0.4);padding:5px 12px;">スタッフ管理ページ →</a>
       </div>
       <div class="three-col" id="staff-list-grid">
         <div class="empty-state" style="grid-column:1/-1;">スタッフが登録されていません。「＋ 新規登録」から追加してください。</div>
@@ -654,6 +675,27 @@
     </div>
   </div>
 </div>
+
+<!-- ── ボトムナビ ── -->
+<nav class="bottom-nav">
+  <div class="bottom-nav-inner">
+    <button class="bn-item active" id="bn-home" onclick="bnNav('home')">
+      <span class="bn-icon">◈</span>ホーム
+    </button>
+    <button class="bn-item" id="bn-bookings" onclick="bnNav('bookings')">
+      <span class="bn-icon">◷</span>予約
+    </button>
+    <button class="bn-item" id="bn-clients" onclick="bnNav('clients')">
+      <span class="bn-icon">◉</span>利用者
+    </button>
+    <button class="bn-item" id="bn-staff" onclick="bnNav('staff')">
+      <span class="bn-icon">◉</span>スタッフ
+    </button>
+    <button class="bn-item" id="bn-docs" onclick="bnNav('docs')">
+      <span class="bn-icon">◎</span>書類
+    </button>
+  </div>
+</nav>
 
 <script>
   // ── データ管理（localStorage） ──
@@ -986,6 +1028,18 @@
     const oncallClients = clients.filter(c => c.plan && (c.plan.includes('オンコール') || c.plan.includes('フル')));
     if (!oncallClients.length) { oncallEl.innerHTML = '<li class="empty-state">オンコール会員はいません</li>'; }
     else { oncallEl.innerHTML = oncallClients.map(c=>`<li class="client-item" onclick="openClientModal('${c.id}')"><div class="client-avatar">${c.name.charAt(0)}</div><div><div class="client-name">${c.name}</div><div class="client-meta">${c.plan}</div></div></li>`).join(''); }
+  }
+
+  function updateBN(page) {
+    const map = {home:'bn-home', bookings:'bn-bookings', clients:'bn-clients', staff:'bn-staff', docs:'bn-docs'};
+    document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
+    if (map[page]) document.getElementById(map[page])?.classList.add('active');
+  }
+
+  function bnNav(page) {
+    showPage(page, null);
+    updateBN(page);
+    document.querySelector('.main').scrollTo(0, 0);
   }
 
   renderAll();

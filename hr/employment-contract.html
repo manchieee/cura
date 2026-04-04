@@ -72,8 +72,11 @@
     <div class="doc-title-en">Employment Contract</div>
   </div>
 
-  <div class="preamble">
+  <div class="preamble" id="preamble">
     cura（以下「甲」）とスタッフ（以下「乙」）は、以下の条件で雇用契約を締結します。
+  </div>
+  <div id="委託-warning" style="display:none;margin-bottom:20px;padding:12px 16px;background:rgba(201,168,130,0.12);border-left:3px solid var(--gold);font-size:11.5px;color:var(--text-mid);line-height:1.9;">
+    ⚠️ 業務委託を選択しています。実態が雇用（時間・場所の指定・指揮命令あり）に近い場合は偽装請負となるリスクがあります。迷う場合は直接雇用（パートタイム）を選択してください。
   </div>
 
   <!-- 契約者情報 -->
@@ -94,9 +97,9 @@
         <label class="form-label">郵便番号</label>
         <div style="display:flex;align-items:center;gap:6px;">
           <span style="font-size:13px;color:var(--text-light);flex-shrink:0;">〒</span>
-          <input class="form-input" type="tel" id="zip1" maxlength="3" placeholder="113" inputmode="numeric" style="width:60px;text-align:left;">
+          <input class="form-input" type="text" inputmode="numeric" id="zip1" maxlength="3" placeholder="113" style="width:60px;text-align:left;">
           <span style="color:var(--text-light);flex-shrink:0;">—</span>
-          <input class="form-input" type="tel" id="zip2" maxlength="4" placeholder="0021" inputmode="numeric" style="width:72px;text-align:left;">
+          <input class="form-input" type="text" inputmode="numeric" id="zip2" maxlength="4" placeholder="0021" style="width:72px;text-align:left;">
           <button type="button" onclick="searchZip()" style="background:var(--dark);color:rgba(250,247,242,0.85);border:none;padding:6px 12px;font-family:'Noto Serif JP',serif;font-size:11px;letter-spacing:0.08em;cursor:pointer;flex-shrink:0;-webkit-appearance:none;">住所を検索</button>
         </div>
         <p id="zip-note" style="font-size:10px;color:var(--text-light);margin-top:3px;"></p>
@@ -110,11 +113,11 @@
       <div class="form-field">
         <label class="form-label">連絡先</label>
         <div style="display:flex;align-items:center;gap:6px;">
-          <input class="form-input" type="tel" id="tel1" maxlength="4" placeholder="090" inputmode="numeric" style="width:70px;text-align:left;">
+          <input class="form-input" type="text" inputmode="numeric" id="tel1" maxlength="4" placeholder="090" style="width:70px;text-align:left;">
           <span style="color:var(--text-light);flex-shrink:0;">—</span>
-          <input class="form-input" type="tel" id="tel2" maxlength="4" placeholder="0000" inputmode="numeric" style="width:70px;text-align:left;">
+          <input class="form-input" type="text" inputmode="numeric" id="tel2" maxlength="4" placeholder="0000" style="width:70px;text-align:left;">
           <span style="color:var(--text-light);flex-shrink:0;">—</span>
-          <input class="form-input" type="tel" id="tel3" maxlength="4" placeholder="0000" inputmode="numeric" style="width:70px;text-align:left;">
+          <input class="form-input" type="text" inputmode="numeric" id="tel3" maxlength="4" placeholder="0000" style="width:70px;text-align:left;">
         </div>
       </div>
     </div>
@@ -122,7 +125,7 @@
 
   <!-- 労働条件 -->
   <div class="section">
-    <div class="section-title">労働条件</div>
+    <div class="section-title" id="work-section-title">労働条件</div>
     <table class="item-table">
       <tr>
         <td>雇用形態</td>
@@ -137,28 +140,50 @@
         <td><input type="text" id="work-place" placeholder="利用者宅・同行先（文京区周辺）" value="利用者宅・同行先（文京区周辺）"></td>
       </tr>
       <tr>
-        <td>勤務時間</td>
-        <td><input type="text" id="work-hours" placeholder="担当者制・週__h（応相談）"></td>
+        <td id="label-hours">勤務時間</td>
+        <td>
+          <select id="work-hours">
+            <option value="">— 選択 —</option>
+            <option>3時間</option>
+            <option>3.5時間</option>
+            <option>4時間</option>
+            <option>4.5時間</option>
+            <option>5時間</option>
+            <option>5.5時間</option>
+            <option>6時間</option>
+            <option>6.5時間</option>
+            <option>7時間</option>
+            <option>7.5時間</option>
+            <option>8時間</option>
+            <option>応相談</option>
+          </select>
+          <div style="font-size:10px;color:var(--text-light);margin-top:4px;">勤務時間は利用者宅への到着時刻から業務終了時刻まで</div>
+        </td>
       </tr>
       <tr>
-        <td>時給</td>
+        <td id="label-wage">時給</td>
         <td><input type="text" id="hourly-rate" placeholder="¥2,000〜（ステップ・複雑度手当別途）"></td>
       </tr>
       <tr>
         <td>交通費</td>
-        <td>実費支給（上限あり）</td>
+        <td id="transport-cell">実費支給（公共交通機関利用分・居住地が採用条件内の場合）</td>
       </tr>
-      <tr>
-        <td>通信費手当</td>
-        <td>月 ¥3,000〜5,000（BYOD利用者）</td>
+      <tr id="row-comm">
+        <td>通信費補助</td>
+        <td>
+          <select id="comm-allowance">
+            <option value="¥5,000">¥5,000 / 月（個人端末業務利用実費補助）</option>
+            <option value="¥2,500">¥2,500 / 月（個人端末業務利用実費補助）</option>
+          </select>
+        </td>
       </tr>
-      <tr>
+      <tr id="row-probation">
         <td>試用期間</td>
         <td><input type="text" id="probation" placeholder="3ヶ月" value="3ヶ月"></td>
       </tr>
       <tr>
         <td>社会保険</td>
-        <td><input type="text" id="insurance" placeholder="週20h以上の場合は加入対象"></td>
+        <td id="insurance-cell"><input type="text" id="insurance" placeholder="週20h以上の場合は加入対象"></td>
       </tr>
     </table>
   </div>
@@ -168,24 +193,28 @@
     <div class="section-title">契約条件</div>
 
     <div class="article">
-      <div class="article-title"><span class="article-num">第1条</span>業務の指示</div>
-      <div class="article-body">乙は甲の指示・ケアプランに従い誠実に業務を遂行する。利用者の状態変化は速やかに代表へ報告する。</div>
+      <div class="article-title"><span class="article-num">第1条</span><span id="art1-title">業務の指示</span></div>
+      <div class="article-body" id="art1-body">乙は甲の指示・ケアプランに従い誠実に業務を遂行する。利用者の状態変化は速やかに代表へ報告する。</div>
     </div>
     <div class="article">
       <div class="article-title"><span class="article-num">第2条</span>守秘義務</div>
       <div class="article-body">乙は業務上知り得た利用者の個人情報・業務情報について、在職中および退職後も守秘義務を負う。別途締結する個人情報取り扱い誓約書（HR-01）と合わせて遵守する。</div>
     </div>
     <div class="article">
-      <div class="article-title"><span class="article-num">第3条</span>専属・兼業</div>
-      <div class="article-body">兼業・副業は代表への事前報告を要する。利用者への個人的な営業・勧誘を禁止する。</div>
+      <div class="article-title"><span class="article-num">第3条</span><span id="art3-title">専属・兼業</span></div>
+      <div class="article-body" id="art3-body">兼業・副業は代表への事前報告を要する。利用者への個人的な営業・勧誘を禁止する。</div>
     </div>
     <div class="article">
-      <div class="article-title"><span class="article-num">第4条</span>解雇・退職</div>
-      <div class="article-body">退職希望は原則1ヶ月前までに代表へ通知する。重大な規律違反・守秘義務違反があった場合は即時解雇とする。退職時はデータ削除確認書（HR-03）に署名の上、提出する。</div>
+      <div class="article-title"><span class="article-num">第4条</span><span id="art4-title">解雇・退職</span></div>
+      <div class="article-body" id="art4-body">退職希望は原則1ヶ月前までに代表へ通知する。重大な規律違反・守秘義務違反があった場合は即時解雇とする。退職時はデータ削除確認書（HR-03）に署名の上、提出する。</div>
     </div>
     <div class="article">
-      <div class="article-title"><span class="article-num">第5条</span>就業規則</div>
-      <div class="article-body">本契約に定めのない事項は就業規則による。就業規則は整備次第乙に開示する。</div>
+      <div class="article-title"><span class="article-num">第5条</span>業務連絡ツール</div>
+      <div class="article-body">業務上の連絡・情報共有は、甲が指定するLINE WORKSアカウントを使用する。個人LINEその他の私的ツールによる利用者情報の送受信を禁止する。退職時はLINE WORKSアカウントへのアクセス権を返上し、業務関連データを完全に削除する。</div>
+    </div>
+    <div class="article">
+      <div class="article-title"><span class="article-num">第6条</span><span id="art6-title">就業規則</span></div>
+      <div class="article-body" id="art6-body">本契約に定めのない事項は就業規則による。就業規則は整備次第乙に開示する。</div>
     </div>
   </div>
 
@@ -199,7 +228,7 @@
           <button class="clear-btn" onclick="clearCanvas('sig-staff')">消去</button>
         </div>
         <canvas id="sig-staff"></canvas>
-        <p class="sig-hint">指またはApple Pencilで署名</p>
+        <p class="sig-hint">署名</p>
       </div>
       <div class="sig-block">
         <div class="sig-block-label">
@@ -207,18 +236,20 @@
           <button class="clear-btn" onclick="clearCanvas('sig-rep')">消去</button>
         </div>
         <canvas id="sig-rep"></canvas>
-        <p class="sig-hint">指またはApple Pencilで署名</p>
+        <p class="sig-hint">署名</p>
       </div>
     </div>
   </div>
 
+  <div style="margin-bottom:16px;padding:12px 16px;background:rgba(201,168,130,0.1);border-left:3px solid var(--gold);font-size:11.5px;color:var(--text-mid);line-height:1.9;">
+    この書面は雇用条件の確認用であり、正式な雇用契約書は開業時に別途締結します。
+  </div>
   <div class="action-bar">
-    <button class="btn-submit" onclick="submitForm()">契約を確定する</button>
-    <button class="btn-pdf" onclick="window.print()">PDFとして保存</button>
+    <button class="btn-submit" onclick="submitForm()">確定してPDFを保存する</button>
     <button class="btn-reset" onclick="resetAll()">リセット</button>
   </div>
   <div class="complete-msg" id="complete-msg"></div>
-  <div class="doc-note">本書は甲・乙がそれぞれ保管する。「PDFとして保存」で控えを取ること。</div>
+  <div class="doc-note">確定後に印刷ダイアログが開きます。「PDFとして保存」を選んで保存してください。</div>
 
 </div>
 <script>
@@ -246,22 +277,45 @@
     document.body.appendChild(script);
   }
 
-  function autoAdvance(id, maxLen, nextId) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.addEventListener('input', function() {
-      this.value = this.value.replace(/\D/g, '');
-      if (this.value.length >= maxLen && nextId) {
-        const next = document.getElementById(nextId);
-        if (next) next.focus();
-      }
-    });
+  // 業務委託切替
+  const empType = document.getElementById('emp-type');
+  function applyEmpType() {
+    const is委託 = empType.value === '業務委託';
+    document.getElementById('委託-warning').style.display = is委託 ? 'block' : 'none';
+    document.getElementById('work-section-title').textContent = is委託 ? '業務条件' : '労働条件';
+    document.getElementById('preamble').textContent = is委託
+      ? 'cura（以下「甲」）と受託者（以下「乙」）は、以下の条件で業務委託契約を締結します。'
+      : 'cura（以下「甲」）とスタッフ（以下「乙」）は、以下の条件で雇用契約を締結します。';
+    document.getElementById('label-wage').textContent = is委託 ? '業務報酬' : '時給';
+    document.getElementById('label-hours').textContent = is委託 ? '稼働時間' : '勤務時間';
+    document.getElementById('row-probation').style.display = is委託 ? 'none' : '';
+    document.getElementById('row-comm').style.display = is委託 ? 'none' : '';
+    document.getElementById('insurance-cell').innerHTML = is委託
+      ? '対象外（業務委託契約のため）'
+      : '<input type="text" id="insurance" placeholder="週20h以上の場合は加入対象">';
+    document.getElementById('transport-cell').textContent = is委託
+      ? '別途請求（実費）'
+      : '実費支給（公共交通機関利用分・居住地が採用条件内の場合）';
+    document.getElementById('art1-title').textContent = is委託 ? '業務の遂行' : '業務の指示';
+    document.getElementById('art1-body').textContent = is委託
+      ? '乙は独立した事業者として、甲との合意に基づき誠実に業務を遂行する。利用者の状態変化は速やかに甲へ報告する。'
+      : '乙は甲の指示・ケアプランに従い誠実に業務を遂行する。利用者の状態変化は速やかに代表へ報告する。';
+    document.getElementById('art4-title').textContent = is委託 ? '契約解除・終了' : '解雇・退職';
+    document.getElementById('art4-body').textContent = is委託
+      ? '契約終了を希望する場合は原則1ヶ月前までに甲へ通知する。重大な契約違反・守秘義務違反があった場合は即時契約解除とする。契約終了時はデータ削除確認書（HR-03）に署名の上、提出する。'
+      : '退職希望は原則1ヶ月前までに代表へ通知する。重大な規律違反・守秘義務違反があった場合は即時解雇とする。退職時はデータ削除確認書（HR-03）に署名の上、提出する。';
+    document.getElementById('art3-title').textContent = is委託 ? '競業・守秘' : '専属・兼業';
+    document.getElementById('art3-body').textContent = is委託
+      ? '乙は他社・個人との業務委託契約を妨げない。ただし、利用者への個人的な営業・勧誘、および甲の業務情報の競合他社への提供を禁止する。'
+      : '兼業・副業は代表への事前報告を要する。利用者への個人的な営業・勧誘を禁止する。';
+    document.getElementById('art6-title').textContent = is委託 ? '準拠規約' : '就業規則';
+    document.getElementById('art6-body').textContent = is委託
+      ? '本契約に定めのない事項は業務委託基本規約による。'
+      : '本契約に定めのない事項は就業規則による。就業規則は整備次第乙に開示する。';
+    document.querySelector('.doc-title').textContent = is委託 ? '業務委託契約書' : '雇用契約書';
+    document.querySelector('.doc-title-en').textContent = is委託 ? 'Service Agreement' : 'Employment Contract';
   }
-  autoAdvance('zip1', 3, 'zip2');
-  autoAdvance('zip2', 4, 'staff-addr');
-  autoAdvance('tel1', 4, 'tel2');
-  autoAdvance('tel2', 4, 'tel3');
-  autoAdvance('tel3', 4, 'work-hours');
+  empType.addEventListener('change', applyEmpType);
 
   // 住所番地の全角→半角変換
   document.getElementById('staff-addr').addEventListener('input', function() {
@@ -288,12 +342,34 @@
     if (!name) { alert('スタッフ氏名を入力してください。'); return; }
     if (isCanvasEmpty('sig-staff')) { alert('スタッフの署名が必要です。'); return; }
     if (isCanvasEmpty('sig-rep')) { alert('cura 代表の署名が必要です。'); return; }
+
+    // スタッフデータをlocalStorageに保存
+    const staffData = {
+      id: 'staff_' + Date.now(),
+      name,
+      contractStart: document.getElementById('contract-start').value,
+      contractType: document.getElementById('emp-type').value,
+      address: document.getElementById('staff-addr').value,
+      phone: [document.getElementById('tel1').value, document.getElementById('tel2').value, document.getElementById('tel3').value].join('-'),
+      jobTitle: document.getElementById('job-title').value,
+      workPlace: document.getElementById('work-place').value,
+      workHours: document.getElementById('work-hours').value,
+      hourlyRate: document.getElementById('hourly-rate').value,
+      commAllowance: document.getElementById('comm-allowance') ? document.getElementById('comm-allowance').value : 'なし',
+      probation: document.getElementById('probation') ? document.getElementById('probation').value : '',
+      registeredAt: new Date().toISOString()
+    };
+    const existing = JSON.parse(localStorage.getItem('cura_staff') || '[]');
+    existing.push(staffData);
+    localStorage.setItem('cura_staff', JSON.stringify(existing));
+
     document.querySelector('.btn-submit').style.display='none';
     document.querySelector('.btn-reset').style.display='none';
     const msg=document.getElementById('complete-msg');
     msg.style.display='block';
-    msg.innerHTML=`契約書が完成しました（${name} ／ ${document.getElementById('contract-start').value}）。<br>「PDFとして保存」で控えを保管してください。`;
+    msg.innerHTML=`契約確定しました（${name} ／ ${staffData.contractStart}）。<br>PDFを保存後、<a href="staff-profile.html?id=${staffData.id}" style="color:var(--rose);">スタッフページを開く →</a>`;
     document.querySelectorAll('.form-input, input, select').forEach(el=>{el.readOnly=true;el.disabled=true;});
+    setTimeout(() => window.print(), 300);
   }
 
   function resetAll() {

@@ -2,8 +2,8 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 
-const root = path.join(__dirname, '..');
-const port = 3003;
+const root = path.join(__dirname, '../cura-pages');
+const port = 3001;
 
 const mime = {
   '.html': 'text/html; charset=utf-8',
@@ -18,11 +18,11 @@ const mime = {
 };
 
 http.createServer((req, res) => {
-  const filePath = path.join(root, req.url === '/' ? 'ops/dashboard.html' : req.url);
+  const filePath = path.join(root, req.url === '/' ? 'index.html' : req.url);
   fs.readFile(filePath, (err, data) => {
     if (err) { res.writeHead(404); res.end('Not found'); return; }
     const ext = path.extname(filePath);
     res.writeHead(200, { 'Content-Type': mime[ext] || 'application/octet-stream' });
     res.end(data);
   });
-}).listen(port, () => console.log(`cura ops server running on http://localhost:${port}`));
+}).listen(port, () => console.log(`cura-pages dev server running on http://localhost:${port}`));

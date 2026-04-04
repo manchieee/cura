@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cura 財務管理</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0f0c0b;color:#d0b8b0;font-family:Arial,'Hiragino Sans',sans-serif;font-size:12px;height:100vh;overflow:hidden}
+
+/* ── Tabs ── */
+.tabs{display:flex;background:#1a1210;border-bottom:2px solid #5c1f3a;flex-shrink:0}
+.tab{padding:10px 18px;cursor:pointer;color:#806868;font-size:11px;border-right:1px solid #3a2828;transition:background .15s}
+.tab.active{background:#3d2535;color:#f5dec8;font-weight:bold;border-top:2px solid #c9a882}
+.tab:hover:not(.active){background:#2a1a20;color:#e8c0d0}
+
+.sheet{display:none;padding:14px;overflow:auto;height:calc(100vh - 42px)}
+.sheet.active{display:block}
+
+/* ── Tables ── */
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;white-space:nowrap}
+th,td{border:1px solid #3a2828;padding:3px 8px;font-size:11px}
+td.label{text-align:left}
+td.right{text-align:right}
+
+tr.hdr th{background:#1a1210;color:#f5dec8;font-weight:bold;text-align:center;position:sticky;top:0;z-index:10}
+tr.sec td{background:#3d2535;color:#e8c0d0;font-weight:bold}
+tr.tot td{background:#5c1f3a;color:#ffe8f0;font-weight:bold}
+tr.sub td{background:#4a2040;color:#f0c8d8;font-weight:bold}
+tr.fix td{background:#2a1f10;color:#c9a882}
+tr.nor td{background:#201a1a;color:#d0b8b0}
+tr.bep td{background:#1a2a1a;color:#88c888}
+
+/* ── Inputs ── */
+input.ci{background:#1a1a30;color:#7090ff;border:none;width:100%;text-align:right;font:11px Arial,sans-serif;padding:0 3px;height:20px}
+input.ci:focus{outline:1px solid #7090ff;background:#20204a}
+input.ci.gold{background:#2a1f10;color:#c9a882}
+
+.pos{color:#88c888}
+.neg{color:#ff7070}
+.zero{color:#555}
+.bold{font-weight:bold}
+
+/* ── Sim layout ── */
+.sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.sec-title{font-size:11px;font-weight:bold;color:#c9a882;background:#2a1f10;padding:5px 10px;margin-bottom:4px;margin-top:10px;border-left:3px solid #c9a882}
+.sec-title:first-child{margin-top:0}
+
+/* ── Print ── */
+.print-btn{position:fixed;bottom:18px;right:18px;background:#5c1f3a;color:#ffe8f0;border:none;padding:7px 14px;cursor:pointer;border-radius:3px;font-size:11px;z-index:100}
+.print-btn:hover{background:#7a2a4a}
+@media print{.tabs,.print-btn{display:none}.sheet{display:block!important;height:auto;overflow:visible;padding:8px}body{overflow:visible}}
+</style>
+</head>
+<body>
+
+<div class="tabs">
+  <div class="tab active" onclick="sw(0)">収支シミュレーション（3名）</div>
+  <div class="tab" onclick="sw(1)">収支シミュレーション（4名）</div>
+  <div class="tab" onclick="sw(2)">資金繰り表</div>
+  <div class="tab" onclick="sw(3)">利益計画</div>
+  <div class="tab" onclick="sw(4)">人件費リアルコスト</div>
+  <div class="tab" onclick="sw(5)">損益・収支分岐点</div>
+</div>
+
+<div id="s0" class="sheet active"></div>
+<div id="s1" class="sheet"></div>
+<div id="s2" class="sheet"></div>
+<div id="s3" class="sheet"></div>
+<div id="s4" class="sheet"></div>
+<div id="s5" class="sheet"></div>
+
+<button class="print-btn" onclick="window.print()">印刷</button>
+
+<script>
+// ── Utils ────────────────────────────────────────────────────────────────
+function yen(v){
+  if(v===0)return '<span class="zero">-</span>';
+  const a=Math.abs(Math.round(v));
+  const s='¥'+a.toLocaleString('ja-JP');
+  return v<0?`<span class="neg">△${s}</span>`:`<span>${s}</span>`;
+}
+function yenPlain(v){
+  if(v===0)return'-';
+  return(v<0?'△':'')+'¥'+Math.abs(Math.round(v)).toLocaleString('ja-JP');
+}
+function pv(el){return parseInt((el.value||'0').replace(/[,¥△]/g,''))||0}
+
+// ── Tab switch ────────────────────────────────────────────────────────────
+function sw(i){
+  document.querySelectorAll('.tab').forEach((t,j)=>t.classList.toggle('active',i===j));
+  document.querySelectorAll('.sheet').forEach((s,j)=>s.classList.toggle('active',i===j));
+}
+
+// ── Simulation Sheet ──────────────────────────────────────────────────────
+function buildSim(id, isYon){
+  const el=document.getElementById(id);
+  const st={
+    careRate:10000,nurseRate:16500,emergency:16500,
+    hoursPerCase:3,nurseRatio:0.05,nurseWage:2500,careWorkerWage:2800,
+    emRate:0.30,
+    masami:200000,nurseFixed:50000,kanChan:50000,
+    careWorker:isYon?250000:0,
+    ins:30000,office:30000
+  };
+
+  function calc(){
+    const rev=st.hoursPerCase*(st.careRate*(1-st.nurseRatio)+st.nurseRate*st.nurseRatio);
+    const varC=isYon
+      ?st.careWorkerWage*st.hoursPerCase*(1-st.nurseRatio)+st.nurseWage*st.hoursPerCase*st.nurseRatio
+      :st.nurseWage*st.hoursPerCase*st.nurseRatio;
+    const gp=rev-varC;
+    const fixed=st.masami+st.nurseFixed+st.kanChan+(isYon?st.careWorker:0)+st.ins+st.office;
+    const bepN=Math.ceil(fixed/gp);
+    const bepR=bepN*rev+Math.round(bepN*st.emRate)*st.emergency;
+    const rows=[5,10,15,20,25,30,35,40,45,50].map(n=>{
+      const em=Math.round(n*st.emRate);
+      const cRev=n*rev, emRev=em*st.emergency, varT=n*varC;
+      const gross=cRev+emRev-varT, profit=gross-fixed;
+      return{n,cRev,emRev,varT,gross,profit};
+    });
+    return{rev,varC,gp,fixed,bepN,bepR,rows};
+  }
+
+  function inp(key,id2,isFixed){
+    return`<input class="ci${isFixed?' gold':''}" id="${id2}" value="${st[key].toLocaleString()}" style="width:90px;text-align:right">`;
+  }
+
+  function render(){
+    const d=calc();
+    el.innerHTML=`
+<div class="sim-grid">
+<div>
+  <div class="sec-title">【料金設定（手取りベース）】</div>
+  <table style="width:100%">
+    <tr class="nor"><td class="label">ケア時給（介護福祉士のみ）</td><td class="right">${inp('careRate',id+'_cr',false)}</td><td style="color:#666">税込</td></tr>
+    <tr class="nor"><td class="label">看護師同行時給</td><td class="right">${inp('nurseRate',id+'_nr',false)}</td><td style="color:#666">同行時のみ</td></tr>
+    <tr class="nor"><td class="label">入会金</td><td class="right">¥36,300</td><td style="color:#666">初回のみ</td></tr>
+    <tr class="nor"><td class="label">緊急相談（月額）</td><td class="right">${inp('emergency',id+'_em',false)}</td><td style="color:#666">加入者のみ</td></tr>
+  </table>
+  <div class="sec-title">【1件あたりの設定】</div>
+  <table style="width:100%">
+    <tr class="nor"><td class="label">1件あたりケア時間</td><td class="right">3h</td><td></td></tr>
+    <tr class="nor"><td class="label">看護師同行率</td><td class="right">5%（20件に1件）</td><td></td></tr>
+    <tr class="nor"><td class="label">└ 1件あたり売上</td><td class="right bold">${yenPlain(d.rev)}</td><td></td></tr>
+    <tr class="nor"><td class="label">└ 1件あたり変動費</td><td class="right">${yenPlain(d.varC)}</td><td></td></tr>
+    <tr class="sub"><td class="label">└ 1件あたり粗利</td><td class="right bold">${yenPlain(d.gp)}</td><td></td></tr>
+  </table>
+</div>
+<div>
+  <div class="sec-title">【スタッフ構成（軌道乗るまで）】</div>
+  <table style="width:100%">
+    <tr class="nor"><th>名前</th><th>役割</th><th>手取り</th><th>雇用形態</th></tr>
+    <tr class="nor"><td>まさみ</td><td>ケアディレクター</td><td>20万</td><td>役員</td></tr>
+    <tr class="nor"><td>看護師</td><td>メディカルアドバイザー</td><td>5万固定+歩合</td><td>業務委託</td></tr>
+    <tr class="nor"><td>キャンちゃん</td><td>コミュニティMgr</td><td>5万</td><td>業務委託</td></tr>
+    ${isYon?'<tr class="nor"><td>介護士1名</td><td>ケアリーダー</td><td>25万</td><td>社員（有期→正社員）</td></tr>':''}
+  </table>
+  <div class="sec-title">【月次固定費（手取りベース）】</div>
+  <table style="width:100%">
+    <tr class="fix"><td class="label">まさみ役員報酬</td><td class="right">${inp('masami',id+'_ma',true)}</td><td style="color:#888">手取り20万</td></tr>
+    <tr class="fix"><td class="label">看護師固定給</td><td class="right">${inp('nurseFixed',id+'_nf',true)}</td><td style="color:#888">業務委託</td></tr>
+    <tr class="fix"><td class="label">キャンちゃん報酬</td><td class="right">${inp('kanChan',id+'_kc',true)}</td><td style="color:#888">業務委託</td></tr>
+    ${isYon?`<tr class="fix"><td class="label">介護士固定給（社員）</td><td class="right">${inp('careWorker',id+'_cw',true)}</td><td style="color:#888">社保込み33万</td></tr>`:''}
+    <tr class="fix"><td class="label">賠償責任保険等</td><td class="right">${inp('ins',id+'_in',true)}</td><td></td></tr>
+    <tr class="fix"><td class="label">事務所・通信費等</td><td class="right">${inp('office',id+'_of',true)}</td><td></td></tr>
+    <tr class="sub"><td class="label bold">固定費合計</td><td class="right bold">${yenPlain(d.fixed)}</td><td></td></tr>
+  </table>
+  <div class="sec-title">【損益分岐点】</div>
+  <table style="width:100%">
+    <tr class="bep"><td class="label bold">BEP件数</td><td class="right" style="font-size:15px;font-weight:bold">${d.bepN}件／月</td><td></td></tr>
+    <tr class="bep"><td class="label">BEP時月売上</td><td class="right">${yenPlain(d.bepR)}</td><td></td></tr>
+  </table>
+</div>
+</div>
+<div class="sec-title">【月次件数別 損益シミュレーション（変動費・固定費込み）】</div>
+<div class="tbl-wrap"><table>
+  <tr class="hdr"><th>月間件数</th><th>ケア売上</th><th>緊急相談売上</th><th>変動費合計</th><th>粗利</th><th>固定費</th><th>営業利益</th><th>判定</th></tr>
+  ${d.rows.map(r=>`
+  <tr class="nor">
+    <td style="text-align:center;font-weight:bold">${r.n}件</td>
+    <td class="right">${yenPlain(r.cRev)}</td>
+    <td class="right">${yenPlain(r.emRev)}</td>
+    <td class="right">${yenPlain(r.varT)}</td>
+    <td class="right">${yenPlain(r.gross)}</td>
+    <td class="right">${yenPlain(d.fixed)}</td>
+    <td class="right bold ${r.profit>=0?'pos':'neg'}">${yenPlain(r.profit)}</td>
+    <td style="text-align:center;font-weight:bold;${r.profit>=0?'color:#88c888':'color:#ff7070'}">${r.profit>=0?'✓ 黒字':'✗ 赤字'}</td>
+  </tr>`).join('')}
+</table></div>`;
+
+    // Bind
+    const b=(key,eid)=>{
+      const inp=document.getElementById(eid);
+      if(!inp)return;
+      inp.addEventListener('input',()=>{st[key]=parseInt(inp.value.replace(/,/g,''))||0;render();});
+    };
+    b('careRate',id+'_cr');b('nurseRate',id+'_nr');b('emergency',id+'_em');
+    b('masami',id+'_ma');b('nurseFixed',id+'_nf');b('kanChan',id+'_kc');
+    b('ins',id+'_in');b('office',id+'_of');
+    if(isYon)b('careWorker',id+'_cw');
+  }
+  render();
+}
+
+// ── Cash Flow Sheet ───────────────────────────────────────────────────────
+function buildCF(){
+  const el=document.getElementById('s2');
+  const M=12;
+  const MONTHS=["2026/9","2026/10","2026/11","2026/12","2027/1","2027/2","2027/3","2027/4","2027/5","2027/6","2027/7","2027/8"];
+
+  // data[row][month]
+  const D=Array.from({length:35},()=>Array(M).fill(0));
+  // Pre-fill fixed costs
+  [[11,200000],[12,50000],[15,30000],[16,30000]].forEach(([r,v])=>{
+    for(let m=0;m<M;m++)D[r][m]=v;
+  });
+
+  // Input row indexes
+  const INPUT_ROWS=new Set([5,6,7,8,9,13,14,17,18,19,20,23,24,25,27,28]);
+  const FIXED_ROWS=new Set([11,12,15,16]);
+
+  function recalc(){
+    for(let m=0;m<M;m++){
+      D[10][m]=D[5][m]+D[6][m]+D[7][m]+D[8][m]+D[9][m];
+      D[21][m]=0; for(let r=11;r<=20;r++)D[21][m]+=D[r][m];
+      D[22][m]=D[10][m]-D[21][m];
+      D[26][m]=D[23][m]-D[24][m]-D[25][m];
+      D[29][m]=D[27][m]-D[28][m];
+      D[30][m]=D[22][m]+D[26][m]+D[29][m];
+      D[31][m]=D[4][m]+D[30][m];
+      if(m+1<M)D[4][m+1]=D[31][m];
+    }
+  }
+
+  // [区分1, 区分2, 項目, type, dataRow]
+  const ROWS=[
+    ['月初繰越残高','','','sec',4],
+    ['経常収支','経常収入','ケア売上（件数×¥36,000）','nor',5],
+    ['','','入会金（¥60,000×件数）','nor',6],
+    ['','','月額会員費（デイ・フル）','nor',7],
+    ['','','夜間オンコール会員費','nor',8],
+    ['','','その他','nor',9],
+    ['','','＜経常収入計＞','sub',10],
+    ['','経常支出','まさみ役員報酬','fix',11],
+    ['','','看護師固定給（業務委託）','fix',12],
+    ['','','キャンちゃん報酬（業務委託）','nor',13],
+    ['','','スタッフ時間給（変動費）','nor',14],
+    ['','','賠償責任保険等','fix',15],
+    ['','','事務所・通信費等','fix',16],
+    ['','','広告宣伝費','nor',17],
+    ['','','交通費（実費）','nor',18],
+    ['','','支払利息（融資分）','nor',19],
+    ['','','その他','nor',20],
+    ['','','＜経常支出計＞','sub',21],
+    ['','【経常収支計】','','tot',22],
+    ['投資収支','投資収入','固定資産売却・その他','nor',23],
+    ['','投資支出','開業費（HP・備品等）','nor',24],
+    ['','','その他設備投資','nor',25],
+    ['','＜投資収支計＞','','sub',26],
+    ['財務収支','財務収入','日本政策金融公庫借入金','nor',27],
+    ['','財務支出','日本政策金融公庫返済','nor',28],
+    ['','＜財務収支計＞','','sub',29],
+    ['【合計収支】','','','tot',30],
+    ['次月繰越額','','','tot',31],
+  ];
+
+  function render(){
+    recalc();
+    // Row totals (skip balance rows)
+    const T=Array(35).fill(0);
+    for(let r=0;r<35;r++) for(let m=0;m<M;m++) T[r]+=D[r][m];
+
+    let h=`
+<div style="margin-bottom:8px;color:#888;font-size:10px">
+  ※ <span style="color:#7090ff">■</span> 青字＝入力セル　<span style="color:#c9a882">■</span> ゴールド＝固定費（変更時は直接書き換え）　黒字＝自動計算
+</div>
+<div class="tbl-wrap"><table>
+<tr class="hdr">
+  <th style="min-width:80px;position:sticky;left:0;z-index:20">区分1</th>
+  <th style="min-width:90px">区分2</th>
+  <th style="min-width:160px">項目</th>
+  ${MONTHS.map(m=>`<th style="min-width:95px">${m}</th>`).join('')}
+  <th style="min-width:95px">合計</th>
+</tr>`;
+
+    ROWS.forEach(([a,b,c,type,dr])=>{
+      const tc=type==='sec'?'sec':type==='tot'?'tot':type==='sub'?'sub':type==='fix'?'fix':'nor';
+      h+=`<tr class="${tc}">`;
+      h+=`<td class="label">${a}</td><td class="label">${b}</td><td class="label">${c}</td>`;
+
+      for(let m=0;m<M;m++){
+        const isInput=INPUT_ROWS.has(dr)||(dr===4&&m===0);
+        const isFixed=FIXED_ROWS.has(dr);
+        if(isInput){
+          const v=D[dr][m];
+          h+=`<td><input class="ci${isFixed?' gold':''}" data-r="${dr}" data-m="${m}" value="${v===0?'':v.toLocaleString()}" style="width:100%"></td>`;
+        } else {
+          const v=D[dr][m];
+          let cls='';
+          if(v<0)cls=' class="neg"';
+          else if(v===0)cls=' class="zero"';
+          else if(isFixed)cls=' style="color:#c9a882"';
+          h+=`<td class="right"${cls}>${v===0?'-':yenPlain(v)}</td>`;
+        }
+      }
+
+      // Total column
+      const noSum=[4,31].includes(dr);
+      if(noSum){h+=`<td></td>`;}
+      else{
+        const tv=T[dr];
+        let cls='class="right bold"';
+        if(tv<0)cls='class="right bold neg"';
+        else if(tv===0)cls='class="right zero"';
+        h+=`<td ${cls}>${tv===0?'-':yenPlain(tv)}</td>`;
+      }
+      h+=`</tr>`;
+    });
+
+    h+=`<tr class="bep"><td colspan="${M+4}" style="text-align:left;padding:6px 10px">
+      【損益分岐点メモ】　3名体制：月12件以上で黒字（固定費36万 / 粗利3.06万/件）　｜　4名体制：月20件以上で黒字（固定費44万 / 粗利2.26万/件）
+    </td></tr>`;
+    h+=`</table></div>`;
+
+    el.innerHTML=h;
+
+    el.querySelectorAll('input.ci').forEach(inp=>{
+      inp.addEventListener('change',()=>{
+        const r=+inp.dataset.r, m=+inp.dataset.m;
+        D[r][m]=parseInt(inp.value.replace(/,/g,''))||0;
+        render();
+      });
+    });
+  }
+
+  render();
+}
+
+// ── Profit Plan Sheet ─────────────────────────────────────────────────────
+function buildProfit(){
+  const el=document.getElementById('s3');
+
+  // State: [実績月, 年間合計(auto), パターン①, パターン②]
+  // Rows: 売上高, 変動費, (限界利益=auto), 人件費, 重要経費, 未来費用, その他,
+  //       (固定費計=auto), (営業利益=auto), 営業外損益, (経常利益=auto), 法人税等, (当期利益=auto)
+  const st={
+    actual:{売上高:0,変動費:0,人件費:0,重要経費:0,未来費用:0,その他固定:0,営業外損益:0,法人税等:0},
+    annual:{売上高:0,変動費:0,人件費:0,重要経費:0,未来費用:0,その他固定:0,営業外損益:0,法人税等:0},
+    p1:{売上高:0,変動費:0,人件費:0,重要経費:0,未来費用:0,その他固定:0,営業外損益:0,法人税等:0},
+    p2:{売上高:0,変動費:0,人件費:0,重要経費:0,未来費用:0,その他固定:0,営業外損益:0,法人税等:0},
+  };
+
+  function derived(s){
+    const 限界利益=s.売上高-s.変動費;
+    const 固定費計=s.人件費+s.重要経費+s.未来費用+s.その他固定;
+    const 営業利益=限界利益-固定費計;
+    const 経常利益=営業利益+s.営業外損益;
+    const 当期利益=経常利益-s.法人税等;
+    const 限界利益率=s.売上高>0?((限界利益/s.売上高)*100).toFixed(1)+'%':'-%';
+    const 営業利益率=s.売上高>0?((営業利益/s.売上高)*100).toFixed(1)+'%':'-%';
+    return{限界利益,固定費計,営業利益,経常利益,当期利益,限界利益率,営業利益率};
+  }
+
+  function fmt(v,unit1000){
+    // unit: 千円
+    if(v===0)return'<span class="zero">-</span>';
+    const disp=unit1000?Math.round(v):v;
+    const s=Math.abs(disp).toLocaleString('ja-JP');
+    return v<0?`<span class="neg">△${s}</span>`:`<span>${s}</span>`;
+  }
+
+  function inpCell(col,key,id){
+    const v=st[col][key];
+    return`<td><input class="ci" id="${id}" value="${v===0?'':v.toLocaleString()}" style="width:100%;text-align:right"></td>`;
+  }
+
+  function calcCell(v,cls=''){
+    if(v===0)return`<td class="right zero${cls?'':''}"${cls?` style="${cls}"`:''}>-</td>`;
+    return`<td class="right bold${v<0?' neg':''}"${cls?` style="${cls}"`:''} >${v<0?'△':''}&nbsp;${Math.abs(v).toLocaleString()}</td>`;
+  }
+
+  function render(){
+    const dA=derived(st.actual), dN=derived(st.annual), dP1=derived(st.p1), dP2=derived(st.p2);
+
+    const row=(label,key,isCalc,getVal,rowClass,rateKey)=>{
+      const isIncome=key==='売上高';
+      let tr=`<tr class="${rowClass}"><td class="label">${label}</td>`;
+      if(isCalc){
+        tr+=calcCell(getVal(dA));
+        tr+=calcCell(getVal(dN));
+        tr+=`<td></td>`;
+        tr+=calcCell(getVal(dP1));
+        tr+=calcCell(getVal(dP2));
+      } else {
+        tr+=inpCell('actual',key,'a_'+key);
+        tr+=inpCell('annual',key,'n_'+key);
+        tr+=`<td></td>`;
+        tr+=inpCell('p1',key,'p1_'+key);
+        tr+=inpCell('p2',key,'p2_'+key);
+      }
+      if(rateKey){
+        tr+=`<td class="right" style="color:#888;font-size:10px">${dA[rateKey]}</td>`;
+        tr+=`<td class="right" style="color:#888;font-size:10px">${dN[rateKey]}</td>`;
+        tr+=`<td></td>`;
+        tr+=`<td class="right" style="color:#888;font-size:10px">${dP1[rateKey]}</td>`;
+        tr+=`<td class="right" style="color:#888;font-size:10px">${dP2[rateKey]}</td>`;
+      } else {
+        tr+=`<td></td><td></td><td></td><td></td><td></td>`;
+      }
+      tr+=`</tr>`;
+      return tr;
+    };
+
+    el.innerHTML=`
+<div style="margin-bottom:10px;display:flex;align-items:center;gap:16px">
+  <span style="color:#c9a882;font-weight:bold;font-size:13px">cura 利益計画</span>
+  <span style="color:#888;font-size:10px">（単位：千円）</span>
+</div>
+<div class="tbl-wrap"><table style="width:auto">
+<tr class="hdr">
+  <th style="min-width:120px">項目</th>
+  <th style="min-width:100px">実績（月）</th>
+  <th style="min-width:100px">年間合計</th>
+  <th style="width:20px;background:#1a1210;border:none"></th>
+  <th style="min-width:100px">パターン①</th>
+  <th style="min-width:100px">パターン②</th>
+  <th style="min-width:70px">実績率</th>
+  <th style="min-width:70px">年間率</th>
+  <th style="width:20px;background:#1a1210;border:none"></th>
+  <th style="min-width:70px">①率</th>
+  <th style="min-width:70px">②率</th>
+</tr>
+${row('売上高','売上高',false,null,'nor',null)}
+${row('変動費','変動費',false,null,'nor',null)}
+${row('限界利益','',true,d=>d.限界利益,'sub','限界利益率')}
+${row('人件費','人件費',false,null,'fix',null)}
+${row('重要経費','重要経費',false,null,'fix',null)}
+${row('未来費用','未来費用',false,null,'fix',null)}
+${row('その他','その他固定',false,null,'fix',null)}
+${row('固定費計','',true,d=>d.固定費計,'sub',null)}
+${row('営業利益','',true,d=>d.営業利益,'tot','営業利益率')}
+${row('営業外損益','営業外損益',false,null,'nor',null)}
+${row('経常利益','',true,d=>d.経常利益,'tot',null)}
+${row('法人税等','法人税等',false,null,'nor',null)}
+${row('当期利益','',true,d=>d.当期利益,'tot',null)}
+</table></div>
+<div style="margin-top:14px;padding:10px;background:#1a2a1a;border-left:3px solid #88c888;font-size:10px;color:#88c888;line-height:1.8">
+  <strong>cura 目安</strong>
+  3名体制：固定費36万/月　BEP月12件（売上約43万）　｜　4名体制：固定費44万/月　BEP月20件（売上約72万）<br>
+  ※ 千円単位で入力。例：売上43万 → 430
+</div>`;
+
+    // Bind all inputs
+    ['actual','annual','p1','p2'].forEach(col=>{
+      const prefix=col==='actual'?'a_':col==='annual'?'n_':col+'_';
+      ['売上高','変動費','人件費','重要経費','未来費用','その他固定','営業外損益','法人税等'].forEach(key=>{
+        const inp=document.getElementById(prefix+key);
+        if(!inp)return;
+        inp.addEventListener('input',()=>{
+          st[col][key]=parseInt(inp.value.replace(/,/g,''))||0;
+          render();
+        });
+      });
+    });
+  }
+  render();
+}
+
+// ── Labor Cost Sheet ──────────────────────────────────────────────────────
+function buildLabor(){
+  const el=document.getElementById('s4');
+  const st={
+    name:'サンプル社員',role:'正社員',
+    kaigo:false,
+    baseSalary:0,
+    fixedAllowance:30000,
+    overtimeHours:20,
+    workHoursMonth:160,
+    overtimeRate:1.25,
+    bonusMonths:2,
+    otherVariableAnnual:0,
+    commute:15000,
+    overtimeDirectInput:0,
+    // 福利厚生
+    welfareMonthly:0,
+    healthCheckMonthly:2000,
+    pcMonthly:12000,
+    officeMonthly:25000,
+    recruitAnnual:120000,
+    trainingAnnual:30000,
+    otherMonthly:5000,
+    // 精度向上
+    socialBaseOverride:0,
+    socialBonusOverride:0,
+    rateMin:1.50,
+    rateMax:2.00,
+    // 労災率（%）
+    rosaiRate:0.3,
+  };
+
+  function calc(){
+    const b=st.baseSalary, fix=st.fixedAllowance;
+    const monthlyBase=b+fix;
+    // 残業代
+    const ot=st.overtimeDirectInput>0
+      ?st.overtimeDirectInput
+      :(monthlyBase/st.workHoursMonth)*st.overtimeRate*st.overtimeHours;
+    // 年間給与
+    const annualBase=monthlyBase*12;
+    const annualOT=ot*12;
+    const annualBonus=monthlyBase*st.bonusMonths;
+    const annualCommute=st.commute*12;
+    const annualOther=st.otherVariableAnnual;
+    const annualGross=annualBase+annualOT+annualBonus+annualCommute+annualOther;
+
+    // 社保算定基礎
+    const socialMonthlyBase=st.socialBaseOverride>0?st.socialBaseOverride:(monthlyBase+ot+st.commute);
+    const socialBonusBase=st.socialBonusOverride>0?st.socialBonusOverride:annualBonus;
+
+    // 会社負担社会保険（東京・一般事業 2024概算）
+    const kenpo=0.04975;   // 健康保険
+    const nenkin=0.0915;   // 厚生年金
+    const koyo=0.009;      // 雇用保険（一般）
+    const rosai=st.rosaiRate/100;
+    const kaigo=st.kaigo?0.008:0;
+
+    const socialMonthly=socialMonthlyBase*(kenpo+nenkin+koyo+rosai+kaigo);
+    const socialBonus=socialBonusBase*(kenpo+nenkin+koyo);
+    const annualSocial=socialMonthly*12+socialBonus;
+
+    // 福利厚生・間接費
+    const annualWelfare=(st.welfareMonthly+st.healthCheckMonthly+st.pcMonthly+st.officeMonthly+st.otherMonthly)*12
+      +st.recruitAnnual+st.trainingAnnual;
+
+    const totalAnnual=annualGross+annualSocial+annualWelfare;
+    const totalMonthly=totalAnnual/12;
+
+    const refMin=annualGross*st.rateMin;
+    const refMax=annualGross*st.rateMax;
+
+    return{monthlyBase,ot,annualBase,annualOT,annualBonus,annualCommute,annualOther,
+      annualGross,annualSocial,socialMonthly:socialMonthly*12,socialBonus,annualWelfare,
+      totalAnnual,totalMonthly,refMin,refMax};
+  }
+
+  function r(label,val,unit,cls='nor'){
+    const v=Math.round(val);
+    const disp=v===0?'-':'¥'+Math.abs(v).toLocaleString();
+    const color=v<0?'color:#ff7070':'';
+    return`<tr class="${cls}"><td class="label">${label}</td><td class="right bold" style="${color}">${disp}</td><td style="color:#666;font-size:10px">${unit}</td></tr>`;
+  }
+
+  function inp(key,id,type='number',extra=''){
+    const v=st[key];
+    if(type==='bool')
+      return`<select class="ci" id="${id}" style="width:100%;background:#1a1a30;color:#7090ff;border:none;height:20px;font-size:11px">
+        <option value="false" ${!v?'selected':''}>いいえ</option>
+        <option value="true" ${v?'selected':''}>はい</option>
+      </select>`;
+    return`<input class="ci" id="${id}" value="${v===0?'':typeof v==='number'?v.toLocaleString():v}" style="width:100%" ${extra}>`;
+  }
+
+  function render(){
+    const d=calc();
+    el.innerHTML=`
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+<!-- 左: 入力 -->
+<div>
+  <div class="sec-title">① 基本コントロール</div>
+  <table style="width:100%">
+    <tr class="nor"><td class="label">対象者名 / 役職</td><td>${inp('name','_n','text')} / ${inp('role','_ro','text')}</td></tr>
+    <tr class="nor"><td class="label">40〜64歳（介護保険対象）</td><td>${inp('kaigo','_kg','bool')}</td></tr>
+    <tr class="nor"><td class="label">労災保険率（%）</td><td>${inp('rosaiRate','_rr')} <span style="color:#666;font-size:10px">例：IT事務0.3</span></td></tr>
+  </table>
+
+  <div class="sec-title">② 給与・賞与</div>
+  <table style="width:100%">
+    <tr class="nor"><td class="label">月額基本給</td><td>${inp('baseSalary','_bs')}</td></tr>
+    <tr class="nor"><td class="label">月額固定手当</td><td>${inp('fixedAllowance','_fa')}</td></tr>
+    <tr class="nor"><td class="label">月平均残業時間</td><td>${inp('overtimeHours','_oh')} <span style="color:#666;font-size:10px">h</span></td></tr>
+    <tr class="nor"><td class="label">所定月間労働時間</td><td>${inp('workHoursMonth','_wh')} <span style="color:#666;font-size:10px">h</span></td></tr>
+    <tr class="nor"><td class="label">残業割増率</td><td>${inp('overtimeRate','_or')} <span style="color:#666;font-size:10px">倍（25%増=1.25）</span></td></tr>
+    <tr class="nor"><td class="label">年間賞与月数</td><td>${inp('bonusMonths','_bm')} <span style="color:#666;font-size:10px">ヶ月</span></td></tr>
+    <tr class="nor"><td class="label">通勤費（月額）</td><td>${inp('commute','_cm')}</td></tr>
+    <tr class="nor"><td class="label">その他変動給与（年額）</td><td>${inp('otherVariableAnnual','_ov')}</td></tr>
+    <tr class="nor"><td class="label">残業代を直接入力（月額）</td><td>${inp('overtimeDirectInput','_od')} <span style="color:#666;font-size:10px">0=自動計算</span></td></tr>
+  </table>
+
+  <div class="sec-title">④ 福利厚生・間接費</div>
+  <table style="width:100%">
+    <tr class="nor"><td class="label">法定外福利厚生（月額）</td><td>${inp('welfareMonthly','_wm')}</td></tr>
+    <tr class="nor"><td class="label">健診・予防接種等（月額）</td><td>${inp('healthCheckMonthly','_hc')}</td></tr>
+    <tr class="nor"><td class="label">PC/スマホ/ライセンス（月額）</td><td>${inp('pcMonthly','_pc')}</td></tr>
+    <tr class="nor"><td class="label">オフィス席/設備費（月額）</td><td>${inp('officeMonthly','_om')}</td></tr>
+    <tr class="nor"><td class="label">採用コスト按分（年額）</td><td>${inp('recruitAnnual','_ra')}</td></tr>
+    <tr class="nor"><td class="label">研修・教育費按分（年額）</td><td>${inp('trainingAnnual','_ta')}</td></tr>
+    <tr class="nor"><td class="label">その他会社負担（月額）</td><td>${inp('otherMonthly','_xm')}</td></tr>
+  </table>
+
+  <div class="sec-title">⑤ 精度向上（任意）</div>
+  <table style="width:100%">
+    <tr class="nor"><td class="label">目安倍率（下限）</td><td>${inp('rateMin','_rl')} <span style="color:#666;font-size:10px">倍</span></td></tr>
+    <tr class="nor"><td class="label">目安倍率（上限）</td><td>${inp('rateMax','_ru')} <span style="color:#666;font-size:10px">倍</span></td></tr>
+  </table>
+</div>
+
+<!-- 右: 結果 -->
+<div>
+  <div class="sec-title">③ 社会保険料内訳（会社負担・年額）</div>
+  <table style="width:100%">
+    ${r('健康保険（会社負担）',d.socialMonthly*0.4975/(0.4975+0.915+0.09+(st.kaigo?0.08:0)+(st.rosaiRate/10)),'年額','fix')}
+    ${r('厚生年金（会社負担）',d.socialMonthly*0.915/(0.4975+0.915+0.09+(st.kaigo?0.08:0)+(st.rosaiRate/10)),'年額','fix')}
+    ${r('雇用保険（会社負担）',d.socialMonthly*0.09/(0.4975+0.915+0.09+(st.kaigo?0.08:0)+(st.rosaiRate/10)),'年額','fix')}
+    ${st.kaigo?r('介護保険（会社負担）',d.socialMonthly*0.08/(0.4975+0.915+0.09+0.08+(st.rosaiRate/10)),'年額','fix'):''}
+    ${r('賞与への社保',d.socialBonus,'年額','fix')}
+    ${r('社会保険合計',d.annualSocial,'年額','sub')}
+  </table>
+
+  <div class="sec-title">給与・賞与内訳（年額）</div>
+  <table style="width:100%">
+    ${r('基本給',d.annualBase,'年額','nor')}
+    ${r('残業代',d.annualOT,'年額 ('+(st.overtimeDirectInput>0?'直接入力':'自動計算')+')','nor')}
+    ${r('賞与',d.annualBonus,'年額','nor')}
+    ${r('通勤費',d.annualCommute,'年額','nor')}
+    ${d.annualOther>0?r('その他変動給与',d.annualOther,'年額','nor'):''}
+    ${r('年間総支給',d.annualGross,'年額','sub')}
+  </table>
+
+  <div class="sec-title">⑥ 実質コスト（会社全負担）</div>
+  <table style="width:100%">
+    ${r('年間総支給',d.annualGross,'年額','nor')}
+    ${r('社会保険（会社負担）',d.annualSocial,'年額','nor')}
+    ${r('福利厚生・間接費',d.annualWelfare,'年額','nor')}
+    ${r('年間実質コスト合計',d.totalAnnual,'年額','tot')}
+    ${r('月額実質コスト',d.totalMonthly,'月額','tot')}
+  </table>
+
+  <div style="margin-top:12px;padding:10px;background:#1a2a1a;border-left:3px solid #88c888;font-size:10px;line-height:2">
+    <span style="color:#88c888;font-weight:bold">参考（倍率）</span><br>
+    <span style="color:#d0b8b0">年収×${st.rateMin}倍目安コスト：</span>
+    <span style="color:#c9a882;font-weight:bold">¥${Math.round(d.refMin).toLocaleString()}</span><br>
+    <span style="color:#d0b8b0">年収×${st.rateMax}倍目安コスト：</span>
+    <span style="color:#c9a882;font-weight:bold">¥${Math.round(d.refMax).toLocaleString()}</span>
+  </div>
+
+  <div style="margin-top:10px;padding:8px 10px;background:#2a1f10;font-size:10px;color:#888;line-height:1.8">
+    ③社保率（東京・一般事業 概算）<br>
+    健保4.975% / 厚年9.15% / 雇用0.9% / 介護0.8%（対象者のみ）<br>
+    ※労災率は業種により異なる。介護・訪問系は要確認。
+  </div>
+</div>
+</div>`;
+
+    // Bind
+    const b=(key,id,type)=>{
+      const inp=document.getElementById(id);
+      if(!inp)return;
+      inp.addEventListener('input',()=>{
+        if(type==='bool') st[key]=inp.value==='true';
+        else if(type==='text') st[key]=inp.value;
+        else st[key]=parseFloat(inp.value.replace(/,/g,''))||0;
+        render();
+      });
+    };
+    b('name','_n','text');b('role','_ro','text');b('kaigo','_kg','bool');
+    b('rosaiRate','_rr');b('baseSalary','_bs');b('fixedAllowance','_fa');
+    b('overtimeHours','_oh');b('workHoursMonth','_wh');b('overtimeRate','_or');
+    b('bonusMonths','_bm');b('commute','_cm');b('otherVariableAnnual','_ov');
+    b('overtimeDirectInput','_od');b('welfareMonthly','_wm');b('healthCheckMonthly','_hc');
+    b('pcMonthly','_pc');b('officeMonthly','_om');b('recruitAnnual','_ra');
+    b('trainingAnnual','_ta');b('otherMonthly','_xm');b('rateMin','_rl');b('rateMax','_ru');
+  }
+  render();
+}
+
+// ── BEP Sheet ─────────────────────────────────────────────────────────────
+function buildBEP(){
+  const el=document.getElementById('s5');
+  const st={fixedCost:0,marginRate:0,dep:0,repayment:0};
+
+  function calc(){
+    const{fixedCost,marginRate,dep,repayment}=st;
+    const rate=marginRate/100;
+    if(rate===0)return{bep:null,cbep:null};
+    const bep=fixedCost/rate;
+    let cbep;
+    if(dep>=repayment){
+      cbep=(fixedCost-(dep-repayment))/rate;
+    }else{
+      cbep=(fixedCost+(repayment-dep)/0.70)/rate;
+    }
+    return{bep,cbep};
+  }
+
+  function fmt(v){
+    if(v===null||isNaN(v))return'<span style="color:#ff7070">入力してください</span>';
+    if(v<0)return'<span style="color:#ff7070">▲¥'+Math.abs(Math.round(v)).toLocaleString()+'</span>';
+    return'<span style="color:#c9a882;font-weight:bold">¥'+Math.round(v).toLocaleString()+'</span>';
+  }
+
+  function render(){
+    const d=calc();
+    el.innerHTML=`
+<div style="max-width:560px;margin:0 auto">
+
+  <div class="sec-title">入力</div>
+  <table style="width:100%">
+    <tr class="nor">
+      <td class="label">固定費（月額）</td>
+      <td><input class="ci" id="_bf" value="${st.fixedCost||''}" style="width:180px"> <span style="color:#666;font-size:10px">円</span></td>
+    </tr>
+    <tr class="nor">
+      <td class="label">限界利益率</td>
+      <td><input class="ci" id="_mr" value="${st.marginRate||''}" style="width:180px"> <span style="color:#666;font-size:10px">%（例：粗利率が60%なら60と入力）</span></td>
+    </tr>
+    <tr class="nor">
+      <td class="label">減価償却費 Dep（月額）</td>
+      <td><input class="ci" id="_dp" value="${st.dep||''}" style="width:180px"> <span style="color:#666;font-size:10px">円（なければ0）</span></td>
+    </tr>
+    <tr class="nor">
+      <td class="label">借入返済額（月額）</td>
+      <td><input class="ci" id="_rp" value="${st.repayment||''}" style="width:180px"> <span style="color:#666;font-size:10px">円（なければ0）</span></td>
+    </tr>
+  </table>
+
+  <div class="sec-title" style="margin-top:20px">計算結果</div>
+  <table style="width:100%">
+    <tr class="tot">
+      <td class="label" style="font-size:13px">損益分岐点売上高（月）</td>
+      <td class="right" style="font-size:14px">${fmt(d.bep)}</td>
+    </tr>
+    <tr class="tot" style="background:#3d2535">
+      <td class="label" style="font-size:13px">収支分岐点売上高（月）</td>
+      <td class="right" style="font-size:14px">${fmt(d.cbep)}</td>
+    </tr>
+  </table>
+
+  <div style="margin-top:16px;padding:12px 14px;background:#1a1a30;border-left:3px solid #7090ff;font-size:10px;line-height:2;color:#aaa">
+    <span style="color:#7090ff;font-weight:bold">計算式</span><br>
+    損益分岐点 ＝ 固定費 ÷ 限界利益率<br>
+    収支分岐点（Dep ≥ 返済）＝ ｛固定費 − (Dep − 返済)｝÷ 限界利益率<br>
+    収支分岐点（Dep ＜ 返済）＝ ｛固定費 ＋ (返済 − Dep) ÷ 70%｝÷ 限界利益率
+  </div>
+
+  <div style="margin-top:10px;padding:8px 10px;background:#1a2a1a;border-left:3px solid #88c888;font-size:10px;color:#888;line-height:1.8">
+    ※ 収支分岐点は「キャッシュが底をつかない最低売上」の目安。<br>
+    　 Dep＜返済の場合は税引後キャッシュ（利益×70%≒税率30%想定）で返済する前提。
+  </div>
+</div>`;
+
+    const bind=(key,id)=>{
+      const inp=document.getElementById(id);
+      if(!inp)return;
+      inp.addEventListener('input',()=>{
+        st[key]=parseFloat(inp.value.replace(/,/g,''))||0;
+        render();
+      });
+    };
+    bind('fixedCost','_bf');
+    bind('marginRate','_mr');
+    bind('dep','_dp');
+    bind('repayment','_rp');
+  }
+  render();
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────
+buildSim('s0',false);
+buildSim('s1',true);
+buildCF();
+buildProfit();
+buildLabor();
+buildBEP();
+</script>
+</body>
+</html>

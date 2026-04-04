@@ -21,7 +21,7 @@
     },
     {
       "name": "ops",
-      "runtimeExecutable": "node",
+      "runtimeExecutable": "/usr/local/bin/node",
       "runtimeArgs": [".claude/serve-ops.js"],
       "port": 3003
     }
