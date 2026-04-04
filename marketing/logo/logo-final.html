@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cura — ロゴ最終版</title>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Noto+Serif+JP:wght@300&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#f4ede6; font-family:'Noto Serif JP',serif; padding:60px 32px 100px; }
+h1 { text-align:center; font-size:11px; letter-spacing:.5em; color:#8a6a5a; margin-bottom:4px; font-weight:300; }
+.meta { text-align:center; font-size:10px; color:#bba; letter-spacing:.2em; margin-bottom:64px; }
+
+.block { max-width:900px; margin:0 auto 80px; }
+.block-title { font-size:10px; letter-spacing:.4em; color:#8a3a55; font-weight:300; padding-bottom:10px; border-bottom:1px solid #e0cfc8; margin-bottom:8px; }
+.block-note { font-size:9px; color:#aaa; letter-spacing:.15em; margin-bottom:28px; }
+.row { display:flex; gap:2px; flex-wrap:wrap; }
+.card { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:48px 40px 32px; position:relative; flex:1; min-width:180px; gap:10px; }
+.tag { position:absolute; top:12px; left:14px; font-size:9px; letter-spacing:.2em; color:#aaa; }
+.lbl { font-size:9px; letter-spacing:.15em; color:#aaa; }
+.dl { position:absolute; bottom:10px; right:12px; font-size:9px; letter-spacing:.1em; color:#c9a882; cursor:pointer; border:none; background:none; font-family:inherit; opacity:.7; }
+.dl:hover { opacity:1; }
+
+.sizes { display:flex; gap:28px; flex-wrap:wrap; align-items:flex-end; background:white; padding:32px; margin-top:2px; }
+.size-item { display:flex; flex-direction:column; align-items:center; gap:8px; }
+.size-lbl { font-size:9px; color:#ccc; letter-spacing:.1em; }
+</style>
+</head>
+<body>
+
+<h1>C U R A — 最終版</h1>
+<p class="meta">ロゴ（wordmark）＋ 制服ワンポイント（＋マーク）</p>
+
+<!-- ===== WORDMARK ===== -->
+<div class="block">
+  <p class="block-title">01 — WORDMARK（HP・名刺・封筒）</p>
+  <p class="block-note">Abril Fatface · letter-spacing 3 · ロゴとして登録予定</p>
+  <div class="row">
+
+    <div class="card" style="background:white;">
+      <span class="tag">白地 / ローズ</span>
+      <svg width="220" height="68" viewBox="0 0 220 68">
+        <text x="110" y="54" font-family="'Abril Fatface',Georgia,serif" font-size="52" fill="#8a3a55" text-anchor="middle" letter-spacing="3">cura</text>
+      </svg>
+      <button class="dl" onclick="dl('wm_rose')">SVG</button>
+    </div>
+
+    <div class="card" style="background:#8a3a55;">
+      <span class="tag" style="color:rgba(255,255,255,.35)">ローズ地 / 白</span>
+      <svg width="220" height="68" viewBox="0 0 220 68">
+        <text x="110" y="54" font-family="'Abril Fatface',Georgia,serif" font-size="52" fill="white" text-anchor="middle" letter-spacing="3">cura</text>
+      </svg>
+      <button class="dl" style="color:rgba(255,255,255,.5)" onclick="dl('wm_white')">SVG</button>
+    </div>
+
+    <div class="card" style="background:#2a1f1a;">
+      <span class="tag" style="color:rgba(255,255,255,.2)">ネイビー地 / ゴールド</span>
+      <svg width="220" height="68" viewBox="0 0 220 68">
+        <text x="110" y="54" font-family="'Abril Fatface',Georgia,serif" font-size="52" fill="#c9a882" text-anchor="middle" letter-spacing="3">cura</text>
+      </svg>
+      <button class="dl" style="color:#c9a882" onclick="dl('wm_gold')">SVG</button>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ===== UNIFORM MARK ===== -->
+<div class="block">
+  <p class="block-title">02 — ＋ マーク（制服ワンポイント・刺繍）</p>
+  <p class="block-note">医療・ケアを直感的に伝える · 1.5cm〜でも潰れない</p>
+  <div class="row">
+
+    <div class="card" style="background:white;">
+      <span class="tag">白地 / ローズ</span>
+      <svg width="100" height="100" viewBox="0 0 60 60">
+        <rect x="26" y="6"  width="8" height="48" rx="3" fill="#8a3a55"/>
+        <rect x="6"  y="26" width="48" height="8"  rx="3" fill="#8a3a55"/>
+      </svg>
+      <button class="dl" onclick="dl('mark_rose')">SVG</button>
+    </div>
+
+    <div class="card" style="background:#8a3a55;">
+      <span class="tag" style="color:rgba(255,255,255,.35)">ローズ地 / 白</span>
+      <svg width="100" height="100" viewBox="0 0 60 60">
+        <rect x="26" y="6"  width="8" height="48" rx="3" fill="white"/>
+        <rect x="6"  y="26" width="48" height="8"  rx="3" fill="white"/>
+      </svg>
+      <button class="dl" style="color:rgba(255,255,255,.5)" onclick="dl('mark_white')">SVG</button>
+    </div>
+
+    <div class="card" style="background:#2a1f1a;">
+      <span class="tag" style="color:rgba(255,255,255,.2)">ネイビー地 / ゴールド</span>
+      <svg width="100" height="100" viewBox="0 0 60 60">
+        <rect x="26" y="6"  width="8" height="48" rx="3" fill="#c9a882"/>
+        <rect x="6"  y="26" width="48" height="8"  rx="3" fill="#c9a882"/>
+      </svg>
+      <button class="dl" style="color:#c9a882" onclick="dl('mark_gold')">SVG</button>
+    </div>
+
+    <div class="card" style="background:#f0ebe4;">
+      <span class="tag">グレージュ地（エプロン）</span>
+      <svg width="100" height="100" viewBox="0 0 60 60">
+        <rect x="26" y="6"  width="8" height="48" rx="3" fill="#8a3a55"/>
+        <rect x="6"  y="26" width="48" height="8"  rx="3" fill="#8a3a55"/>
+      </svg>
+      <button class="dl" onclick="dl('mark_rose')">SVG</button>
+    </div>
+
+  </div>
+
+  <!-- 刺繍サイズ感 -->
+  <div class="sizes">
+    <span style="font-size:9px;color:#bbb;letter-spacing:.2em;align-self:center;">実寸イメージ →</span>
+    <div class="size-item">
+      <svg width="17" height="17" viewBox="0 0 60 60">
+        <rect x="26" y="6" width="8" height="48" rx="3" fill="#8a3a55"/>
+        <rect x="6" y="26" width="48" height="8" rx="3" fill="#8a3a55"/>
+      </svg>
+      <span class="size-lbl">1.5cm</span>
+    </div>
+    <div class="size-item">
+      <svg width="22" height="22" viewBox="0 0 60 60">
+        <rect x="26" y="6" width="8" height="48" rx="3" fill="#8a3a55"/>
+        <rect x="6" y="26" width="48" height="8" rx="3" fill="#8a3a55"/>
+      </svg>
+      <span class="size-lbl">2cm</span>
+    </div>
+    <div class="size-item">
+      <svg width="33" height="33" viewBox="0 0 60 60">
+        <rect x="26" y="6" width="8" height="48" rx="3" fill="#8a3a55"/>
+        <rect x="6" y="26" width="48" height="8" rx="3" fill="#8a3a55"/>
+      </svg>
+      <span class="size-lbl">3cm</span>
+    </div>
+    <div class="size-item">
+      <svg width="50" height="50" viewBox="0 0 60 60">
+        <rect x="26" y="6" width="8" height="48" rx="3" fill="#8a3a55"/>
+        <rect x="6" y="26" width="48" height="8" rx="3" fill="#8a3a55"/>
+      </svg>
+      <span class="size-lbl">4.5cm</span>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===== 制服シミュレーション ===== -->
+<div class="block">
+  <p class="block-title">03 — 制服イメージ</p>
+  <p class="block-note">胸元左上に＋マーク刺繍 · 約2〜3cm</p>
+  <div style="display:flex;gap:2px;flex-wrap:wrap;">
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+      <div style="width:160px;height:200px;background:white;border:1px solid #e8ddd5;position:relative;border-radius:3px;">
+        <svg width="28" height="28" viewBox="0 0 60 60" style="position:absolute;top:24px;left:20px;">
+          <rect x="26" y="6" width="8" height="48" rx="3" fill="#8a3a55"/>
+          <rect x="6" y="26" width="48" height="8" rx="3" fill="#8a3a55"/>
+        </svg>
+      </div>
+      <span style="font-size:9px;color:#aaa;letter-spacing:.15em;">白</span>
+    </div>
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+      <div style="width:160px;height:200px;background:#8a3a55;position:relative;border-radius:3px;">
+        <svg width="28" height="28" viewBox="0 0 60 60" style="position:absolute;top:24px;left:20px;">
+          <rect x="26" y="6" width="8" height="48" rx="3" fill="white"/>
+          <rect x="6" y="26" width="48" height="8" rx="3" fill="white"/>
+        </svg>
+      </div>
+      <span style="font-size:9px;color:#aaa;letter-spacing:.15em;">ローズ</span>
+    </div>
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+      <div style="width:160px;height:200px;background:#2a1f1a;position:relative;border-radius:3px;">
+        <svg width="28" height="28" viewBox="0 0 60 60" style="position:absolute;top:24px;left:20px;">
+          <rect x="26" y="6" width="8" height="48" rx="3" fill="#c9a882"/>
+          <rect x="6" y="26" width="48" height="8" rx="3" fill="#c9a882"/>
+        </svg>
+      </div>
+      <span style="font-size:9px;color:#aaa;letter-spacing:.15em;">ネイビー</span>
+    </div>
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+      <div style="width:160px;height:200px;background:#e8ddd5;position:relative;border-radius:3px;">
+        <svg width="28" height="28" viewBox="0 0 60 60" style="position:absolute;top:24px;left:20px;">
+          <rect x="26" y="6" width="8" height="48" rx="3" fill="#8a3a55"/>
+          <rect x="6" y="26" width="48" height="8" rx="3" fill="#8a3a55"/>
+        </svg>
+      </div>
+      <span style="font-size:9px;color:#aaa;letter-spacing:.15em;">グレージュ</span>
+    </div>
+
+  </div>
+</div>
+
+
+<script>
+const defs = {
+  wm_rose:  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 68" width="880" height="272"><text x="110" y="54" font-family="Abril Fatface,Georgia,serif" font-size="52" fill="#8a3a55" text-anchor="middle" letter-spacing="3">cura</text></svg>`,
+  wm_white: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 68" width="880" height="272"><rect width="220" height="68" fill="#8a3a55"/><text x="110" y="54" font-family="Abril Fatface,Georgia,serif" font-size="52" fill="white" text-anchor="middle" letter-spacing="3">cura</text></svg>`,
+  wm_gold:  `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 68" width="880" height="272"><rect width="220" height="68" fill="#2a1f1a"/><text x="110" y="54" font-family="Abril Fatface,Georgia,serif" font-size="52" fill="#c9a882" text-anchor="middle" letter-spacing="3">cura</text></svg>`,
+  mark_rose: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="400" height="400"><rect x="26" y="6" width="8" height="48" rx="3" fill="#8a3a55"/><rect x="6" y="26" width="48" height="8" rx="3" fill="#8a3a55"/></svg>`,
+  mark_white:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="400" height="400"><rect width="60" height="60" fill="#8a3a55"/><rect x="26" y="6" width="8" height="48" rx="3" fill="white"/><rect x="6" y="26" width="48" height="8" rx="3" fill="white"/></svg>`,
+  mark_gold: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="400" height="400"><rect width="60" height="60" fill="#2a1f1a"/><rect x="26" y="6" width="8" height="48" rx="3" fill="#c9a882"/><rect x="6" y="26" width="48" height="8" rx="3" fill="#c9a882"/></svg>`
+};
+function dl(id) {
+  const blob = new Blob([defs[id]], {type:'image/svg+xml'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `cura-${id}.svg`;
+  a.click();
+}
+</script>
+</body>
+</html>

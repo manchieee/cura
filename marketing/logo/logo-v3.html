@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cura ロゴ 05 × 09 カラー比較</title>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cormorant+Garamond:wght@300;400&family=Noto+Serif+JP:wght@300&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#f4ede6; font-family:'Noto Serif JP',serif; padding:48px 28px 80px; }
+h1 { text-align:center; font-size:11px; letter-spacing:.4em; color:#8a6a5a; margin-bottom:6px; font-weight:300; }
+.subtitle { text-align:center; font-size:10px; letter-spacing:.2em; color:#bba; margin-bottom:48px; }
+.section { margin-bottom:56px; }
+.section-label {
+  font-size:10px; letter-spacing:.35em; color:#8a3a55;
+  margin-bottom:20px; padding-bottom:8px;
+  border-bottom:1px solid #e8d8d0;
+  max-width:800px; margin-left:auto; margin-right:auto;
+}
+.row {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:16px; max-width:800px; margin:0 auto;
+}
+.card {
+  display:flex; flex-direction:column; align-items:center;
+  justify-content:center; padding:40px 20px 28px;
+  min-height:180px; position:relative;
+}
+.tag {
+  position:absolute; top:10px; left:12px;
+  font-size:9px; letter-spacing:.2em; opacity:.5;
+}
+.dl { position:absolute; bottom:9px; right:10px;
+  font-size:9px; letter-spacing:.1em; color:#c9a882;
+  cursor:pointer; border:none; background:none; font-family:inherit; opacity:.7; }
+.dl:hover { opacity:1; }
+</style>
+</head>
+<body>
+
+<h1>LOGO 05 × 09 — COLOR STUDY</h1>
+<p class="subtitle">ピンク系 vs ダーク・全パターン比較</p>
+
+<!-- ====== 05: クロス ====== -->
+<div class="section">
+  <p class="section-label">05 — CROSS MARK</p>
+  <div class="row">
+
+    <!-- 05-A: 白背景・ローズ -->
+    <div class="card" style="background:white;" id="a1">
+      <span class="tag">白 × ローズ</span>
+      <svg width="220" height="110" viewBox="0 0 220 110">
+        <line x1="60" y1="50" x2="60" y2="60" stroke="#a85f78" stroke-width="1.4" stroke-linecap="round"/>
+        <line x1="55" y1="55" x2="65" y2="55" stroke="#a85f78" stroke-width="1.4" stroke-linecap="round"/>
+        <text x="130" y="64" font-family="'Abril Fatface',Georgia,serif" font-size="44" fill="#8a3a55" text-anchor="middle" letter-spacing="3">cura</text>
+        <line x1="80" y1="76" x2="180" y2="76" stroke="#c9a882" stroke-width=".5"/>
+        <text x="130" y="90" font-family="Georgia,serif" font-size="7" fill="#c9a882" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+      </svg>
+      <button class="dl" onclick="dl('a1')">SVG</button>
+    </div>
+
+    <!-- 05-B: クリーム背景・ダープローズ -->
+    <div class="card" style="background:#faf0f3;" id="a2">
+      <span class="tag">ピンク背景</span>
+      <svg width="220" height="110" viewBox="0 0 220 110">
+        <line x1="60" y1="42" x2="60" y2="68" stroke="#8a3a55" stroke-width="1.8"/>
+        <line x1="47" y1="55" x2="73" y2="55" stroke="#8a3a55" stroke-width="1.8"/>
+        <text x="130" y="62" font-family="'Cormorant Garamond',Georgia,serif" font-size="44" font-weight="400" fill="#2a1f1a" text-anchor="middle" letter-spacing="4">cura</text>
+        <line x1="80" y1="74" x2="180" y2="74" stroke="#a85f78" stroke-width=".5"/>
+        <text x="130" y="88" font-family="Georgia,serif" font-size="7" fill="#a85f78" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+      </svg>
+      <button class="dl" onclick="dl('a2')">SVG</button>
+    </div>
+
+    <!-- 05-C: ローズ背景・白 -->
+    <div class="card" style="background:#8a3a55;" id="a3">
+      <span class="tag" style="color:white">ローズ背景</span>
+      <svg width="220" height="110" viewBox="0 0 220 110">
+        <line x1="60" y1="42" x2="60" y2="68" stroke="white" stroke-width="1.8"/>
+        <line x1="47" y1="55" x2="73" y2="55" stroke="white" stroke-width="1.8"/>
+        <text x="130" y="62" font-family="'Cormorant Garamond',Georgia,serif" font-size="44" font-weight="400" fill="white" text-anchor="middle" letter-spacing="4">cura</text>
+        <line x1="80" y1="74" x2="180" y2="74" stroke="rgba(255,255,255,.35)" stroke-width=".5"/>
+        <text x="130" y="88" font-family="Georgia,serif" font-size="7" fill="#f0c8a0" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+      </svg>
+      <button class="dl" onclick="dl('a3')">SVG</button>
+    </div>
+
+    <!-- 05-D: ピンクグラデ背景 -->
+    <div class="card" style="background:linear-gradient(135deg,#a85f78,#c9a882);" id="a4">
+      <span class="tag" style="color:white">グラデ背景</span>
+      <svg width="220" height="110" viewBox="0 0 220 110">
+        <line x1="60" y1="42" x2="60" y2="68" stroke="white" stroke-width="1.8"/>
+        <line x1="47" y1="55" x2="73" y2="55" stroke="white" stroke-width="1.8"/>
+        <text x="130" y="62" font-family="'Cormorant Garamond',Georgia,serif" font-size="44" font-weight="400" fill="white" text-anchor="middle" letter-spacing="4">cura</text>
+        <line x1="80" y1="74" x2="180" y2="74" stroke="rgba(255,255,255,.4)" stroke-width=".5"/>
+        <text x="130" y="88" font-family="Georgia,serif" font-size="7" fill="rgba(255,255,255,.8)" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+      </svg>
+      <button class="dl" onclick="dl('a4')">SVG</button>
+    </div>
+
+    <!-- 05-E: 黒背景（比較用） -->
+    <div class="card" style="background:#1a1a1a;" id="a5">
+      <span class="tag" style="color:#555">黒（比較）</span>
+      <svg width="220" height="110" viewBox="0 0 220 110">
+        <line x1="60" y1="42" x2="60" y2="68" stroke="#c9a882" stroke-width="1.8"/>
+        <line x1="47" y1="55" x2="73" y2="55" stroke="#c9a882" stroke-width="1.8"/>
+        <text x="130" y="62" font-family="'Cormorant Garamond',Georgia,serif" font-size="44" font-weight="400" fill="white" text-anchor="middle" letter-spacing="4">cura</text>
+        <line x1="80" y1="74" x2="180" y2="74" stroke="#c9a882" stroke-width=".5"/>
+        <text x="130" y="88" font-family="Georgia,serif" font-size="7" fill="#c9a882" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+      </svg>
+      <button class="dl" onclick="dl('a5')">SVG</button>
+    </div>
+
+    <!-- 05-F: ネイビー（比較用） -->
+    <div class="card" style="background:#2a1f1a;" id="a6">
+      <span class="tag" style="color:#555">ネイビー（比較）</span>
+      <svg width="220" height="110" viewBox="0 0 220 110">
+        <line x1="60" y1="42" x2="60" y2="68" stroke="#b87888" stroke-width="1.8"/>
+        <line x1="47" y1="55" x2="73" y2="55" stroke="#b87888" stroke-width="1.8"/>
+        <text x="130" y="62" font-family="'Cormorant Garamond',Georgia,serif" font-size="44" font-weight="400" fill="#f5ede8" text-anchor="middle" letter-spacing="4">cura</text>
+        <line x1="80" y1="74" x2="180" y2="74" stroke="#c9a882" stroke-width=".5"/>
+        <text x="130" y="88" font-family="Georgia,serif" font-size="7" fill="#c9a882" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+      </svg>
+      <button class="dl" onclick="dl('a6')">SVG</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- ====== 09: インフィニティ ====== -->
+<div class="section">
+  <p class="section-label">09 — INFINITY MARK</p>
+  <div class="row">
+
+    <!-- 09-A: 白背景・ローズ -->
+    <div class="card" style="background:white;" id="b1">
+      <span class="tag">白 × ローズ</span>
+      <svg width="220" height="120" viewBox="0 0 220 120">
+        <text x="110" y="58" font-family="Georgia, serif" font-size="52" fill="none" stroke="#a85f78" stroke-width="1.2" text-anchor="middle">∞</text>
+        <!-- override with flat path -->
+        <path d="M 78 46 C 78 37 94 32 110 46 C 126 60 142 55 142 46 C 142 37 126 32 110 46 C 94 60 78 55 78 46 Z" fill="none" stroke="#a85f78" stroke-width="1.4"/>
+        <text x="110" y="84" font-family="'Cormorant Garamond',Georgia,serif" font-size="38" font-weight="300" fill="#8a3a55" text-anchor="middle" letter-spacing="8">cura</text>
+        <line x1="65" y1="94" x2="155" y2="94" stroke="#c9a882" stroke-width=".5"/>
+        <text x="110" y="107" font-family="Georgia,serif" font-size="7" fill="#c9a882" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+      </svg>
+      <button class="dl" onclick="dl('b1')">SVG</button>
+    </div>
+
+    <!-- 09-B: ピンク背景 -->
+    <div class="card" style="background:#fdf0f5;" id="b2">
+      <span class="tag">ピンク背景</span>
+      <svg width="220" height="120" viewBox="0 0 220 120">
+        <text x="110" y="58" font-family="Georgia, serif" font-size="52" fill="none" stroke="#8a3a55" stroke-width="1.2" text-anchor="middle">∞</text>
+        <text x="110" y="84" font-family="'Cormorant Garamond',Georgia,serif" font-size="38" font-weight="300" fill="#2a1f1a" text-anchor="middle" letter-spacing="8">cura</text>
+        <line x1="65" y1="94" x2="155" y2="94" stroke="#a85f78" stroke-width=".5"/>
+        <text x="110" y="107" font-family="Georgia,serif" font-size="7" fill="#a85f78" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+      </svg>
+      <button class="dl" onclick="dl('b2')">SVG</button>
+    </div>
+
+    <!-- 09-C: ローズ背景・白 -->
+    <div class="card" style="background:#8a3a55;" id="b3">
+      <span class="tag" style="color:white">ローズ背景</span>
+      <svg width="220" height="120" viewBox="0 0 220 120">
+        <text x="110" y="58" font-family="Georgia, serif" font-size="52" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="1.2" text-anchor="middle">∞</text>
+        <text x="110" y="84" font-family="'Cormorant Garamond',Georgia,serif" font-size="38" font-weight="300" fill="white" text-anchor="middle" letter-spacing="8">cura</text>
+        <line x1="65" y1="94" x2="155" y2="94" stroke="rgba(255,255,255,.3)" stroke-width=".5"/>
+        <text x="110" y="107" font-family="Georgia,serif" font-size="7" fill="#f0c8a0" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+      </svg>
+      <button class="dl" onclick="dl('b3')">SVG</button>
+    </div>
+
+    <!-- 09-D: グラデ背景 -->
+    <div class="card" style="background:linear-gradient(135deg,#8a3a55,#b87888);" id="b4">
+      <span class="tag" style="color:rgba(255,255,255,.5)">グラデ背景</span>
+      <svg width="220" height="120" viewBox="0 0 220 120">
+        <text x="110" y="58" font-family="Georgia, serif" font-size="52" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="1.2" text-anchor="middle">∞</text>
+        <text x="110" y="84" font-family="'Cormorant Garamond',Georgia,serif" font-size="38" font-weight="300" fill="white" text-anchor="middle" letter-spacing="8">cura</text>
+        <line x1="65" y1="94" x2="155" y2="94" stroke="rgba(255,255,255,.3)" stroke-width=".5"/>
+        <text x="110" y="107" font-family="Georgia,serif" font-size="7" fill="#f5e0b0" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+      </svg>
+      <button class="dl" onclick="dl('b4')">SVG</button>
+    </div>
+
+    <!-- 09-E: 黒（比較） -->
+    <div class="card" style="background:#1a1a1a;" id="b5">
+      <span class="tag" style="color:#555">黒（比較）</span>
+      <svg width="220" height="120" viewBox="0 0 220 120">
+        <text x="110" y="58" font-family="Georgia, serif" font-size="52" fill="none" stroke="#c9a882" stroke-width="1.2" text-anchor="middle">∞</text>
+        <text x="110" y="84" font-family="'Cormorant Garamond',Georgia,serif" font-size="38" font-weight="300" fill="white" text-anchor="middle" letter-spacing="8">cura</text>
+        <line x1="65" y1="94" x2="155" y2="94" stroke="#c9a882" stroke-width=".5"/>
+        <text x="110" y="107" font-family="Georgia,serif" font-size="7" fill="#c9a882" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+      </svg>
+      <button class="dl" onclick="dl('b5')">SVG</button>
+    </div>
+
+    <!-- 09-F: ネイビー（比較） -->
+    <div class="card" style="background:#2a1f1a;" id="b6">
+      <span class="tag" style="color:#555">ネイビー（比較）</span>
+      <svg width="220" height="120" viewBox="0 0 220 120">
+        <text x="110" y="58" font-family="Georgia, serif" font-size="52" fill="none" stroke="#b87888" stroke-width="1.2" text-anchor="middle">∞</text>
+        <text x="110" y="84" font-family="'Cormorant Garamond',Georgia,serif" font-size="38" font-weight="300" fill="#f5ede8" text-anchor="middle" letter-spacing="8">cura</text>
+        <line x1="65" y1="94" x2="155" y2="94" stroke="#c9a882" stroke-width=".5"/>
+        <text x="110" y="107" font-family="Georgia,serif" font-size="7" fill="#c9a882" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+      </svg>
+      <button class="dl" onclick="dl('b6')">SVG</button>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const svgs = {
+  a1:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 110" width="440" height="220"><rect width="220" height="110" fill="white"/><line x1="60" y1="42" x2="60" y2="68" stroke="#a85f78" stroke-width="1.8"/><line x1="47" y1="55" x2="73" y2="55" stroke="#a85f78" stroke-width="1.8"/><text x="130" y="62" font-family="Cormorant Garamond,Georgia,serif" font-size="44" fill="#8a3a55" text-anchor="middle" letter-spacing="4">cura</text><line x1="80" y1="74" x2="180" y2="74" stroke="#c9a882" stroke-width=".5"/><text x="130" y="88" font-family="Georgia,serif" font-size="7" fill="#c9a882" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text></svg>`,
+  a2:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 110" width="440" height="220"><rect width="220" height="110" fill="#faf0f3"/><line x1="60" y1="42" x2="60" y2="68" stroke="#8a3a55" stroke-width="1.8"/><line x1="47" y1="55" x2="73" y2="55" stroke="#8a3a55" stroke-width="1.8"/><text x="130" y="62" font-family="Cormorant Garamond,Georgia,serif" font-size="44" fill="#2a1f1a" text-anchor="middle" letter-spacing="4">cura</text><line x1="80" y1="74" x2="180" y2="74" stroke="#a85f78" stroke-width=".5"/><text x="130" y="88" font-family="Georgia,serif" font-size="7" fill="#a85f78" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text></svg>`,
+  a3:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 110" width="440" height="220"><rect width="220" height="110" fill="#8a3a55"/><line x1="60" y1="42" x2="60" y2="68" stroke="white" stroke-width="1.8"/><line x1="47" y1="55" x2="73" y2="55" stroke="white" stroke-width="1.8"/><text x="130" y="62" font-family="Cormorant Garamond,Georgia,serif" font-size="44" fill="white" text-anchor="middle" letter-spacing="4">cura</text><line x1="80" y1="74" x2="180" y2="74" stroke="rgba(255,255,255,.35)" stroke-width=".5"/><text x="130" y="88" font-family="Georgia,serif" font-size="7" fill="#f0c8a0" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text></svg>`,
+  a4:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 110" width="440" height="220"><defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#a85f78"/><stop offset="100%" stop-color="#c9a882"/></linearGradient></defs><rect width="220" height="110" fill="url(#g)"/><line x1="60" y1="42" x2="60" y2="68" stroke="white" stroke-width="1.8"/><line x1="47" y1="55" x2="73" y2="55" stroke="white" stroke-width="1.8"/><text x="130" y="62" font-family="Cormorant Garamond,Georgia,serif" font-size="44" fill="white" text-anchor="middle" letter-spacing="4">cura</text><line x1="80" y1="74" x2="180" y2="74" stroke="rgba(255,255,255,.4)" stroke-width=".5"/><text x="130" y="88" font-family="Georgia,serif" font-size="7" fill="rgba(255,255,255,.85)" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text></svg>`,
+  a5:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 110" width="440" height="220"><rect width="220" height="110" fill="#1a1a1a"/><line x1="60" y1="42" x2="60" y2="68" stroke="#c9a882" stroke-width="1.8"/><line x1="47" y1="55" x2="73" y2="55" stroke="#c9a882" stroke-width="1.8"/><text x="130" y="62" font-family="Cormorant Garamond,Georgia,serif" font-size="44" fill="white" text-anchor="middle" letter-spacing="4">cura</text><line x1="80" y1="74" x2="180" y2="74" stroke="#c9a882" stroke-width=".5"/><text x="130" y="88" font-family="Georgia,serif" font-size="7" fill="#c9a882" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text></svg>`,
+  a6:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 110" width="440" height="220"><rect width="220" height="110" fill="#2a1f1a"/><line x1="60" y1="42" x2="60" y2="68" stroke="#b87888" stroke-width="1.8"/><line x1="47" y1="55" x2="73" y2="55" stroke="#b87888" stroke-width="1.8"/><text x="130" y="62" font-family="Cormorant Garamond,Georgia,serif" font-size="44" fill="#f5ede8" text-anchor="middle" letter-spacing="4">cura</text><line x1="80" y1="74" x2="180" y2="74" stroke="#c9a882" stroke-width=".5"/><text x="130" y="88" font-family="Georgia,serif" font-size="7" fill="#c9a882" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text></svg>`,
+  b1:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 120" width="440" height="240"><rect width="220" height="120" fill="white"/><path d="M 81 52 C 81 42 93 38 101 45 C 107 50 114 55 121 55 C 128 55 139 50 139 42 C 139 34 128 30 121 37 C 114 43 107 48 101 52 C 93 58 81 62 81 52 Z" fill="none" stroke="#a85f78" stroke-width="1.5"/><text x="110" y="78" font-family="Cormorant Garamond,Georgia,serif" font-size="38" font-weight="300" fill="#8a3a55" text-anchor="middle" letter-spacing="8">cura</text><line x1="65" y1="88" x2="155" y2="88" stroke="#c9a882" stroke-width=".5"/><text x="110" y="101" font-family="Georgia,serif" font-size="7" fill="#c9a882" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text></svg>`,
+  b2:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 120" width="440" height="240"><rect width="220" height="120" fill="#fdf0f5"/><path d="M 81 52 C 81 42 93 38 101 45 C 107 50 114 55 121 55 C 128 55 139 50 139 42 C 139 34 128 30 121 37 C 114 43 107 48 101 52 C 93 58 81 62 81 52 Z" fill="none" stroke="#8a3a55" stroke-width="1.5"/><text x="110" y="78" font-family="Cormorant Garamond,Georgia,serif" font-size="38" font-weight="300" fill="#2a1f1a" text-anchor="middle" letter-spacing="8">cura</text><line x1="65" y1="88" x2="155" y2="88" stroke="#a85f78" stroke-width=".5"/><text x="110" y="101" font-family="Georgia,serif" font-size="7" fill="#a85f78" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text></svg>`,
+  b3:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 120" width="440" height="240"><rect width="220" height="120" fill="#8a3a55"/><path d="M 81 52 C 81 42 93 38 101 45 C 107 50 114 55 121 55 C 128 55 139 50 139 42 C 139 34 128 30 121 37 C 114 43 107 48 101 52 C 93 58 81 62 81 52 Z" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="1.5"/><text x="110" y="78" font-family="Cormorant Garamond,Georgia,serif" font-size="38" font-weight="300" fill="white" text-anchor="middle" letter-spacing="8">cura</text><line x1="65" y1="88" x2="155" y2="88" stroke="rgba(255,255,255,.3)" stroke-width=".5"/><text x="110" y="101" font-family="Georgia,serif" font-size="7" fill="#f0c8a0" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text></svg>`,
+  b4:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 120" width="440" height="240"><defs><linearGradient id="g2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#8a3a55"/><stop offset="100%" stop-color="#b87888"/></linearGradient></defs><rect width="220" height="120" fill="url(#g2)"/><path d="M 81 52 C 81 42 93 38 101 45 C 107 50 114 55 121 55 C 128 55 139 50 139 42 C 139 34 128 30 121 37 C 114 43 107 48 101 52 C 93 58 81 62 81 52 Z" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="1.5"/><text x="110" y="78" font-family="Cormorant Garamond,Georgia,serif" font-size="38" font-weight="300" fill="white" text-anchor="middle" letter-spacing="8">cura</text><line x1="65" y1="88" x2="155" y2="88" stroke="rgba(255,255,255,.3)" stroke-width=".5"/><text x="110" y="101" font-family="Georgia,serif" font-size="7" fill="#f5e0b0" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text></svg>`,
+  b5:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 120" width="440" height="240"><rect width="220" height="120" fill="#1a1a1a"/><path d="M 81 52 C 81 42 93 38 101 45 C 107 50 114 55 121 55 C 128 55 139 50 139 42 C 139 34 128 30 121 37 C 114 43 107 48 101 52 C 93 58 81 62 81 52 Z" fill="none" stroke="#c9a882" stroke-width="1.5"/><text x="110" y="78" font-family="Cormorant Garamond,Georgia,serif" font-size="38" font-weight="300" fill="white" text-anchor="middle" letter-spacing="8">cura</text><line x1="65" y1="88" x2="155" y2="88" stroke="#c9a882" stroke-width=".5"/><text x="110" y="101" font-family="Georgia,serif" font-size="7" fill="#c9a882" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text></svg>`,
+  b6:`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 120" width="440" height="240"><rect width="220" height="120" fill="#2a1f1a"/><path d="M 81 52 C 81 42 93 38 101 45 C 107 50 114 55 121 55 C 128 55 139 50 139 42 C 139 34 128 30 121 37 C 114 43 107 48 101 52 C 93 58 81 62 81 52 Z" fill="none" stroke="#b87888" stroke-width="1.5"/><text x="110" y="78" font-family="Cormorant Garamond,Georgia,serif" font-size="38" font-weight="300" fill="#f5ede8" text-anchor="middle" letter-spacing="8">cura</text><line x1="65" y1="88" x2="155" y2="88" stroke="#c9a882" stroke-width=".5"/><text x="110" y="101" font-family="Georgia,serif" font-size="7" fill="#c9a882" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text></svg>`
+};
+function dl(id){
+  const blob=new Blob([svgs[id]],{type:'image/svg+xml'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`cura-logo-${id}.svg`;
+  a.click();
+}
+</script>
+</body>
+</html>

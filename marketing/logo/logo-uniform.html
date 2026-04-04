@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cura — ロゴ案</title>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Noto+Serif+JP:wght@300&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#f4ede6; font-family:'Noto Serif JP',serif; padding:48px 28px 80px; }
+h1 { text-align:center; font-size:11px; letter-spacing:.4em; color:#8a6a5a; margin-bottom:6px; font-weight:300; }
+.subtitle { text-align:center; font-size:10px; letter-spacing:.2em; color:#bba; margin-bottom:56px; }
+
+.section { margin-bottom:64px; max-width:900px; margin-left:auto; margin-right:auto; }
+.section-label {
+  font-size:10px; letter-spacing:.35em; color:#8a3a55;
+  margin-bottom:24px; padding-bottom:8px;
+  border-bottom:1px solid #e8d8d0;
+}
+.row { display:flex; gap:24px; flex-wrap:wrap; align-items:center; }
+
+.card {
+  display:flex; flex-direction:column; align-items:center;
+  justify-content:center; padding:40px 32px 28px;
+  position:relative; gap:14px;
+}
+.tag {
+  position:absolute; top:10px; left:12px;
+  font-size:9px; letter-spacing:.2em; opacity:.5;
+}
+.size-label {
+  font-size:9px; letter-spacing:.1em; color:#999; text-align:center;
+}
+.dl {
+  position:absolute; bottom:8px; right:10px;
+  font-size:9px; letter-spacing:.1em; color:#c9a882;
+  cursor:pointer; border:none; background:none; font-family:inherit; opacity:.7;
+}
+.dl:hover { opacity:1; }
+
+/* 制服シミュレーション */
+.uniform-sim { display:flex; gap:36px; flex-wrap:wrap; align-items:center; }
+.uniform-card { display:flex; flex-direction:column; align-items:center; gap:12px; }
+.fabric {
+  width:170px; height:210px;
+  display:flex; align-items:flex-start; justify-content:flex-start;
+  border-radius:4px; position:relative; padding:32px 20px;
+}
+.fabric-label { font-size:9px; letter-spacing:.2em; color:#999; }
+</style>
+</head>
+<body>
+
+<h1>C U R A — ロゴ案</h1>
+<p class="subtitle">c が＋を囲む形</p>
+
+<!-- コンセプト説明 -->
+<div class="section">
+  <p class="section-label">コンセプト — c が＋を抱き込む</p>
+  <p style="font-size:10px; color:#8a6a5a; letter-spacing:.15em; line-height:2; margin-bottom:28px;">
+    "cura" の頭文字「c」がメディカルクロス「＋」を包む形。<br>
+    c = ケア・つながり　＋ = 医療・看護。二つが重なってcuraを表す。
+  </p>
+
+  <!-- マーク単体 -->
+  <div class="row">
+
+    <div class="card" style="background:white;">
+      <span class="tag">ローズ / 白地</span>
+      <svg width="90" height="90" viewBox="0 0 80 80">
+        <!-- C arc: center (40,40) radius 27, opening right ~70deg gap -->
+        <path d="M 63 26 A 27 27 0 1 0 63 54" fill="none" stroke="#8a3a55" stroke-width="5.5" stroke-linecap="round"/>
+        <!-- + cross centered at (40,40) -->
+        <rect x="37" y="24" width="6" height="32" rx="2" fill="#8a3a55"/>
+        <rect x="24" y="37" width="32" height="6" rx="2" fill="#8a3a55"/>
+      </svg>
+      <div class="size-label">マークのみ</div>
+      <button class="dl" onclick="dlSVG('mark_rose_white')">SVG</button>
+    </div>
+
+    <div class="card" style="background:#8a3a55;">
+      <span class="tag" style="color:rgba(255,255,255,.5)">白 / ローズ地</span>
+      <svg width="90" height="90" viewBox="0 0 80 80">
+        <path d="M 63 26 A 27 27 0 1 0 63 54" fill="none" stroke="white" stroke-width="5.5" stroke-linecap="round"/>
+        <rect x="37" y="24" width="6" height="32" rx="2" fill="white"/>
+        <rect x="24" y="37" width="32" height="6" rx="2" fill="white"/>
+      </svg>
+      <div class="size-label" style="color:rgba(255,255,255,.4)">マークのみ</div>
+      <button class="dl" style="color:#f5c899" onclick="dlSVG('mark_white_rose')">SVG</button>
+    </div>
+
+    <div class="card" style="background:#2a1f1a;">
+      <span class="tag" style="color:rgba(255,255,255,.3)">ゴールド / ネイビー地</span>
+      <svg width="90" height="90" viewBox="0 0 80 80">
+        <path d="M 63 26 A 27 27 0 1 0 63 54" fill="none" stroke="#c9a882" stroke-width="5.5" stroke-linecap="round"/>
+        <rect x="37" y="24" width="6" height="32" rx="2" fill="#c9a882"/>
+        <rect x="24" y="37" width="32" height="6" rx="2" fill="#c9a882"/>
+      </svg>
+      <div class="size-label" style="color:rgba(255,255,255,.3)">マークのみ</div>
+      <button class="dl" style="color:#c9a882" onclick="dlSVG('mark_gold_navy')">SVG</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- マーク＋テキスト -->
+<div class="section">
+  <p class="section-label">マーク＋ wordmark（胸ポケット・刺繍向き）</p>
+  <div class="row">
+
+    <div class="card" style="background:white;">
+      <span class="tag">白地</span>
+      <svg width="200" height="72" viewBox="0 0 200 72">
+        <!-- C mark: center(36,36), radius 24, opening right -->
+        <path d="M 56 20 A 24 24 0 1 0 56 52" fill="none" stroke="#8a3a55" stroke-width="5" stroke-linecap="round"/>
+        <rect x="33" y="20" width="5.5" height="32" rx="1.5" fill="#8a3a55"/>
+        <rect x="20" y="33" width="32" height="5.5" rx="1.5" fill="#8a3a55"/>
+        <!-- ura text -->
+        <text x="120" y="49" font-family="'Abril Fatface',Georgia,serif" font-size="38" fill="#8a3a55" text-anchor="middle" letter-spacing="1">ura</text>
+      </svg>
+      <div class="size-label">c＋ura = cura</div>
+      <button class="dl" onclick="dlSVG('logo_white')">SVG</button>
+    </div>
+
+    <div class="card" style="background:#8a3a55;">
+      <span class="tag" style="color:rgba(255,255,255,.5)">ローズ地</span>
+      <svg width="200" height="72" viewBox="0 0 200 72">
+        <path d="M 56 20 A 24 24 0 1 0 56 52" fill="none" stroke="white" stroke-width="5" stroke-linecap="round"/>
+        <rect x="33" y="20" width="5.5" height="32" rx="1.5" fill="white"/>
+        <rect x="20" y="33" width="32" height="5.5" rx="1.5" fill="white"/>
+        <text x="120" y="49" font-family="'Abril Fatface',Georgia,serif" font-size="38" fill="white" text-anchor="middle" letter-spacing="1">ura</text>
+      </svg>
+      <div class="size-label" style="color:rgba(255,255,255,.4)">c＋ura = cura</div>
+      <button class="dl" style="color:#f5c899" onclick="dlSVG('logo_rose')">SVG</button>
+    </div>
+
+    <div class="card" style="background:#2a1f1a;">
+      <span class="tag" style="color:rgba(255,255,255,.3)">ネイビー地</span>
+      <svg width="200" height="72" viewBox="0 0 200 72">
+        <path d="M 56 20 A 24 24 0 1 0 56 52" fill="none" stroke="#c9a882" stroke-width="5" stroke-linecap="round"/>
+        <rect x="33" y="20" width="5.5" height="32" rx="1.5" fill="#c9a882"/>
+        <rect x="20" y="33" width="32" height="5.5" rx="1.5" fill="#c9a882"/>
+        <text x="120" y="49" font-family="'Abril Fatface',Georgia,serif" font-size="38" fill="#f5ede8" text-anchor="middle" letter-spacing="1">ura</text>
+      </svg>
+      <div class="size-label" style="color:rgba(255,255,255,.3)">c＋ura = cura</div>
+      <button class="dl" style="color:#c9a882" onclick="dlSVG('logo_navy')">SVG</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- サイズ比較 -->
+<div class="section">
+  <p class="section-label">サイズ確認（実際の刺繍サイズ感）</p>
+  <div class="row" style="background:white; padding:32px; align-items:flex-end; gap:32px;">
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+      <svg width="18" height="18" viewBox="0 0 80 80">
+        <path d="M 63 26 A 27 27 0 1 0 63 54" fill="none" stroke="#8a3a55" stroke-width="5.5" stroke-linecap="round"/>
+        <rect x="37" y="24" width="6" height="32" rx="2" fill="#8a3a55"/>
+        <rect x="24" y="37" width="32" height="6" rx="2" fill="#8a3a55"/>
+      </svg>
+      <span style="font-size:9px;color:#999;letter-spacing:.1em">1.5cm</span>
+    </div>
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+      <svg width="28" height="28" viewBox="0 0 80 80">
+        <path d="M 63 26 A 27 27 0 1 0 63 54" fill="none" stroke="#8a3a55" stroke-width="5.5" stroke-linecap="round"/>
+        <rect x="37" y="24" width="6" height="32" rx="2" fill="#8a3a55"/>
+        <rect x="24" y="37" width="32" height="6" rx="2" fill="#8a3a55"/>
+      </svg>
+      <span style="font-size:9px;color:#999;letter-spacing:.1em">2.5cm</span>
+    </div>
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+      <svg width="40" height="40" viewBox="0 0 80 80">
+        <path d="M 63 26 A 27 27 0 1 0 63 54" fill="none" stroke="#8a3a55" stroke-width="5.5" stroke-linecap="round"/>
+        <rect x="37" y="24" width="6" height="32" rx="2" fill="#8a3a55"/>
+        <rect x="24" y="37" width="32" height="6" rx="2" fill="#8a3a55"/>
+      </svg>
+      <span style="font-size:9px;color:#999;letter-spacing:.1em">3.5cm</span>
+    </div>
+
+    <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+      <svg width="56" height="56" viewBox="0 0 80 80">
+        <path d="M 63 26 A 27 27 0 1 0 63 54" fill="none" stroke="#8a3a55" stroke-width="5.5" stroke-linecap="round"/>
+        <rect x="37" y="24" width="6" height="32" rx="2" fill="#8a3a55"/>
+        <rect x="24" y="37" width="32" height="6" rx="2" fill="#8a3a55"/>
+      </svg>
+      <span style="font-size:9px;color:#999;letter-spacing:.1em">5cm</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- 制服シミュレーション -->
+<div class="section">
+  <p class="section-label">制服イメージ</p>
+  <div class="uniform-sim">
+
+    <div class="uniform-card">
+      <div class="fabric" style="background:white; border:1px solid #e8ddd5;">
+        <svg width="80" height="29" viewBox="0 0 200 72">
+          <path d="M 56 20 A 24 24 0 1 0 56 52" fill="none" stroke="#8a3a55" stroke-width="5" stroke-linecap="round"/>
+          <rect x="32" y="19" width="5.5" height="34" rx="1.5" fill="#8a3a55"/>
+          <rect x="19" y="33" width="34" height="5.5" rx="1.5" fill="#8a3a55"/>
+          <text x="115" y="50" font-family="'Abril Fatface',Georgia,serif" font-size="38" fill="#8a3a55" text-anchor="middle" letter-spacing="1">ura</text>
+        </svg>
+      </div>
+      <span class="fabric-label">白ユニフォーム</span>
+    </div>
+
+    <div class="uniform-card">
+      <div class="fabric" style="background:#8a3a55;">
+        <svg width="80" height="29" viewBox="0 0 200 72">
+          <path d="M 56 20 A 24 24 0 1 0 56 52" fill="none" stroke="white" stroke-width="5" stroke-linecap="round"/>
+          <rect x="32" y="19" width="5.5" height="34" rx="1.5" fill="white"/>
+          <rect x="19" y="33" width="34" height="5.5" rx="1.5" fill="white"/>
+          <text x="115" y="50" font-family="'Abril Fatface',Georgia,serif" font-size="38" fill="white" text-anchor="middle" letter-spacing="1">ura</text>
+        </svg>
+      </div>
+      <span class="fabric-label">ローズユニフォーム</span>
+    </div>
+
+    <div class="uniform-card">
+      <div class="fabric" style="background:#2a1f1a;">
+        <svg width="80" height="29" viewBox="0 0 200 72">
+          <path d="M 56 20 A 24 24 0 1 0 56 52" fill="none" stroke="#c9a882" stroke-width="5" stroke-linecap="round"/>
+          <rect x="32" y="19" width="5.5" height="34" rx="1.5" fill="#c9a882"/>
+          <rect x="19" y="33" width="34" height="5.5" rx="1.5" fill="#c9a882"/>
+          <text x="115" y="50" font-family="'Abril Fatface',Georgia,serif" font-size="38" fill="#f5ede8" text-anchor="middle" letter-spacing="1">ura</text>
+        </svg>
+      </div>
+      <span class="fabric-label">ネイビーユニフォーム</span>
+    </div>
+
+    <div class="uniform-card">
+      <div class="fabric" style="background:#e8ddd5;">
+        <!-- mark only top left -->
+        <svg width="40" height="40" viewBox="0 0 80 80" style="position:absolute;top:20px;left:20px;">
+          <path d="M 63 26 A 27 27 0 1 0 63 54" fill="none" stroke="#8a3a55" stroke-width="5.5" stroke-linecap="round"/>
+          <rect x="37" y="24" width="6" height="32" rx="2" fill="#8a3a55"/>
+          <rect x="24" y="37" width="32" height="6" rx="2" fill="#8a3a55"/>
+        </svg>
+      </div>
+      <span class="fabric-label">マークのみ（袖・ポケット）</span>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const svgDefs = {
+  mark_rose_white: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="320" height="320"><path d="M 63 26 A 27 27 0 1 0 63 54" fill="none" stroke="#8a3a55" stroke-width="5.5" stroke-linecap="round"/><rect x="37" y="24" width="6" height="32" rx="2" fill="#8a3a55"/><rect x="24" y="37" width="32" height="6" rx="2" fill="#8a3a55"/></svg>`,
+  mark_white_rose: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="320" height="320"><rect width="80" height="80" fill="#8a3a55"/><path d="M 63 26 A 27 27 0 1 0 63 54" fill="none" stroke="white" stroke-width="5.5" stroke-linecap="round"/><rect x="37" y="24" width="6" height="32" rx="2" fill="white"/><rect x="24" y="37" width="32" height="6" rx="2" fill="white"/></svg>`,
+  mark_gold_navy: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="320" height="320"><rect width="80" height="80" fill="#2a1f1a"/><path d="M 63 26 A 27 27 0 1 0 63 54" fill="none" stroke="#c9a882" stroke-width="5.5" stroke-linecap="round"/><rect x="37" y="24" width="6" height="32" rx="2" fill="#c9a882"/><rect x="24" y="37" width="32" height="6" rx="2" fill="#c9a882"/></svg>`,
+  logo_white: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 72" width="800" height="288"><path d="M 56 20 A 24 24 0 1 0 56 52" fill="none" stroke="#8a3a55" stroke-width="5" stroke-linecap="round"/><rect x="32" y="19" width="5.5" height="34" rx="1.5" fill="#8a3a55"/><rect x="19" y="33" width="34" height="5.5" rx="1.5" fill="#8a3a55"/><text x="115" y="50" font-family="Abril Fatface,Georgia,serif" font-size="38" fill="#8a3a55" text-anchor="middle" letter-spacing="1">ura</text></svg>`,
+  logo_rose: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 72" width="800" height="288"><rect width="200" height="72" fill="#8a3a55"/><path d="M 56 20 A 24 24 0 1 0 56 52" fill="none" stroke="white" stroke-width="5" stroke-linecap="round"/><rect x="32" y="19" width="5.5" height="34" rx="1.5" fill="white"/><rect x="19" y="33" width="34" height="5.5" rx="1.5" fill="white"/><text x="115" y="50" font-family="Abril Fatface,Georgia,serif" font-size="38" fill="white" text-anchor="middle" letter-spacing="1">ura</text></svg>`,
+  logo_navy: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 72" width="800" height="288"><rect width="200" height="72" fill="#2a1f1a"/><path d="M 56 20 A 24 24 0 1 0 56 52" fill="none" stroke="#c9a882" stroke-width="5" stroke-linecap="round"/><rect x="32" y="19" width="5.5" height="34" rx="1.5" fill="#c9a882"/><rect x="19" y="33" width="34" height="5.5" rx="1.5" fill="#c9a882"/><text x="115" y="50" font-family="Abril Fatface,Georgia,serif" font-size="38" fill="#f5ede8" text-anchor="middle" letter-spacing="1">ura</text></svg>`
+};
+function dlSVG(id) {
+  const blob = new Blob([svgDefs[id]], {type:'image/svg+xml'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `cura-${id}.svg`;
+  a.click();
+}
+</script>
+</body>
+</html>

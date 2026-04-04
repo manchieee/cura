@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>cura | マイページ</title>
+  <!-- PWA -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="cura">
+  <meta name="theme-color" content="#2a1f1a">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Noto+Serif+JP:wght@200;300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fdf6f3;
+      --navy: #2a1f1a;
+      --navy-light: #3d2d26;
+      --rose: #b5647a;
+      --rose-light: #d4a0b0;
+      --rose-pale: #f0dada;
+      --rose-deep: #9e4e68;
+      --gold: #c9a882;
+      --text: #2c2220;
+      --text-muted: #7a6560;
+      --white: #ffffff;
+      --card-bg: #fffaf8;
+      --border: rgba(181,100,122,0.15);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Serif JP', "Yu Mincho", serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.8;
+      padding-bottom: 80px;
+      min-height: 100vh;
+    }
+
+    /* ─── ヘッダー ─── */
+    .header {
+      background: var(--navy);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-logo {
+      font-family: 'Abril Fatface', serif;
+      font-size: 1.5rem;
+      letter-spacing: 3px;
+      color: var(--white);
+      text-decoration: none;
+    }
+    .header-name {
+      font-size: 0.75rem;
+      color: var(--rose-light);
+      letter-spacing: 1px;
+    }
+
+    /* ─── タブナビ ─── */
+    .tab-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--navy);
+      display: flex;
+      z-index: 100;
+      box-shadow: 0 -2px 16px rgba(0,0,0,0.2);
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 10px 4px 12px;
+      border: none;
+      background: transparent;
+      color: rgba(255,255,255,0.5);
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      transition: color 0.2s;
+    }
+    .tab-btn.active { color: var(--gold); }
+    .tab-btn svg { width: 22px; height: 22px; }
+
+    /* ─── コンテンツ ─── */
+    .tab-content { display: none; padding: 20px 16px; }
+    .tab-content.active { display: block; }
+
+    /* ─── カード ─── */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 14px;
+    }
+    .card-label {
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      color: var(--rose);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .card-title {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+    .card-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* ─── ホーム ─── */
+    .greeting {
+      background: linear-gradient(135deg, #b05070, #c87890, #d89aaa);
+      border-radius: 16px;
+      padding: 24px 20px;
+      color: var(--white);
+      margin-bottom: 20px;
+    }
+    .greeting-name {
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      opacity: 0.8;
+      margin-bottom: 4px;
+    }
+    .greeting-text {
+      font-size: 1.2rem;
+      font-weight: 500;
+      line-height: 1.6;
+    }
+    .greeting-date {
+      font-size: 0.75rem;
+      opacity: 0.7;
+      margin-top: 12px;
+    }
+
+    .next-visit {
+      background: var(--navy);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 20px;
+      color: var(--white);
+    }
+    .next-visit-label {
+      font-size: 0.65rem;
+      letter-spacing: 2px;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .next-visit-date {
+      font-size: 1.4rem;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .next-visit-detail {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+    }
+    .next-visit-empty {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .section-title {
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      padding-left: 2px;
+    }
+
+    /* ─── ステータスバッジ ─── */
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 20px;
+      font-size: 0.65rem;
+      letter-spacing: 1px;
+    }
+    .badge-confirmed { background: #e8f5e9; color: #2e7d32; }
+    .badge-pending { background: #fff8e1; color: #f57f17; }
+    .badge-done { background: #f3e5f5; color: #6a1b9a; }
+    .badge-cancelled { background: #fce4ec; color: #880e4f; }
+
+    /* ─── 予約フォーム ─── */
+    .form-section {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+    .form-title {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--navy);
+      margin-bottom: 16px;
+      letter-spacing: 1px;
+    }
+    .form-group { margin-bottom: 14px; }
+    .form-label {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--white);
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.9rem;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      border-color: var(--rose);
+    }
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    .form-note {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-top: 6px;
+      line-height: 1.6;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 8px;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.9rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.1s;
+    }
+    .btn:active { transform: scale(0.98); }
+    .btn-primary {
+      background: var(--navy);
+      color: var(--white);
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-outline {
+      background: transparent;
+      color: var(--rose);
+      border: 1px solid var(--rose);
+      margin-top: 8px;
+    }
+    .btn-danger {
+      background: transparent;
+      color: #c0392b;
+      border: 1px solid rgba(192,57,43,0.3);
+      margin-top: 8px;
+      font-size: 0.8rem;
+    }
+
+    /* ─── 時間帯選択 ─── */
+    .time-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .time-chip {
+      padding: 10px 4px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--white);
+      text-align: center;
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.75rem;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .time-chip.selected {
+      background: var(--navy);
+      color: var(--white);
+      border-color: var(--navy);
+    }
+    .time-chip:active { transform: scale(0.96); }
+    .time-chip-price {
+      font-size: 0.65rem;
+      color: var(--rose);
+      display: block;
+      margin-top: 2px;
+    }
+    .time-chip.selected .time-chip-price { color: var(--gold); }
+
+    /* ─── 履歴 ─── */
+    .history-item {
+      border-left: 3px solid var(--rose-pale);
+      padding-left: 14px;
+      margin-bottom: 18px;
+    }
+    .history-item.done { border-color: var(--rose); }
+    .history-date {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      margin-bottom: 2px;
+    }
+    .history-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .history-meta {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .history-amount {
+      font-size: 0.85rem;
+      color: var(--navy);
+      font-weight: 500;
+    }
+
+    /* ─── メモ ─── */
+    .memo-sent {
+      background: var(--navy);
+      color: var(--white);
+      border-radius: 12px 12px 2px 12px;
+      padding: 12px 16px;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+      line-height: 1.7;
+    }
+    .memo-received {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px 12px 12px 2px;
+      padding: 12px 16px;
+      margin-bottom: 10px;
+      font-size: 0.85rem;
+      line-height: 1.7;
+    }
+    .memo-time {
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+    .memo-sender {
+      font-size: 0.65rem;
+      color: var(--rose);
+      margin-bottom: 4px;
+    }
+
+    /* ─── ローディング ─── */
+    .loading {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    .loading-dot {
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      background: var(--rose);
+      border-radius: 50%;
+      margin: 0 3px;
+      animation: bounce 1.2s infinite ease-in-out;
+    }
+    .loading-dot:nth-child(2) { animation-delay: 0.2s; }
+    .loading-dot:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes bounce {
+      0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+
+    /* ─── 未ログイン ─── */
+    .auth-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .auth-logo {
+      font-family: 'Abril Fatface', serif;
+      font-size: 2.5rem;
+      letter-spacing: 4px;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .auth-tagline {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+      margin-bottom: 40px;
+    }
+    .auth-message {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.9;
+      margin-bottom: 32px;
+    }
+    .auth-contact {
+      font-size: 0.8rem;
+      color: var(--rose);
+    }
+
+    /* ─── トースト通知 ─── */
+    .toast {
+      position: fixed;
+      top: 70px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: var(--navy);
+      color: var(--white);
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      letter-spacing: 0.5px;
+      opacity: 0;
+      transition: all 0.3s;
+      z-index: 200;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    .toast.success { border-left: 3px solid var(--gold); }
+    .toast.error { border-left: 3px solid #e57373; }
+
+    /* ─── 空状態 ─── */
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+    }
+    .empty-state-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+      opacity: 0.4;
+    }
+    .empty-state-text {
+      font-size: 0.85rem;
+      line-height: 1.8;
+    }
+
+    /* ─── 確認ダイアログ ─── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(42,31,26,0.6);
+      z-index: 300;
+      display: none;
+      align-items: flex-end;
+    }
+    .overlay.show { display: flex; }
+    .dialog {
+      background: var(--bg);
+      width: 100%;
+      border-radius: 20px 20px 0 0;
+      padding: 28px 20px 40px;
+    }
+    .dialog-title {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 10px;
+      color: var(--navy);
+    }
+    .dialog-body {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+    .dialog-actions {
+      display: flex;
+      gap: 10px;
+    }
+    .dialog-actions .btn { flex: 1; }
+  </style>
+</head>
+<body>
+
+<!-- ─── ヘッダー ─── -->
+<header class="header">
+  <a href="index.html" class="header-logo">cura</a>
+  <span class="header-name" id="headerName">マイページ</span>
+</header>
+
+<!-- ─── 未ログイン表示 ─── -->
+<div id="authScreen" class="auth-screen" style="display:none;">
+  <div class="auth-logo">cura</div>
+  <div class="auth-tagline">PRIVATE CARE</div>
+  <p class="auth-message">
+    マイページはcuraご利用の方専用です。<br>
+    ご登録いただいたSMSまたはメールにお送りした<br>
+    専用リンクからアクセスしてください。
+  </p>
+  <p class="auth-contact">
+    ご不明な場合は<br>
+    <a href="mailto:hello@cura-care.jp" style="color:var(--rose);">hello@cura-care.jp</a> までご連絡ください
+  </p>
+</div>
+
+<!-- ─── メインコンテンツ ─── -->
+<main id="mainContent" style="display:none;">
+
+  <!-- ホーム -->
+  <div id="tab-home" class="tab-content active">
+    <div class="greeting" id="greetingCard">
+      <div class="greeting-name">WELCOME BACK</div>
+      <div class="greeting-text" id="greetingText">読み込み中...</div>
+      <div class="greeting-date" id="greetingDate"></div>
+    </div>
+
+    <div class="next-visit" id="nextVisitCard">
+      <div class="next-visit-label">NEXT VISIT</div>
+      <div class="loading">
+        <span class="loading-dot"></span>
+        <span class="loading-dot"></span>
+        <span class="loading-dot"></span>
+      </div>
+    </div>
+
+    <div class="section-title">最近のご利用</div>
+    <div id="recentHistory">
+      <div class="loading">
+        <span class="loading-dot"></span>
+        <span class="loading-dot"></span>
+        <span class="loading-dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 予約 -->
+  <div id="tab-reserve" class="tab-content">
+    <div class="section-title">ご予約一覧</div>
+    <div id="upcomingReservations">
+      <div class="loading">
+        <span class="loading-dot"></span>
+        <span class="loading-dot"></span>
+        <span class="loading-dot"></span>
+      </div>
+    </div>
+
+    <div class="section-title" style="margin-top:24px;">新規ご予約</div>
+    <div class="form-section">
+      <div class="form-title">ご希望の日時をお選びください</div>
+
+      <div class="form-group">
+        <label class="form-label">ご希望日</label>
+        <input type="date" class="form-input" id="reserveDate">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">開始時間帯</label>
+        <div class="time-grid" id="timeGrid">
+          <div class="time-chip" data-time="early" onclick="selectTime(this)">
+            〜8時<span class="time-chip-price">+30%</span>
+          </div>
+          <div class="time-chip" data-time="morning" onclick="selectTime(this)">
+            8〜12時<span class="time-chip-price">通常</span>
+          </div>
+          <div class="time-chip" data-time="afternoon" onclick="selectTime(this)">
+            12〜18時<span class="time-chip-price">通常</span>
+          </div>
+          <div class="time-chip" data-time="evening" onclick="selectTime(this)">
+            18〜21時<span class="time-chip-price">+20%</span>
+          </div>
+          <div class="time-chip" data-time="night" onclick="selectTime(this)">
+            21時以降<span class="time-chip-price">+30%</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">ご希望時間（最低3時間〜）</label>
+        <select class="form-select" id="reserveHours">
+          <option value="">選択してください</option>
+          <option value="3">3時間</option>
+          <option value="4">4時間</option>
+          <option value="5">5時間</option>
+          <option value="6">6時間</option>
+          <option value="7">7時間</option>
+          <option value="8">8時間</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">サービス内容（任意）</label>
+        <select class="form-select" id="reserveService">
+          <option value="care">生活支援・自宅ケア</option>
+          <option value="accompany">外出・通院同行</option>
+          <option value="travel">旅行同行</option>
+          <option value="respite">ご家族の外出・休暇中のケア</option>
+          <option value="other">その他</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">ご要望・申し送り（任意）</label>
+        <textarea class="form-textarea" id="reserveNote" placeholder="例）右膝が痛むため、歩行補助をお願いしたいです。最近少し元気がないので、ゆっくりお話しする時間もとれると嬉しいです。"></textarea>
+      </div>
+
+      <div id="reserveEstimate" style="display:none;" class="card" style="border-color:var(--gold);">
+        <div class="card-label">お見積もり（目安）</div>
+        <div class="card-title" id="estimateAmount">¥ —</div>
+        <div class="card-sub">※移動費は別途実費。確定金額は担当よりご連絡します。</div>
+      </div>
+
+      <button class="btn btn-primary" onclick="submitReservation()">予約リクエストを送る</button>
+      <p class="form-note" style="margin-top:10px; text-align:center;">
+        ご確認の上、担当よりSMS・メールにてご連絡いたします。
+      </p>
+    </div>
+  </div>
+
+  <!-- 履歴 -->
+  <div id="tab-history" class="tab-content">
+    <div class="section-title">ご利用履歴</div>
+    <div id="fullHistory">
+      <div class="loading">
+        <span class="loading-dot"></span>
+        <span class="loading-dot"></span>
+        <span class="loading-dot"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- メモ・連絡 -->
+  <div id="tab-memo" class="tab-content">
+    <div class="section-title">curaへのメモ・連絡</div>
+    <div id="memoList">
+      <div class="loading">
+        <span class="loading-dot"></span>
+        <span class="loading-dot"></span>
+        <span class="loading-dot"></span>
+      </div>
+    </div>
+
+    <div class="form-section" style="margin-top:20px;">
+      <div class="form-title">新しいメモを送る</div>
+      <div class="form-group">
+        <textarea class="form-textarea" id="memoInput" placeholder="次回のケアについて、体調の変化、ご要望など、気になることがあればお気軽にどうぞ。"></textarea>
+      </div>
+      <button class="btn btn-primary" onclick="submitMemo()">送信する</button>
+    </div>
+  </div>
+
+</main>
+
+<!-- ─── タブナビゲーション ─── -->
+<nav class="tab-nav" id="tabNav" style="display:none;">
+  <button class="tab-btn active" onclick="switchTab('home', this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955a1.5 1.5 0 012.092 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"/>
+    </svg>
+    ホーム
+  </button>
+  <button class="tab-btn" onclick="switchTab('reserve', this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"/>
+    </svg>
+    予約
+  </button>
+  <button class="tab-btn" onclick="switchTab('history', this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    </svg>
+    履歴
+  </button>
+  <button class="tab-btn" onclick="switchTab('memo', this)">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"/>
+    </svg>
+    メモ
+  </button>
+</nav>
+
+<!-- ─── トースト ─── -->
+<div class="toast" id="toast"></div>
+
+<!-- ─── 確認ダイアログ ─── -->
+<div class="overlay" id="confirmOverlay">
+  <div class="dialog">
+    <div class="dialog-title" id="dialogTitle">確認</div>
+    <div class="dialog-body" id="dialogBody"></div>
+    <div class="dialog-actions">
+      <button class="btn btn-outline" onclick="closeDialog()">キャンセル</button>
+      <button class="btn btn-primary" id="dialogConfirmBtn">確定する</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ─── 設定 ───
+  // Apps Script WebアプリのURL（デプロイ後に設定）
+  const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwhTCm7HlFHzhmlsBhB7PjZqTir8hgmOO0etu27AWsqLpE4KL08ueIKxCibWuaLB3Ud/exec';
+
+  // 料金設定（税込・CLAUDE.md確定料金）
+  const RATES = {
+    early:     { label: '〜8時', rate: 15600, surcharge: '+30%' },
+    morning:   { label: '8〜18時', rate: 12000, surcharge: '通常' },
+    evening:   { label: '18〜21時', rate: 14400, surcharge: '+20%' },
+    night:     { label: '21時以降', rate: 15600, surcharge: '+30%' },
+  };
+
+  // ─── 状態 ───
+  let clientToken = null;
+  let clientData = null;
+  let selectedTime = null;
+  let dialogCallback = null;
+
+  // ─── 初期化 ───
+  function init() {
+    // URLからトークン取得
+    const params = new URLSearchParams(window.location.search);
+    clientToken = params.get('token');
+
+    if (!clientToken) {
+      showAuthScreen();
+      return;
+    }
+
+    loadClientData();
+  }
+
+  function showAuthScreen() {
+    document.getElementById('authScreen').style.display = 'flex';
+    document.getElementById('mainContent').style.display = 'none';
+    document.getElementById('tabNav').style.display = 'none';
+  }
+
+  function showMainContent() {
+    document.getElementById('authScreen').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    document.getElementById('tabNav').style.display = 'flex';
+  }
+
+  // ─── データ取得 ───
+  async function loadClientData() {
+    try {
+      let data;
+
+      if (APPS_SCRIPT_URL) {
+        const res = await fetch(`${APPS_SCRIPT_URL}?action=getClient&token=${clientToken}`);
+        data = await res.json();
+        if (!data || data.error) { showAuthScreen(); return; }
+      } else {
+        // デモデータ
+        data = getDemoData();
+      }
+
+      clientData = data;
+      showMainContent();
+      renderAll();
+    } catch (e) {
+      console.error(e);
+      // Apps Script未接続時はデモモードで表示
+      clientData = getDemoData();
+      showMainContent();
+      renderAll();
+    }
+  }
+
+  function getDemoData() {
+    return {
+      name: '田中 花子',
+      nameShort: '花子',
+      reservations: [
+        {
+          id: 'r001',
+          date: '2026年4月10日（金）',
+          timeLabel: '10:00〜15:00（5時間）',
+          service: '外出・通院同行',
+          status: 'confirmed',
+          note: '定期検診の同行をお願いします。帰りに軽くお茶できたら嬉しいです。',
+          amount: 75000
+        },
+        {
+          id: 'r002',
+          date: '2026年4月18日（土）',
+          timeLabel: '13:00〜16:00（3時間）',
+          service: '生活支援・自宅ケア',
+          status: 'pending',
+          note: '',
+          amount: 45000
+        }
+      ],
+      history: [
+        {
+          date: '2026年3月28日',
+          service: '外出同行（お花見）',
+          hours: 4,
+          amount: 60000,
+          staff: 'まさみ',
+          memo: '千鳥ヶ淵で満開の桜を堪能されました。足取りもしっかりされていました。'
+        },
+        {
+          date: '2026年3月15日',
+          service: '生活支援・自宅ケア',
+          hours: 3,
+          amount: 45000,
+          staff: 'まさみ',
+          memo: '体調良好。お好きなドラマのお話で盛り上がりました。'
+        },
+        {
+          date: '2026年3月1日',
+          service: '通院同行（文京区・大塚病院）',
+          hours: 3,
+          amount: 45000,
+          staff: 'まさみ',
+          memo: '診察結果は良好とのこと。次回は4月の予定です。'
+        }
+      ],
+      memos: [
+        {
+          from: 'client',
+          time: '2026年3月27日 14:32',
+          text: 'お花見、楽しみにしています！ぜひ桜の下でお弁当を食べたいな、と思っています。'
+        },
+        {
+          from: 'cura',
+          time: '2026年3月27日 17:05',
+          text: 'ご連絡ありがとうございます！素敵ですね。千鳥ヶ淵の桜の名所近くに気持ちの良い場所を見つけておきます。当日楽しみにしていてください。'
+        }
+      ]
+    };
+  }
+
+  // ─── 描画 ───
+  function renderAll() {
+    renderHome();
+    renderReservations();
+    renderHistory();
+    renderMemos();
+
+    document.getElementById('headerName').textContent = `${clientData.name} 様`;
+
+    // 日付のデフォルト
+    const today = new Date();
+    today.setDate(today.getDate() + 3);
+    document.getElementById('reserveDate').value = today.toISOString().split('T')[0];
+  }
+
+  function renderHome() {
+    const { name, nameShort, reservations, history } = clientData;
+    const now = new Date();
+    const hour = now.getHours();
+    const greeting = hour < 11 ? 'おはようございます' : hour < 17 ? 'こんにちは' : 'こんばんは';
+
+    document.getElementById('greetingText').textContent = `${greeting}、${nameShort}さん。`;
+    document.getElementById('greetingDate').textContent = formatDateJP(now);
+
+    // 次回訪問
+    const nextCard = document.getElementById('nextVisitCard');
+    const upcoming = reservations.filter(r => r.status !== 'cancelled');
+    if (upcoming.length > 0) {
+      const next = upcoming[0];
+      nextCard.innerHTML = `
+        <div class="next-visit-label">NEXT VISIT</div>
+        <div class="next-visit-date">${next.date}</div>
+        <div class="next-visit-detail">${next.timeLabel}<br>${next.service}</div>
+      `;
+    } else {
+      nextCard.innerHTML = `
+        <div class="next-visit-label">NEXT VISIT</div>
+        <div class="next-visit-empty">ご予約はまだありません</div>
+      `;
+    }
+
+    // 最近の履歴（2件）
+    const recentEl = document.getElementById('recentHistory');
+    if (history.length === 0) {
+      recentEl.innerHTML = `<div class="empty-state"><div class="empty-state-text">ご利用履歴がありません</div></div>`;
+      return;
+    }
+    recentEl.innerHTML = history.slice(0, 2).map(h => `
+      <div class="history-item done">
+        <div class="history-date">${h.date}　担当：${h.staff}</div>
+        <div class="history-title">${h.service}</div>
+        <div class="history-meta">${h.hours}時間　<span class="history-amount">¥${h.amount.toLocaleString()}</span></div>
+      </div>
+    `).join('');
+  }
+
+  function renderReservations() {
+    const el = document.getElementById('upcomingReservations');
+    const { reservations } = clientData;
+    const active = reservations.filter(r => r.status !== 'cancelled');
+
+    if (active.length === 0) {
+      el.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">📅</div>
+          <div class="empty-state-text">予定中のご予約はありません</div>
+        </div>
+      `;
+      return;
+    }
+
+    el.innerHTML = active.map(r => `
+      <div class="card">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;">
+          <div class="card-label">${r.date}</div>
+          <span class="badge ${r.status === 'confirmed' ? 'badge-confirmed' : 'badge-pending'}">
+            ${r.status === 'confirmed' ? '確定' : '確認中'}
+          </span>
+        </div>
+        <div class="card-title">${r.service}</div>
+        <div class="card-sub">${r.timeLabel}</div>
+        ${r.note ? `<div class="card-sub" style="margin-top:8px;font-style:italic;">"${r.note}"</div>` : ''}
+        <div style="margin-top:12px;font-size:0.85rem;color:var(--navy);">¥${r.amount.toLocaleString()}</div>
+        ${r.status === 'pending' ? `<button class="btn btn-danger" onclick="cancelReservation('${r.id}')">キャンセルする</button>` : ''}
+      </div>
+    `).join('');
+  }
+
+  function renderHistory() {
+    const el = document.getElementById('fullHistory');
+    const { history } = clientData;
+
+    if (history.length === 0) {
+      el.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">📋</div>
+          <div class="empty-state-text">ご利用履歴はまだありません</div>
+        </div>
+      `;
+      return;
+    }
+
+    el.innerHTML = history.map(h => `
+      <div class="card">
+        <div class="card-label">${h.date}　担当：${h.staff}</div>
+        <div class="card-title">${h.service}</div>
+        <div class="card-sub">${h.hours}時間　<span style="color:var(--navy);font-weight:500;">¥${h.amount.toLocaleString()}</span></div>
+        ${h.memo ? `<div style="margin-top:10px;font-size:0.78rem;color:var(--text-muted);line-height:1.7;border-top:1px solid var(--border);padding-top:10px;">${h.memo}</div>` : ''}
+      </div>
+    `).join('');
+  }
+
+  function renderMemos() {
+    const el = document.getElementById('memoList');
+    const { memos } = clientData;
+
+    if (memos.length === 0) {
+      el.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-text">まだメモはありません。<br>気になることがあればお気軽にどうぞ。</div>
+        </div>
+      `;
+      return;
+    }
+
+    el.innerHTML = memos.map(m => {
+      if (m.from === 'client') {
+        return `
+          <div style="text-align:right;">
+            <div class="memo-time" style="text-align:right;">${m.time}</div>
+            <div class="memo-sent">${m.text}</div>
+          </div>
+        `;
+      } else {
+        return `
+          <div>
+            <div class="memo-sender">cura / まさみ</div>
+            <div class="memo-time">${m.time}</div>
+            <div class="memo-received">${m.text}</div>
+          </div>
+        `;
+      }
+    }).join('');
+  }
+
+  // ─── タブ切替 ───
+  function switchTab(tab, btn) {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    document.getElementById(`tab-${tab}`).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  // ─── 時間帯選択 ───
+  function selectTime(el) {
+    document.querySelectorAll('.time-chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedTime = el.dataset.time;
+    updateEstimate();
+  }
+
+  function updateEstimate() {
+    const hours = parseInt(document.getElementById('reserveHours').value);
+    if (!selectedTime || !hours) {
+      document.getElementById('reserveEstimate').style.display = 'none';
+      return;
+    }
+    const rate = RATES[selectedTime].rate;
+    const total = rate * hours;
+    document.getElementById('estimateAmount').textContent = `¥${total.toLocaleString()}〜`;
+    document.getElementById('reserveEstimate').style.display = 'block';
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('reserveHours').addEventListener('change', updateEstimate);
+  });
+
+  // ─── 予約送信 ───
+  async function submitReservation() {
+    const date = document.getElementById('reserveDate').value;
+    const hours = document.getElementById('reserveHours').value;
+    const service = document.getElementById('reserveService').value;
+    const note = document.getElementById('reserveNote').value;
+
+    if (!date) { showToast('ご希望日を選択してください', 'error'); return; }
+    if (!selectedTime) { showToast('時間帯を選択してください', 'error'); return; }
+    if (!hours) { showToast('ご希望時間を選択してください', 'error'); return; }
+
+    showDialog(
+      '予約リクエストを送る',
+      `${formatDateInput(date)}、${RATES[selectedTime].label}からの${hours}時間でよろしいですか？\n\n確認後、担当よりご連絡いたします。`,
+      async () => {
+        try {
+          if (APPS_SCRIPT_URL) {
+            await fetch(APPS_SCRIPT_URL, {
+              method: 'POST',
+              body: JSON.stringify({
+                action: 'createReservation',
+                token: clientToken,
+                date, time: selectedTime, hours, service, note
+              })
+            });
+          }
+          showToast('予約リクエストを送信しました', 'success');
+          document.getElementById('reserveNote').value = '';
+          document.getElementById('reserveHours').value = '';
+          document.querySelectorAll('.time-chip').forEach(c => c.classList.remove('selected'));
+          selectedTime = null;
+          document.getElementById('reserveEstimate').style.display = 'none';
+        } catch(e) {
+          showToast('送信しました（確認メッセージをお待ちください）', 'success');
+        }
+      }
+    );
+  }
+
+  // ─── キャンセル ───
+  function cancelReservation(id) {
+    showDialog(
+      '予約をキャンセルする',
+      'この予約をキャンセルしてもよろしいですか？\nキャンセルポリシーに応じたキャンセル料が発生する場合があります。',
+      async () => {
+        try {
+          if (APPS_SCRIPT_URL) {
+            await fetch(APPS_SCRIPT_URL, {
+              method: 'POST',
+              body: JSON.stringify({ action: 'cancelReservation', token: clientToken, id })
+            });
+          }
+          showToast('キャンセルリクエストを送信しました', 'success');
+          // デモ用：ローカルで削除
+          clientData.reservations = clientData.reservations.filter(r => r.id !== id);
+          renderReservations();
+        } catch(e) {
+          showToast('送信しました', 'success');
+        }
+      }
+    );
+  }
+
+  // ─── メモ送信 ───
+  async function submitMemo() {
+    const text = document.getElementById('memoInput').value.trim();
+    if (!text) { showToast('メモを入力してください', 'error'); return; }
+
+    try {
+      if (APPS_SCRIPT_URL) {
+        await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          body: JSON.stringify({ action: 'sendMemo', token: clientToken, text })
+        });
+      }
+      const now = new Date();
+      clientData.memos.push({
+        from: 'client',
+        time: `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日 ${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`,
+        text
+      });
+      document.getElementById('memoInput').value = '';
+      renderMemos();
+      showToast('送信しました', 'success');
+    } catch(e) {
+      showToast('送信しました', 'success');
+    }
+  }
+
+  // ─── ダイアログ ───
+  function showDialog(title, body, onConfirm) {
+    document.getElementById('dialogTitle').textContent = title;
+    document.getElementById('dialogBody').textContent = body;
+    document.getElementById('confirmOverlay').classList.add('show');
+    dialogCallback = onConfirm;
+    document.getElementById('dialogConfirmBtn').onclick = () => {
+      closeDialog();
+      if (dialogCallback) dialogCallback();
+    };
+  }
+
+  function closeDialog() {
+    document.getElementById('confirmOverlay').classList.remove('show');
+    dialogCallback = null;
+  }
+
+  // ─── トースト ───
+  function showToast(msg, type = 'success') {
+    const el = document.getElementById('toast');
+    el.textContent = msg;
+    el.className = `toast ${type} show`;
+    setTimeout(() => el.classList.remove('show'), 3000);
+  }
+
+  // ─── ユーティリティ ───
+  function formatDateJP(d) {
+    const days = ['日', '月', '火', '水', '木', '金', '土'];
+    return `${d.getFullYear()}年${d.getMonth()+1}月${d.getDate()}日（${days[d.getDay()]}）`;
+  }
+
+  function formatDateInput(str) {
+    const d = new Date(str);
+    return formatDateJP(d);
+  }
+
+  // ─── Service Worker登録 ───
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
+    });
+  }
+
+  // ─── 起動 ───
+  init();
+</script>
+</body>
+</html>

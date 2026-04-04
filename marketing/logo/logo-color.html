@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cura — カラー比較</title>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Noto+Serif+JP:wght@300&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#f4ede6; font-family:'Noto Serif JP',serif; padding:52px 32px 100px; }
+h1 { text-align:center; font-size:11px; letter-spacing:.5em; color:#8a6a5a; margin-bottom:56px; font-weight:300; }
+
+.row { max-width:860px; margin:0 auto; display:flex; flex-direction:column; gap:2px; }
+.swatch {
+  display:grid; grid-template-columns:200px 1fr 1fr;
+  align-items:center; background:white; padding:28px 32px;
+  gap:40px;
+}
+.swatch:nth-child(even) { background:#faf5f2; }
+.color-info { display:flex; flex-direction:column; gap:6px; }
+.color-name { font-size:10px; letter-spacing:.3em; color:#8a6a5a; }
+.color-hex { font-size:11px; letter-spacing:.15em; color:#bba; font-family:monospace; }
+.color-dot { width:28px; height:28px; border-radius:50%; margin-bottom:4px; }
+.note { font-size:9px; color:#bba; letter-spacing:.1em; line-height:1.8; }
+
+.wm { display:flex; align-items:center; justify-content:center; }
+.mark-demo { display:flex; align-items:center; justify-content:center; gap:24px; }
+.mark-wrap { display:flex; flex-direction:column; align-items:center; gap:6px; }
+.mark-lbl { font-size:9px; color:#bba; letter-spacing:.1em; }
+</style>
+</head>
+<body>
+
+<h1>C U R A — カラー比較</h1>
+
+<div class="row">
+
+  <!-- 現在 -->
+  <div class="swatch">
+    <div class="color-info">
+      <div class="color-dot" style="background:#8a3a55;"></div>
+      <div class="color-name">現在</div>
+      <div class="color-hex">#8a3a55</div>
+      <div class="note">深いローズ<br>力強い・格調ある</div>
+    </div>
+    <div class="wm">
+      <svg width="180" height="56" viewBox="0 0 220 68">
+        <text x="110" y="54" font-family="'Abril Fatface',Georgia,serif" font-size="52" fill="#8a3a55" text-anchor="middle" letter-spacing="3">cura</text>
+      </svg>
+    </div>
+    <div class="mark-demo">
+      <div class="mark-wrap">
+        <svg width="48" height="48" viewBox="0 0 60 60">
+          <rect x="26" y="6" width="8" height="48" rx="3" fill="#8a3a55"/>
+          <rect x="6" y="26" width="48" height="8" rx="3" fill="#8a3a55"/>
+        </svg>
+        <span class="mark-lbl">制服マーク</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 少し薄め -->
+  <div class="swatch">
+    <div class="color-info">
+      <div class="color-dot" style="background:#a85f78;"></div>
+      <div class="color-name">ミドルローズ</div>
+      <div class="color-hex">#a85f78</div>
+      <div class="note">ブランドカラー中間<br>華やか・フェミニン</div>
+    </div>
+    <div class="wm">
+      <svg width="180" height="56" viewBox="0 0 220 68">
+        <text x="110" y="54" font-family="'Abril Fatface',Georgia,serif" font-size="52" fill="#a85f78" text-anchor="middle" letter-spacing="3">cura</text>
+      </svg>
+    </div>
+    <div class="mark-demo">
+      <div class="mark-wrap">
+        <svg width="48" height="48" viewBox="0 0 60 60">
+          <rect x="26" y="6" width="8" height="48" rx="3" fill="#a85f78"/>
+          <rect x="6" y="26" width="48" height="8" rx="3" fill="#a85f78"/>
+        </svg>
+        <span class="mark-lbl">制服マーク</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- さらに薄め -->
+  <div class="swatch">
+    <div class="color-info">
+      <div class="color-dot" style="background:#b87888;"></div>
+      <div class="color-name">ライトローズ</div>
+      <div class="color-hex">#b87888</div>
+      <div class="note">ブランドカラー薄め<br>やわらか・上品</div>
+    </div>
+    <div class="wm">
+      <svg width="180" height="56" viewBox="0 0 220 68">
+        <text x="110" y="54" font-family="'Abril Fatface',Georgia,serif" font-size="52" fill="#b87888" text-anchor="middle" letter-spacing="3">cura</text>
+      </svg>
+    </div>
+    <div class="mark-demo">
+      <div class="mark-wrap">
+        <svg width="48" height="48" viewBox="0 0 60 60">
+          <rect x="26" y="6" width="8" height="48" rx="3" fill="#b87888"/>
+          <rect x="6" y="26" width="48" height="8" rx="3" fill="#b87888"/>
+        </svg>
+        <span class="mark-lbl">制服マーク</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- もっと薄め -->
+  <div class="swatch">
+    <div class="color-info">
+      <div class="color-dot" style="background:#c99aaa;"></div>
+      <div class="color-name">ペールローズ</div>
+      <div class="color-hex">#c99aaa</div>
+      <div class="note">さらに薄いピンク<br>繊細・淡い</div>
+    </div>
+    <div class="wm">
+      <svg width="180" height="56" viewBox="0 0 220 68">
+        <text x="110" y="54" font-family="'Abril Fatface',Georgia,serif" font-size="52" fill="#c99aaa" text-anchor="middle" letter-spacing="3">cura</text>
+      </svg>
+    </div>
+    <div class="mark-demo">
+      <div class="mark-wrap">
+        <svg width="48" height="48" viewBox="0 0 60 60">
+          <rect x="26" y="6" width="8" height="48" rx="3" fill="#c99aaa"/>
+          <rect x="6" y="26" width="48" height="8" rx="3" fill="#c99aaa"/>
+        </svg>
+        <span class="mark-lbl">制服マーク</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

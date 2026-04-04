@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cura — 上付きマーク</title>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Noto+Serif+JP:wght@300&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#f4ede6; font-family:'Noto Serif JP',serif; padding:52px 32px 100px; }
+h1 { text-align:center; font-size:11px; letter-spacing:.5em; color:#8a6a5a; margin-bottom:8px; font-weight:300; }
+.meta { text-align:center; font-size:10px; color:#bba; letter-spacing:.2em; margin-bottom:56px; }
+
+.block { max-width:900px; margin:0 auto 72px; }
+.block-title { font-size:10px; letter-spacing:.4em; color:#8a3a55; font-weight:300; padding-bottom:10px; border-bottom:1px solid #e0cfc8; margin-bottom:28px; }
+.row { display:flex; gap:20px; flex-wrap:wrap; align-items:center; }
+.card { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:40px 32px 28px; position:relative; gap:10px; }
+.tag { position:absolute; top:10px; left:12px; font-size:9px; letter-spacing:.2em; color:#aaa; }
+.lbl { font-size:9px; letter-spacing:.15em; color:#aaa; }
+</style>
+</head>
+<body>
+
+<h1>C U R A — 上付きマーク</h1>
+<p class="meta">cura が主役・上にさりげなく光る</p>
+
+
+<!-- 案A: ＋（太め・上左） -->
+<div class="block">
+  <p class="block-title">A — 太い ＋ を左上に</p>
+  <div class="row">
+    <div class="card" style="background:white;">
+      <span class="tag">ローズ</span>
+      <svg width="210" height="76" viewBox="0 0 210 76">
+        <rect x="12" y="5"  width="7" height="24" rx="2.5" fill="#8a3a55"/>
+        <rect x="4"  y="13" width="23" height="7"  rx="2.5" fill="#8a3a55"/>
+        <text x="108" y="68" font-family="'Abril Fatface',Georgia,serif" font-size="50" fill="#8a3a55" text-anchor="middle" letter-spacing="2">cura</text>
+      </svg>
+    </div>
+    <div class="card" style="background:#8a3a55;">
+      <span class="tag" style="color:rgba(255,255,255,.35)">白抜き</span>
+      <svg width="210" height="76" viewBox="0 0 210 76">
+        <rect x="12" y="5"  width="7" height="24" rx="2.5" fill="white"/>
+        <rect x="4"  y="13" width="23" height="7"  rx="2.5" fill="white"/>
+        <text x="108" y="68" font-family="'Abril Fatface',Georgia,serif" font-size="50" fill="white" text-anchor="middle" letter-spacing="2">cura</text>
+      </svg>
+    </div>
+    <div class="card" style="background:#2a1f1a;">
+      <span class="tag" style="color:rgba(255,255,255,.2)">ゴールド</span>
+      <svg width="210" height="76" viewBox="0 0 210 76">
+        <rect x="12" y="5"  width="7" height="24" rx="2.5" fill="#c9a882"/>
+        <rect x="4"  y="13" width="23" height="7"  rx="2.5" fill="#c9a882"/>
+        <text x="108" y="68" font-family="'Abril Fatface',Georgia,serif" font-size="50" fill="#f0e4d6" text-anchor="middle" letter-spacing="2">cura</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+
+<!-- 案B: 4本線の星（＊っぽく） -->
+<div class="block">
+  <p class="block-title">B — 4本線スター（＊）を左上に</p>
+  <div class="row">
+    <div class="card" style="background:white;">
+      <span class="tag">ローズ</span>
+      <svg width="210" height="76" viewBox="0 0 210 76">
+        <!-- 4-pointed star: cross + diagonal cross -->
+        <rect x="14" y="4"  width="5" height="20" rx="2" fill="#8a3a55"/>
+        <rect x="6"  y="12" width="21" height="5"  rx="2" fill="#8a3a55"/>
+        <!-- diagonal lines -->
+        <line x1="8"  y1="6"  x2="26" y2="22" stroke="#8a3a55" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="26" y1="6"  x2="8"  y2="22" stroke="#8a3a55" stroke-width="3.5" stroke-linecap="round"/>
+        <text x="118" y="68" font-family="'Abril Fatface',Georgia,serif" font-size="50" fill="#8a3a55" text-anchor="middle" letter-spacing="2">cura</text>
+      </svg>
+    </div>
+    <div class="card" style="background:#8a3a55;">
+      <span class="tag" style="color:rgba(255,255,255,.35)">白抜き</span>
+      <svg width="210" height="76" viewBox="0 0 210 76">
+        <rect x="14" y="4"  width="5" height="20" rx="2" fill="white"/>
+        <rect x="6"  y="12" width="21" height="5"  rx="2" fill="white"/>
+        <line x1="8"  y1="6"  x2="26" y2="22" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="26" y1="6"  x2="8"  y2="22" stroke="white" stroke-width="3.5" stroke-linecap="round"/>
+        <text x="118" y="68" font-family="'Abril Fatface',Georgia,serif" font-size="50" fill="white" text-anchor="middle" letter-spacing="2">cura</text>
+      </svg>
+    </div>
+    <div class="card" style="background:#2a1f1a;">
+      <span class="tag" style="color:rgba(255,255,255,.2)">ゴールド</span>
+      <svg width="210" height="76" viewBox="0 0 210 76">
+        <rect x="14" y="4"  width="5" height="20" rx="2" fill="#c9a882"/>
+        <rect x="6"  y="12" width="21" height="5"  rx="2" fill="#c9a882"/>
+        <line x1="8"  y1="6"  x2="26" y2="22" stroke="#c9a882" stroke-width="3.5" stroke-linecap="round"/>
+        <line x1="26" y1="6"  x2="8"  y2="22" stroke="#c9a882" stroke-width="3.5" stroke-linecap="round"/>
+        <text x="118" y="68" font-family="'Abril Fatface',Georgia,serif" font-size="50" fill="#f0e4d6" text-anchor="middle" letter-spacing="2">cura</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+
+<!-- 案C: ダイヤ型スター（4点・先が尖る） -->
+<div class="block">
+  <p class="block-title">C — 4点スター（ダイヤ型・先が尖る）を左上に</p>
+  <div class="row">
+    <div class="card" style="background:white;">
+      <span class="tag">ローズ</span>
+      <svg width="210" height="76" viewBox="0 0 210 76">
+        <!-- 4-pointed diamond star -->
+        <path d="M 16 2 L 20 12 L 30 14 L 20 17 L 16 26 L 12 17 L 2 14 L 12 12 Z" fill="#8a3a55"/>
+        <text x="118" y="68" font-family="'Abril Fatface',Georgia,serif" font-size="50" fill="#8a3a55" text-anchor="middle" letter-spacing="2">cura</text>
+      </svg>
+    </div>
+    <div class="card" style="background:#8a3a55;">
+      <span class="tag" style="color:rgba(255,255,255,.35)">白抜き</span>
+      <svg width="210" height="76" viewBox="0 0 210 76">
+        <path d="M 16 2 L 20 12 L 30 14 L 20 17 L 16 26 L 12 17 L 2 14 L 12 12 Z" fill="white"/>
+        <text x="118" y="68" font-family="'Abril Fatface',Georgia,serif" font-size="50" fill="white" text-anchor="middle" letter-spacing="2">cura</text>
+      </svg>
+    </div>
+    <div class="card" style="background:#2a1f1a;">
+      <span class="tag" style="color:rgba(255,255,255,.2)">ゴールド</span>
+      <svg width="210" height="76" viewBox="0 0 210 76">
+        <path d="M 16 2 L 20 12 L 30 14 L 20 17 L 16 26 L 12 17 L 2 14 L 12 12 Z" fill="#c9a882"/>
+        <text x="118" y="68" font-family="'Abril Fatface',Georgia,serif" font-size="50" fill="#f0e4d6" text-anchor="middle" letter-spacing="2">cura</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+
+<!-- 案D: ＋ を中央上に（センター揃え） -->
+<div class="block">
+  <p class="block-title">D — ＋ を中央上に（センター揃え）</p>
+  <div class="row">
+    <div class="card" style="background:white;">
+      <span class="tag">ローズ</span>
+      <svg width="200" height="82" viewBox="0 0 200 82">
+        <rect x="96" y="4"  width="8" height="24" rx="3" fill="#8a3a55"/>
+        <rect x="88" y="12" width="24" height="8"  rx="3" fill="#8a3a55"/>
+        <text x="100" y="76" font-family="'Abril Fatface',Georgia,serif" font-size="50" fill="#8a3a55" text-anchor="middle" letter-spacing="2">cura</text>
+      </svg>
+    </div>
+    <div class="card" style="background:#8a3a55;">
+      <span class="tag" style="color:rgba(255,255,255,.35)">白抜き</span>
+      <svg width="200" height="82" viewBox="0 0 200 82">
+        <rect x="96" y="4"  width="8" height="24" rx="3" fill="white"/>
+        <rect x="88" y="12" width="24" height="8"  rx="3" fill="white"/>
+        <text x="100" y="76" font-family="'Abril Fatface',Georgia,serif" font-size="50" fill="white" text-anchor="middle" letter-spacing="2">cura</text>
+      </svg>
+    </div>
+    <div class="card" style="background:#2a1f1a;">
+      <span class="tag" style="color:rgba(255,255,255,.2)">ゴールド</span>
+      <svg width="200" height="82" viewBox="0 0 200 82">
+        <rect x="96" y="4"  width="8" height="24" rx="3" fill="#c9a882"/>
+        <rect x="88" y="12" width="24" height="8"  rx="3" fill="#c9a882"/>
+        <text x="100" y="76" font-family="'Abril Fatface',Georgia,serif" font-size="50" fill="#f0e4d6" text-anchor="middle" letter-spacing="2">cura</text>
+      </svg>
+    </div>
+  </div>
+</div>
+
+
+</body>
+</html>

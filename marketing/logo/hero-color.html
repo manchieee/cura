@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cura — ヒーロー背景比較</title>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Noto+Serif+JP:wght@300;400&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#1a1a1a; font-family:'Noto Serif JP',serif; padding:32px 20px 80px; display:flex; flex-direction:column; gap:8px; }
+.label { font-size:9px; letter-spacing:.3em; color:#666; margin-bottom:4px; margin-top:16px; }
+
+.hero-mock {
+  width:100%; height:320px;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  position:relative; overflow:hidden; gap:12px;
+}
+.hero-mock::before {
+  content:'';
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 30%, rgba(255,220,210,0.35) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 80% 70%, rgba(220,180,190,0.2) 0%, transparent 60%);
+}
+.hero-mock > * { position:relative; z-index:1; }
+.hero-title { font-family:'Abril Fatface',serif; font-size:72px; letter-spacing:.12em; }
+.hero-sub { font-size:11px; letter-spacing:.4em; }
+.hero-copy { font-size:13px; letter-spacing:.1em; line-height:2; margin-top:4px; }
+.hero-divider { width:1px; height:32px; background:rgba(255,255,255,0.5); }
+</style>
+</head>
+<body>
+
+<p class="label">現在 — #8a3a55 → #a85f78 → #b87888（深いローズ）</p>
+<div class="hero-mock" style="background:linear-gradient(145deg, #8a3a55 0%, #a85f78 50%, #b87888 100%);">
+  <div class="hero-title" style="color:white;">cura</div>
+  <div class="hero-sub" style="color:rgba(255,255,255,.7);">PRIVATE CARE SERVICE</div>
+  <div class="hero-divider"></div>
+  <div class="hero-copy" style="color:rgba(255,255,255,.85);">最期まで、自宅で。</div>
+</div>
+
+<p class="label">案A — #b05070 → #c87890 → #d89aaa（1段階明るい）</p>
+<div class="hero-mock" style="background:linear-gradient(145deg, #b05070 0%, #c87890 50%, #d89aaa 100%);">
+  <div class="hero-title" style="color:white;">cura</div>
+  <div class="hero-sub" style="color:rgba(255,255,255,.7);">PRIVATE CARE SERVICE</div>
+  <div class="hero-divider"></div>
+  <div class="hero-copy" style="color:rgba(255,255,255,.85);">最期まで、自宅で。</div>
+</div>
+
+<p class="label">案B — #c07888 → #d494a8 → #e0b0be（ミルキーローズ）</p>
+<div class="hero-mock" style="background:linear-gradient(145deg, #c07888 0%, #d494a8 50%, #e0b0be 100%);">
+  <div class="hero-title" style="color:white;">cura</div>
+  <div class="hero-sub" style="color:rgba(255,255,255,.7);">PRIVATE CARE SERVICE</div>
+  <div class="hero-divider"></div>
+  <div class="hero-copy" style="color:rgba(255,255,255,.85);">最期まで、自宅で。</div>
+</div>
+
+<p class="label">案C — #e8d0d8 → #f0dce4 → #f8eef2（ペールローズ・文字はローズ）</p>
+<div class="hero-mock" style="background:linear-gradient(145deg, #e8d0d8 0%, #f0dce4 50%, #f8eef2 100%);">
+  <div class="hero-title" style="color:#8a3a55;">cura</div>
+  <div class="hero-sub" style="color:#a85f78;">PRIVATE CARE SERVICE</div>
+  <div class="hero-divider" style="background:#c9a882;"></div>
+  <div class="hero-copy" style="color:#5a3040;">最期まで、自宅で。</div>
+</div>
+
+<p class="label">案D — #f5ede6（現在のベージュ背景・文字はローズ）</p>
+<div class="hero-mock" style="background:linear-gradient(145deg, #f0e4dc 0%, #f5ede6 60%, #faf5f0 100%);">
+  <div class="hero-title" style="color:#8a3a55;">cura</div>
+  <div class="hero-sub" style="color:#a85f78;">PRIVATE CARE SERVICE</div>
+  <div class="hero-divider" style="background:#c9a882;"></div>
+  <div class="hero-copy" style="color:#4a3035;">最期まで、自宅で。</div>
+</div>
+
+</body>
+</html>

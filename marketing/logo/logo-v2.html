@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>cura ロゴ案 v2</title>
+<link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cormorant+Garamond:wght@300;400;500&family=Noto+Serif+JP:wght@300;400&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: #f4efe9;
+  font-family: 'Noto Serif JP', serif;
+  padding: 48px 32px 80px;
+}
+h1 {
+  text-align: center;
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  color: #8a6a5a;
+  margin-bottom: 8px;
+  font-weight: 300;
+}
+.subtitle {
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: #bba;
+  margin-bottom: 56px;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.card {
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 32px 36px;
+  min-height: 220px;
+  position: relative;
+  gap: 20px;
+}
+.card.dark { background: #2a1f1a; }
+.card.rose { background: #8a3a55; }
+.card.cream { background: #faf6f0; }
+.num {
+  position: absolute;
+  top: 14px; left: 18px;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: #ccc;
+}
+.card.dark .num, .card.rose .num { color: #555; }
+.dl-btn {
+  position: absolute;
+  bottom: 12px; right: 14px;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: #c9a882;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  opacity: 0.7;
+}
+.dl-btn:hover { opacity: 1; }
+</style>
+</head>
+<body>
+
+<h1>C U R A — LOGO CONCEPTS</h1>
+<p class="subtitle">MiuMiu インスパイア・10案</p>
+
+<div class="grid">
+
+<!-- 01 ファッションハウス風 ALL CAPS -->
+<div class="card cream" id="c1">
+  <span class="num">01</span>
+  <svg width="260" height="120" viewBox="0 0 260 120">
+    <text x="130" y="72" font-family="'Cormorant Garamond', Georgia, serif" font-size="64" font-weight="300" fill="#2a1f1a" text-anchor="middle" letter-spacing="18">CURA</text>
+    <line x1="40" y1="84" x2="220" y2="84" stroke="#c9a882" stroke-width="0.6"/>
+    <text x="130" y="100" font-family="Georgia, serif" font-size="8" fill="#c9a882" text-anchor="middle" letter-spacing="6">PRIVATE CARE</text>
+  </svg>
+  <button class="dl-btn" onclick="dl(1)">SVG保存</button>
+</div>
+
+<!-- 02 Cモノグラム + wordmark -->
+<div class="card" id="c2">
+  <span class="num">02</span>
+  <svg width="260" height="120" viewBox="0 0 260 120">
+    <!-- C mark -->
+    <path d="M 90 35 A 25 25 0 1 0 90 85" fill="none" stroke="#8a3a55" stroke-width="2.5" stroke-linecap="round"/>
+    <!-- wordmark -->
+    <text x="148" y="66" font-family="'Cormorant Garamond', Georgia, serif" font-size="40" font-weight="400" fill="#2a1f1a" text-anchor="middle" letter-spacing="6">cura</text>
+    <line x1="105" y1="80" x2="195" y2="80" stroke="#c9a882" stroke-width="0.5"/>
+    <text x="150" y="93" font-family="Georgia, serif" font-size="7" fill="#a85f78" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+  </svg>
+  <button class="dl-btn" onclick="dl(2)">SVG保存</button>
+</div>
+
+<!-- 03 ダイヤモンドマーク -->
+<div class="card dark" id="c3">
+  <span class="num">03</span>
+  <svg width="260" height="120" viewBox="0 0 260 120">
+    <!-- diamond -->
+    <polygon points="72,60 82,46 92,60 82,74" fill="none" stroke="#c9a882" stroke-width="1.2"/>
+    <polygon points="72,60 82,46 92,60 82,74" fill="#c9a882" opacity="0.12"/>
+    <!-- wordmark -->
+    <text x="160" y="67" font-family="'Cormorant Garamond', Georgia, serif" font-size="44" font-weight="300" fill="#c9a882" text-anchor="middle" letter-spacing="10">cura</text>
+    <text x="160" y="84" font-family="Georgia, serif" font-size="7" fill="#a85f78" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+  </svg>
+  <button class="dl-btn" onclick="dl(3)">SVG保存</button>
+</div>
+
+<!-- 04 アーチ＋名前（包み込むケア） -->
+<div class="card" id="c4">
+  <span class="num">04</span>
+  <svg width="260" height="130" viewBox="0 0 260 130">
+    <!-- arc above -->
+    <path d="M 90 70 A 40 40 0 0 1 170 70" fill="none" stroke="#8a3a55" stroke-width="1.5"/>
+    <circle cx="90" cy="70" r="2.5" fill="#8a3a55"/>
+    <circle cx="170" cy="70" r="2.5" fill="#8a3a55"/>
+    <!-- text -->
+    <text x="130" y="95" font-family="'Cormorant Garamond', Georgia, serif" font-size="42" font-weight="400" fill="#2a1f1a" text-anchor="middle" letter-spacing="8">cura</text>
+    <text x="130" y="115" font-family="Georgia, serif" font-size="7.5" fill="#c9a882" text-anchor="middle" letter-spacing="5">PRIVATE CARE</text>
+  </svg>
+  <button class="dl-btn" onclick="dl(4)">SVG保存</button>
+</div>
+
+<!-- 05 クロス（+）ケア記号 ミニマル -->
+<div class="card cream" id="c5">
+  <span class="num">05</span>
+  <svg width="260" height="120" viewBox="0 0 260 120">
+    <!-- plus mark, thin -->
+    <line x1="80" y1="50" x2="80" y2="72" stroke="#a85f78" stroke-width="1.5"/>
+    <line x1="69" y1="61" x2="91" y2="61" stroke="#a85f78" stroke-width="1.5"/>
+    <!-- wordmark -->
+    <text x="155" y="70" font-family="'Abril Fatface', Georgia, serif" font-size="44" fill="#2a1f1a" text-anchor="middle" letter-spacing="4">cura</text>
+    <line x1="100" y1="82" x2="210" y2="82" stroke="#c9a882" stroke-width="0.5"/>
+    <text x="155" y="95" font-family="Georgia, serif" font-size="7" fill="#c9a882" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+  </svg>
+  <button class="dl-btn" onclick="dl(5)">SVG保存</button>
+</div>
+
+<!-- 06 ダブルボーダー（ファッションブランド的） -->
+<div class="card" id="c6">
+  <span class="num">06</span>
+  <svg width="260" height="120" viewBox="0 0 260 120">
+    <rect x="44" y="28" width="172" height="64" fill="none" stroke="#2a1f1a" stroke-width="2"/>
+    <rect x="48" y="32" width="164" height="56" fill="none" stroke="#c9a882" stroke-width="0.6"/>
+    <text x="130" y="71" font-family="'Cormorant Garamond', Georgia, serif" font-size="42" font-weight="400" fill="#2a1f1a" text-anchor="middle" letter-spacing="10">cura</text>
+    <text x="130" y="83" font-family="Georgia, serif" font-size="7" fill="#c9a882" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+  </svg>
+  <button class="dl-btn" onclick="dl(6)">SVG保存</button>
+</div>
+
+<!-- 07 ローズカラー × ゴールド（制服映え） -->
+<div class="card rose" id="c7">
+  <span class="num">07</span>
+  <svg width="260" height="120" viewBox="0 0 260 120">
+    <text x="130" y="72" font-family="'Cormorant Garamond', Georgia, serif" font-size="56" font-weight="300" fill="white" text-anchor="middle" letter-spacing="14">CURA</text>
+    <line x1="60" y1="84" x2="200" y2="84" stroke="rgba(255,255,255,0.4)" stroke-width="0.6"/>
+    <text x="130" y="99" font-family="Georgia, serif" font-size="8" fill="#f0d0a0" text-anchor="middle" letter-spacing="5">PRIVATE CARE</text>
+  </svg>
+  <button class="dl-btn" onclick="dl(7)">SVG保存</button>
+</div>
+
+<!-- 08 リーフ（自然なケア・柔らかさ） -->
+<div class="card" id="c8">
+  <span class="num">08</span>
+  <svg width="260" height="120" viewBox="0 0 260 120">
+    <!-- leaf mark -->
+    <path d="M 80 65 Q 80 40 95 40 Q 80 40 80 65 Q 80 82 95 75 Q 80 82 80 65" fill="#a85f78" opacity="0.3"/>
+    <path d="M 80 65 Q 95 40 95 40 Q 95 40 80 65" fill="none" stroke="#8a3a55" stroke-width="1.5" stroke-linecap="round"/>
+    <path d="M 80 65 Q 95 75 95 75 Q 95 75 80 65" fill="none" stroke="#8a3a55" stroke-width="1.5" stroke-linecap="round"/>
+    <line x1="80" y1="42" x2="80" y2="75" stroke="#8a3a55" stroke-width="0.8" stroke-dasharray="2,2"/>
+    <!-- wordmark -->
+    <text x="155" y="70" font-family="'Cormorant Garamond', Georgia, serif" font-size="44" font-weight="400" fill="#2a1f1a" text-anchor="middle" letter-spacing="6">cura</text>
+    <line x1="105" y1="82" x2="205" y2="82" stroke="#c9a882" stroke-width="0.5"/>
+    <text x="155" y="95" font-family="Georgia, serif" font-size="7" fill="#c9a882" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+  </svg>
+  <button class="dl-btn" onclick="dl(8)">SVG保存</button>
+</div>
+
+<!-- 09 インフィニティ（継続するケア） -->
+<div class="card dark" id="c9">
+  <span class="num">09</span>
+  <svg width="260" height="130" viewBox="0 0 260 130">
+    <!-- infinity -->
+    <path d="M 95 52 C 95 42 105 38 112 45 C 120 52 120 52 128 52 C 136 52 146 42 146 52 C 146 62 136 68 128 52 C 120 36 108 58 108 52 C 108 46 118 38 128 52"
+          fill="none" stroke="#c9a882" stroke-width="1.5" stroke-linecap="round"/>
+    <!-- simpler infinity -->
+    <path d="M 82 52 C 82 42 94 38 102 45 C 108 50 115 55 122 55 C 129 55 140 50 140 42 C 140 34 129 30 122 37 C 115 43 108 48 102 52 C 94 58 82 62 82 52 Z"
+          fill="none" stroke="#c9a882" stroke-width="1.5"/>
+    <!-- wordmark below -->
+    <text x="130" y="88" font-family="'Cormorant Garamond', Georgia, serif" font-size="42" font-weight="300" fill="#f5efe8" text-anchor="middle" letter-spacing="10">cura</text>
+    <text x="130" y="106" font-family="Georgia, serif" font-size="7" fill="#a85f78" text-anchor="middle" letter-spacing="5">PRIVATE CARE</text>
+  </svg>
+  <button class="dl-btn" onclick="dl(9)">SVG保存</button>
+</div>
+
+<!-- 10 スタックド（縦組み・制服ワッペン向け） -->
+<div class="card cream" id="c10">
+  <span class="num">10</span>
+  <svg width="260" height="140" viewBox="0 0 260 140">
+    <!-- circle border -->
+    <circle cx="130" cy="70" r="52" fill="none" stroke="#2a1f1a" stroke-width="1.2"/>
+    <circle cx="130" cy="70" r="47" fill="none" stroke="#c9a882" stroke-width="0.5"/>
+    <!-- text inside circle -->
+    <text x="130" y="66" font-family="'Cormorant Garamond', Georgia, serif" font-size="40" font-weight="400" fill="#2a1f1a" text-anchor="middle" letter-spacing="6">cura</text>
+    <line x1="90" y1="75" x2="170" y2="75" stroke="#c9a882" stroke-width="0.6"/>
+    <text x="130" y="90" font-family="Georgia, serif" font-size="7" fill="#8a3a55" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+  </svg>
+  <button class="dl-btn" onclick="dl(10)">SVG保存</button>
+</div>
+
+</div><!-- /grid -->
+
+<script>
+const svgData = {
+  1: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 120" width="520" height="240">
+  <rect width="260" height="120" fill="#faf6f0"/>
+  <text x="130" y="72" font-family="Cormorant Garamond, Georgia, serif" font-size="64" font-weight="300" fill="#2a1f1a" text-anchor="middle" letter-spacing="18">CURA</text>
+  <line x1="40" y1="84" x2="220" y2="84" stroke="#c9a882" stroke-width="0.6"/>
+  <text x="130" y="100" font-family="Georgia, serif" font-size="8" fill="#c9a882" text-anchor="middle" letter-spacing="6">PRIVATE CARE</text>
+</svg>`,
+  2: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 120" width="520" height="240">
+  <rect width="260" height="120" fill="white"/>
+  <path d="M 90 35 A 25 25 0 1 0 90 85" fill="none" stroke="#8a3a55" stroke-width="2.5" stroke-linecap="round"/>
+  <text x="148" y="66" font-family="Cormorant Garamond, Georgia, serif" font-size="40" fill="#2a1f1a" text-anchor="middle" letter-spacing="6">cura</text>
+  <line x1="105" y1="80" x2="195" y2="80" stroke="#c9a882" stroke-width="0.5"/>
+  <text x="150" y="93" font-family="Georgia, serif" font-size="7" fill="#a85f78" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+</svg>`,
+  3: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 120" width="520" height="240">
+  <rect width="260" height="120" fill="#2a1f1a"/>
+  <polygon points="72,60 82,46 92,60 82,74" fill="none" stroke="#c9a882" stroke-width="1.2"/>
+  <text x="160" y="67" font-family="Cormorant Garamond, Georgia, serif" font-size="44" font-weight="300" fill="#c9a882" text-anchor="middle" letter-spacing="10">cura</text>
+  <text x="160" y="84" font-family="Georgia, serif" font-size="7" fill="#a85f78" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+</svg>`,
+  4: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 130" width="520" height="260">
+  <rect width="260" height="130" fill="white"/>
+  <path d="M 90 70 A 40 40 0 0 1 170 70" fill="none" stroke="#8a3a55" stroke-width="1.5"/>
+  <circle cx="90" cy="70" r="2.5" fill="#8a3a55"/>
+  <circle cx="170" cy="70" r="2.5" fill="#8a3a55"/>
+  <text x="130" y="95" font-family="Cormorant Garamond, Georgia, serif" font-size="42" fill="#2a1f1a" text-anchor="middle" letter-spacing="8">cura</text>
+  <text x="130" y="115" font-family="Georgia, serif" font-size="7.5" fill="#c9a882" text-anchor="middle" letter-spacing="5">PRIVATE CARE</text>
+</svg>`,
+  5: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 120" width="520" height="240">
+  <rect width="260" height="120" fill="#faf6f0"/>
+  <line x1="80" y1="50" x2="80" y2="72" stroke="#a85f78" stroke-width="1.5"/>
+  <line x1="69" y1="61" x2="91" y2="61" stroke="#a85f78" stroke-width="1.5"/>
+  <text x="155" y="70" font-family="Abril Fatface, Georgia, serif" font-size="44" fill="#2a1f1a" text-anchor="middle" letter-spacing="4">cura</text>
+  <line x1="100" y1="82" x2="210" y2="82" stroke="#c9a882" stroke-width="0.5"/>
+  <text x="155" y="95" font-family="Georgia, serif" font-size="7" fill="#c9a882" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+</svg>`,
+  6: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 120" width="520" height="240">
+  <rect width="260" height="120" fill="white"/>
+  <rect x="44" y="28" width="172" height="64" fill="none" stroke="#2a1f1a" stroke-width="2"/>
+  <rect x="48" y="32" width="164" height="56" fill="none" stroke="#c9a882" stroke-width="0.6"/>
+  <text x="130" y="71" font-family="Cormorant Garamond, Georgia, serif" font-size="42" fill="#2a1f1a" text-anchor="middle" letter-spacing="10">cura</text>
+  <text x="130" y="83" font-family="Georgia, serif" font-size="7" fill="#c9a882" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+</svg>`,
+  7: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 120" width="520" height="240">
+  <rect width="260" height="120" fill="#8a3a55"/>
+  <text x="130" y="72" font-family="Cormorant Garamond, Georgia, serif" font-size="56" font-weight="300" fill="white" text-anchor="middle" letter-spacing="14">CURA</text>
+  <line x1="60" y1="84" x2="200" y2="84" stroke="rgba(255,255,255,0.4)" stroke-width="0.6"/>
+  <text x="130" y="99" font-family="Georgia, serif" font-size="8" fill="#f0d0a0" text-anchor="middle" letter-spacing="5">PRIVATE CARE</text>
+</svg>`,
+  8: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 120" width="520" height="240">
+  <rect width="260" height="120" fill="white"/>
+  <path d="M 80 65 Q 95 40 95 40 Q 95 40 80 65" fill="none" stroke="#8a3a55" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M 80 65 Q 95 75 95 75 Q 95 75 80 65" fill="none" stroke="#8a3a55" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="80" y1="42" x2="80" y2="75" stroke="#8a3a55" stroke-width="0.8" stroke-dasharray="2,2"/>
+  <text x="155" y="70" font-family="Cormorant Garamond, Georgia, serif" font-size="44" fill="#2a1f1a" text-anchor="middle" letter-spacing="6">cura</text>
+  <line x1="105" y1="82" x2="205" y2="82" stroke="#c9a882" stroke-width="0.5"/>
+  <text x="155" y="95" font-family="Georgia, serif" font-size="7" fill="#c9a882" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+</svg>`,
+  9: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 130" width="520" height="260">
+  <rect width="260" height="130" fill="#2a1f1a"/>
+  <path d="M 82 52 C 82 42 94 38 102 45 C 108 50 115 55 122 55 C 129 55 140 50 140 42 C 140 34 129 30 122 37 C 115 43 108 48 102 52 C 94 58 82 62 82 52 Z" fill="none" stroke="#c9a882" stroke-width="1.5"/>
+  <text x="130" y="88" font-family="Cormorant Garamond, Georgia, serif" font-size="42" font-weight="300" fill="#f5efe8" text-anchor="middle" letter-spacing="10">cura</text>
+  <text x="130" y="106" font-family="Georgia, serif" font-size="7" fill="#a85f78" text-anchor="middle" letter-spacing="5">PRIVATE CARE</text>
+</svg>`,
+  10: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 140" width="520" height="280">
+  <rect width="260" height="140" fill="#faf6f0"/>
+  <circle cx="130" cy="70" r="52" fill="none" stroke="#2a1f1a" stroke-width="1.2"/>
+  <circle cx="130" cy="70" r="47" fill="none" stroke="#c9a882" stroke-width="0.5"/>
+  <text x="130" y="66" font-family="Cormorant Garamond, Georgia, serif" font-size="40" fill="#2a1f1a" text-anchor="middle" letter-spacing="6">cura</text>
+  <line x1="90" y1="75" x2="170" y2="75" stroke="#c9a882" stroke-width="0.6"/>
+  <text x="130" y="90" font-family="Georgia, serif" font-size="7" fill="#8a3a55" text-anchor="middle" letter-spacing="4">PRIVATE CARE</text>
+</svg>`
+};
+
+function dl(n) {
+  const svg = svgData[n];
+  const blob = new Blob([svg], {type: 'image/svg+xml'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `cura-logo-0${n}.svg`;
+  a.click();
+}
+</script>
+</body>
+</html>
