@@ -430,6 +430,89 @@
       color: var(--rose);
     }
 
+    /* ─── PIN画面 ─── */
+    .pin-screen {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 80vh;
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .pin-logo {
+      font-family: 'Abril Fatface', serif;
+      font-size: 2.5rem;
+      letter-spacing: 4px;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .pin-tagline {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+      margin-bottom: 40px;
+    }
+    .pin-label {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+      line-height: 1.8;
+    }
+    .pin-inputs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .pin-input {
+      width: 56px;
+      height: 64px;
+      border: 2px solid var(--rose-light);
+      border-radius: 12px;
+      font-size: 1.8rem;
+      text-align: center;
+      font-family: 'Noto Serif JP', serif;
+      color: var(--navy);
+      background: white;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-text-security: disc;
+    }
+    .pin-input:focus {
+      border-color: var(--rose);
+    }
+    .pin-input.filled {
+      border-color: var(--rose);
+      background: var(--rose-pale);
+    }
+    .pin-error {
+      font-size: 0.82rem;
+      color: #c0392b;
+      margin-bottom: 16px;
+      min-height: 20px;
+    }
+    .pin-btn {
+      background: linear-gradient(135deg, var(--rose), var(--rose-light));
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 14px 48px;
+      font-size: 0.9rem;
+      font-family: 'Noto Serif JP', serif;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .pin-btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+    .pin-attempts {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 16px;
+    }
+
     /* ─── トースト通知 ─── */
     .toast {
       position: fixed;
@@ -527,6 +610,25 @@
     ご不明な場合は<br>
     <a href="mailto:hello@cura-care.jp" style="color:var(--rose);">hello@cura-care.jp</a> までご連絡ください
   </p>
+</div>
+
+<!-- ─── PIN入力画面 ─── -->
+<div id="pinScreen" class="pin-screen" style="display:none;">
+  <div class="pin-logo">cura</div>
+  <div class="pin-tagline">PRIVATE CARE</div>
+  <p class="pin-label">
+    4桁のPINコードを入力してください。<br>
+    <span style="font-size:0.8rem;">ご登録時にお知らせしたPINコードです。</span>
+  </p>
+  <div class="pin-inputs">
+    <input class="pin-input" id="pin0" type="tel" maxlength="1" inputmode="numeric" pattern="[0-9]">
+    <input class="pin-input" id="pin1" type="tel" maxlength="1" inputmode="numeric" pattern="[0-9]">
+    <input class="pin-input" id="pin2" type="tel" maxlength="1" inputmode="numeric" pattern="[0-9]">
+    <input class="pin-input" id="pin3" type="tel" maxlength="1" inputmode="numeric" pattern="[0-9]">
+  </div>
+  <div class="pin-error" id="pinError"></div>
+  <button class="pin-btn" id="pinSubmitBtn" onclick="submitPin()" disabled>確認</button>
+  <div class="pin-attempts" id="pinAttempts"></div>
 </div>
 
 <!-- ─── メインコンテンツ ─── -->
@@ -737,10 +839,11 @@
   let clientData = null;
   let selectedTime = null;
   let dialogCallback = null;
+  let pinAttempts = 0;
+  const PIN_MAX_ATTEMPTS = 5;
 
   // ─── 初期化 ───
   function init() {
-    // URLからトークン取得
     const params = new URLSearchParams(window.location.search);
     clientToken = params.get('token');
 
@@ -749,41 +852,145 @@
       return;
     }
 
-    loadClientData();
+    // トークンの有効性チェック（有効期限・active確認）
+    validateToken();
   }
 
   function showAuthScreen() {
     document.getElementById('authScreen').style.display = 'flex';
+    document.getElementById('pinScreen').style.display = 'none';
     document.getElementById('mainContent').style.display = 'none';
     document.getElementById('tabNav').style.display = 'none';
   }
 
+  function showPinScreen() {
+    document.getElementById('authScreen').style.display = 'none';
+    document.getElementById('pinScreen').style.display = 'flex';
+    document.getElementById('mainContent').style.display = 'none';
+    document.getElementById('tabNav').style.display = 'none';
+    setupPinInputs();
+    document.getElementById('pin0').focus();
+  }
+
   function showMainContent() {
     document.getElementById('authScreen').style.display = 'none';
+    document.getElementById('pinScreen').style.display = 'none';
     document.getElementById('mainContent').style.display = 'block';
     document.getElementById('tabNav').style.display = 'flex';
+  }
+
+  // ─── トークン有効性チェック ───
+  async function validateToken() {
+    try {
+      const res = await fetch(`${APPS_SCRIPT_URL}?action=validateToken&token=${clientToken}`);
+      const result = await res.json();
+      if (!result || result.error || !result.valid) {
+        showAuthScreen();
+        return;
+      }
+      // トークン有効 → PIN画面へ
+      showPinScreen();
+    } catch (e) {
+      console.error(e);
+      // 開発・デモ用：Apps Script未接続時はPIN画面をスキップして表示
+      clientData = getDemoData();
+      showMainContent();
+      renderAll();
+    }
+  }
+
+  // ─── PIN入力UI設定 ───
+  function setupPinInputs() {
+    const inputs = document.querySelectorAll('.pin-input');
+    inputs.forEach((input, idx) => {
+      input.value = '';
+      input.classList.remove('filled');
+      input.addEventListener('input', () => {
+        const val = input.value.replace(/[^0-9]/g, '');
+        input.value = val;
+        if (val) {
+          input.classList.add('filled');
+          if (idx < 3) inputs[idx + 1].focus();
+        } else {
+          input.classList.remove('filled');
+        }
+        checkPinComplete();
+      });
+      input.addEventListener('keydown', (e) => {
+        if (e.key === 'Backspace' && !input.value && idx > 0) {
+          inputs[idx - 1].focus();
+          inputs[idx - 1].value = '';
+          inputs[idx - 1].classList.remove('filled');
+          checkPinComplete();
+        }
+        if (e.key === 'Enter') submitPin();
+      });
+    });
+  }
+
+  function checkPinComplete() {
+    const inputs = document.querySelectorAll('.pin-input');
+    const complete = [...inputs].every(i => i.value.length === 1);
+    document.getElementById('pinSubmitBtn').disabled = !complete;
+  }
+
+  // ─── PIN送信 ───
+  async function submitPin() {
+    if (pinAttempts >= PIN_MAX_ATTEMPTS) return;
+
+    const inputs = document.querySelectorAll('.pin-input');
+    const pin = [...inputs].map(i => i.value).join('');
+    if (pin.length !== 4) return;
+
+    const btn = document.getElementById('pinSubmitBtn');
+    btn.disabled = true;
+    btn.textContent = '確認中...';
+
+    try {
+      const res = await fetch(`${APPS_SCRIPT_URL}?action=verifyPin&token=${clientToken}&pin=${pin}`);
+      const result = await res.json();
+
+      if (result && result.success && result.clientData) {
+        clientData = result.clientData;
+        showMainContent();
+        renderAll();
+      } else {
+        pinAttempts++;
+        const remaining = PIN_MAX_ATTEMPTS - pinAttempts;
+        document.getElementById('pinError').textContent =
+          remaining > 0
+            ? `PINコードが違います。あと${remaining}回入力できます。`
+            : 'ロックされました。curaまでご連絡ください。';
+        if (remaining <= 0) {
+          inputs.forEach(i => { i.disabled = true; });
+        } else {
+          inputs.forEach(i => { i.value = ''; i.classList.remove('filled'); });
+          inputs[0].focus();
+        }
+        document.getElementById('pinAttempts').textContent =
+          remaining > 0 ? `試行回数：${pinAttempts}/${PIN_MAX_ATTEMPTS}` : '';
+        btn.textContent = '確認';
+        btn.disabled = false;
+      }
+    } catch (e) {
+      console.error(e);
+      document.getElementById('pinError').textContent = '通信エラーが発生しました。';
+      btn.textContent = '確認';
+      btn.disabled = false;
+    }
   }
 
   // ─── データ取得 ───
   async function loadClientData() {
     try {
-      let data;
-
-      if (APPS_SCRIPT_URL) {
-        const res = await fetch(`${APPS_SCRIPT_URL}?action=getClient&token=${clientToken}`);
-        data = await res.json();
-        if (!data || data.error) { showAuthScreen(); return; }
-      } else {
-        // デモデータ
-        data = getDemoData();
-      }
-
+      const res = await fetch(`${APPS_SCRIPT_URL}?action=getClient&token=${clientToken}`);
+      const data = await res.json();
+      if (!data || data.error) { showAuthScreen(); return; }
       clientData = data;
       showMainContent();
       renderAll();
     } catch (e) {
       console.error(e);
-      // Apps Script未接続時はデモモードで表示
       clientData = getDemoData();
       showMainContent();
       renderAll();

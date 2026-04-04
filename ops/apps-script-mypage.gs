@@ -24,9 +24,9 @@ var SHEET_ID = '1w0FJ3HM8JosH-jZqwOpnDvbeNuOqJkWANVt1pQiIayg';
 function doGet(e) {
   var action = e.parameter.action;
 
-  if (action === 'getClient') {
-    return jsonResponse(getClient(e.parameter.token));
-  }
+  if (action === 'getClient')     return jsonResponse(getClient(e.parameter.token));
+  if (action === 'validateToken') return jsonResponse(validateToken(e.parameter.token));
+  if (action === 'verifyPin')     return jsonResponse(verifyPin(e.parameter.token, e.parameter.pin));
 
   // 既存：空き枠取得
   return jsonResponse(getSlots());
@@ -60,7 +60,7 @@ function getSheet(name) {
   if (!sheet) {
     sheet = ss.insertSheet(name);
     if (name === 'clients') {
-      sheet.appendRow(['token', 'name', 'nameShort', 'email', 'phone', 'createdAt']);
+      sheet.appendRow(['token', 'name', 'nameShort', 'email', 'phone', 'createdAt', 'pin', 'active', 'expiresAt']);
     } else if (name === 'reservations') {
       sheet.appendRow(['id', 'clientToken', 'date', 'time', 'hours', 'service', 'note', 'status', 'caregiver', 'estimatedCost', 'createdAt']);
     } else if (name === 'memos') {
@@ -73,6 +73,91 @@ function getSheet(name) {
 // ─────────────────────────────────────────
 // マイページ機能
 // ─────────────────────────────────────────
+
+/**
+ * トークン有効性チェック（PIN入力前）
+ * GET ?action=validateToken&token=xxx
+ * 返値: { valid: true } or { valid: false, reason: '...' }
+ * ※PINは返さない
+ */
+function validateToken(token) {
+  if (!token) return { valid: false, reason: 'token required' };
+
+  try {
+    var sheet = getSheet('clients');
+    var rows = sheet.getDataRange().getValues();
+
+    for (var i = 1; i < rows.length; i++) {
+      if (rows[i][0] !== token) continue;
+
+      // active チェック（列7、空欄の場合はtrueとみなす）
+      var active = rows[i][7];
+      if (active === false || active === 'false' || active === 0) {
+        return { valid: false, reason: 'inactive' };
+      }
+
+      // 有効期限チェック（列8、空欄の場合は無期限）
+      var expiresAt = rows[i][8];
+      if (expiresAt && expiresAt !== '') {
+        var expDate = new Date(expiresAt);
+        if (!isNaN(expDate.getTime()) && expDate < new Date()) {
+          return { valid: false, reason: 'expired' };
+        }
+      }
+
+      return { valid: true };
+    }
+
+    return { valid: false, reason: 'not found' };
+  } catch (e) {
+    return { valid: false, reason: e.message };
+  }
+}
+
+/**
+ * PIN認証＋クライアントデータ返却
+ * GET ?action=verifyPin&token=xxx&pin=1234
+ * 返値: { success: true, clientData: {...} } or { success: false }
+ */
+function verifyPin(token, pin) {
+  if (!token || !pin) return { success: false };
+
+  try {
+    var sheet = getSheet('clients');
+    var rows = sheet.getDataRange().getValues();
+
+    for (var i = 1; i < rows.length; i++) {
+      if (rows[i][0] !== token) continue;
+
+      // active・有効期限チェック
+      var active = rows[i][7];
+      if (active === false || active === 'false' || active === 0) {
+        return { success: false, reason: 'inactive' };
+      }
+      var expiresAt = rows[i][8];
+      if (expiresAt && expiresAt !== '') {
+        var expDate = new Date(expiresAt);
+        if (!isNaN(expDate.getTime()) && expDate < new Date()) {
+          return { success: false, reason: 'expired' };
+        }
+      }
+
+      // PIN照合（列6）
+      var storedPin = String(rows[i][6]).trim();
+      if (storedPin !== String(pin).trim()) {
+        return { success: false, reason: 'wrong pin' };
+      }
+
+      // 認証成功 → getClientと同じデータを返す
+      var clientData = getClient(token);
+      return { success: true, clientData: clientData };
+    }
+
+    return { success: false, reason: 'not found' };
+  } catch (e) {
+    return { success: false, reason: e.message };
+  }
+}
 
 /**
  * クライアントデータ取得
